@@ -1,0 +1,520 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>小chen妙妙屋 | 小chen妙妙屋</title><meta name="author" content="小chen"><meta name="copyright" content="小chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="在 AWD 赛事中，时间紧迫且操作频繁，熟练掌握以下 Python 标准库与第三方库，是实现自动化攻击与批量化运维防御的基础。 1 Python 标准库：系统交互与底层网络标准库无需额外安装，是编写高兼容性、高可用性脚本的首选。 1.1 操作系统与环境交互：os &amp; sys在 AWD 中，通常需要遍历目录读取源码、备份文件，或者根据不同操作系统环境调整脚本逻辑。  os 模块：主要用于文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小chen妙妙屋">
+<meta property="og:url" content="http://blog.chenjichao.site/2026/03/27/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/4%20python%E5%9F%BA%E7%A1%80/1%20python%20awd%20%E5%BA%93/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="在 AWD 赛事中，时间紧迫且操作频繁，熟练掌握以下 Python 标准库与第三方库，是实现自动化攻击与批量化运维防御的基础。 1 Python 标准库：系统交互与底层网络标准库无需额外安装，是编写高兼容性、高可用性脚本的首选。 1.1 操作系统与环境交互：os &amp; sys在 AWD 中，通常需要遍历目录读取源码、备份文件，或者根据不同操作系统环境调整脚本逻辑。  os 模块：主要用于文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.chenjichao.site/raw/12.webp">
+<meta property="article:published_time" content="2026-03-27T00:59:23.128Z">
+<meta property="article:modified_time" content="2026-03-12T06:53:37.703Z">
+<meta property="article:author" content="小chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.chenjichao.site/raw/12.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.chenjichao.site/2026/03/27/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/4%20python%E5%9F%BA%E7%A1%80/1%20python%20awd%20%E5%BA%93/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '小chen妙妙屋',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2026-03-12 14:53:37'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">210</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">150</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.chenjichao.site/raw/12.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-27T00:59:23.128Z" title="发表于 2026-03-27 08:59:23">2026-03-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-12T06:53:37.703Z" title="更新于 2026-03-12 14:53:37">2026-03-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在 AWD 赛事中，时间紧迫且操作频繁，熟练掌握以下 Python 标准库与第三方库，是实现<strong>自动化攻击</strong>与<strong>批量化运维防御</strong>的基础。</p>
+<h1 id="1-Python-标准库：系统交互与底层网络"><a href="#1-Python-标准库：系统交互与底层网络" class="headerlink" title="1 Python 标准库：系统交互与底层网络"></a>1 Python 标准库：系统交互与底层网络</h1><p>标准库无需额外安装，是编写高兼容性、高可用性脚本的首选。</p>
+<h2 id="1-1-操作系统与环境交互：os-amp-sys"><a href="#1-1-操作系统与环境交互：os-amp-sys" class="headerlink" title="1.1 操作系统与环境交互：os &amp; sys"></a>1.1 操作系统与环境交互：<code>os</code> &amp; <code>sys</code></h2><p>在 AWD 中，通常需要遍历目录读取源码、备份文件，或者根据不同操作系统环境调整脚本逻辑。</p>
+<ul>
+<li><strong><code>os</code> 模块</strong>：主要用于文件和目录操作。<ul>
+<li><code>os.system()</code> / <code>os.popen()</code>：执行系统命令（在现代 Python 开发中，更推荐使用 <code>subprocess</code>）。</li>
+<li><code>os.walk()</code>：递归遍历目录树，常用于 <strong>批量查找后门（Webshell）</strong> 或备份整个 Web 目录。</li>
+</ul>
+</li>
+<li><strong><code>sys</code> 模块</strong>：主要用于与 Python 解释器交互。<ul>
+<li><code>sys.argv</code>：获取命令行参数，用于编写灵活的 CLI 工具（如 <code>python exp.py http://target 80</code>）。</li>
+<li><code>sys.exit()</code>：在检测到目标不可达或触发防御机制时安全退出脚本。</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-2-进程管理与命令执行：subprocess"><a href="#1-2-进程管理与命令执行：subprocess" class="headerlink" title="1.2 进程管理与命令执行：subprocess"></a>1.2 进程管理与命令执行：<code>subprocess</code></h2><p>完全理解。在深入复杂的攻防脚本之前，打好基础是非常必要的。考虑到内容吸收效率和 Token 的合理分配，我们先聚焦于 <code>subprocess</code>，从最基本的核心用法开始，一步步向上构建。</p>
+<p><code>subprocess</code> 模块的作用非常明确：<strong>让 Python 脚本能够像你在终端（Terminal）里敲键盘一样，去执行操作系统的命令</strong>，并且还能把执行的结果拿回到 Python 里进行逻辑判断。</p>
+<h3 id="1-2-1-为什么抛弃-os-system？"><a href="#1-2-1-为什么抛弃-os-system？" class="headerlink" title="1.2.1 为什么抛弃 os.system？"></a>1.2.1 为什么抛弃 <code>os.system</code>？</h3><p>在很多老旧的教程中，你会看到使用 <code>os.system(&#39;ls&#39;)</code>。但在现代 Python 开发和网络安全领域，我们强烈建议抛弃它，原因有两点：</p>
+<ol>
+<li><p><strong>无法捕获输出</strong>：<code>os.system</code> 只能在屏幕上打印结果，你的 Python 变量无法直接拿到这些文本内容（它只能返回一个代表成功与否的数字状态码）。</p>
+</li>
+<li><p><strong>安全风险</strong>：它的底层实现极易受到命令注入（Command Injection）攻击。</p>
+</li>
+</ol>
+<hr>
+<h3 id="1-2-2-核心函数：subprocess-run"><a href="#1-2-2-核心函数：subprocess-run" class="headerlink" title="1.2.2 核心函数：subprocess.run()"></a>1.2.2 核心函数：<code>subprocess.run()</code></h3><p>自 Python 3.5 起，官方推荐使用 <code>subprocess.run()</code> 来处理绝大多数的系统命令调用任务。它是一个<strong>同步阻塞</strong>的函数——即 Python 程序会暂停，等待这条系统命令彻底执行完毕后，才会继续往下执行代码。</p>
+<h4 id="1-2-2-1-执行无参命令"><a href="#1-2-2-1-执行无参命令" class="headerlink" title="1.2.2.1 执行无参命令"></a>1.2.2.1 执行无参命令</h4><p>我们先来看如何执行一个最简单的命令，例如查看当前系统用户 <code>whoami</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import subprocess</span><br><span class="line"></span><br><span class="line"># 直接传入命令字符串的列表</span><br><span class="line"># 注意：强烈建议将命令和参数写成列表形式，而不是一整个字符串 &quot;whoami&quot;</span><br><span class="line">subprocess.run([&#x27;whoami&#x27;])</span><br></pre></td></tr></table></figure>
+<p>运行逻辑：这会在终端屏幕上打印出当前用户名（如 <code>root</code>），但你的 Python 脚本内部并没有截获这个值。</p>
+<h4 id="1-2-2-2-执行带参数的命令"><a href="#1-2-2-2-执行带参数的命令" class="headerlink" title="1.2.2.2 执行带参数的命令"></a>1.2.2.2 执行带参数的命令</h4><p>当命令带有参数时（例如 Linux 下的 <code>ls -la /var/www/html</code>），列表传参的优势就体现出来了。Python 会自动处理底层的空格和转义问题，避免因路径中含有特殊字符而导致的报错。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import subprocess</span><br><span class="line"></span><br><span class="line"># 列表的第一个元素是主命令，后面的元素全是参数</span><br><span class="line">subprocess.run([&#x27;ls&#x27;, &#x27;-la&#x27;, &#x27;/var/www/html&#x27;])</span><br></pre></td></tr></table></figure>
+<h4 id="1-2-2-3-捕获输出结果"><a href="#1-2-2-3-捕获输出结果" class="headerlink" title="1.2.2.3 捕获输出结果"></a>1.2.2.3 捕获输出结果</h4><p>这是你在 AWD 中最常用的场景。你需要执行命令，并把弹出的结果存到变量里，以便后续使用正则表达式（<code>re</code>）提取 Flag 或 IP 网址。</p>
+<p>要实现这一点，需要给 <code>run()</code> 函数添加两个关键参数：</p>
+<ul>
+<li><strong><code>capture_output=True</code></strong>：告诉 Python，把命令产生的标准输出（stdout）和错误输出（stderr）都拦截在内存里，不要直接打印到屏幕上。</li>
+<li><strong><code>text=True</code></strong>：将捕获到的底层二进制字节流（bytes）自动解码为普通的 Python 字符串（string），方便我们进行 <code>if &quot;root&quot; in result:</code> 这样的字符串匹配。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import subprocess</span><br><span class="line"></span><br><span class="line"># 执行命令并捕获结果</span><br><span class="line">result = subprocess.run([&#x27;id&#x27;], capture_output=True, text=True)</span><br><span class="line"></span><br><span class="line"># result 是一个 CompletedProcess 对象，它包含了执行完毕后的所有状态信息</span><br><span class="line">print(&quot;返回状态码:&quot;, result.returncode)  # 0 表示命令执行成功，非 0 表示出现错误</span><br><span class="line">print(&quot;标准输出内容:\n&quot;, result.stdout)   # 这里就是我们想要的具体命令回显内容</span><br></pre></td></tr></table></figure>
+<h4 id="1-2-2-4-错误处理：识别执行失败的命令"><a href="#1-2-2-4-错误处理：识别执行失败的命令" class="headerlink" title="1.2.2.4 错误处理：识别执行失败的命令"></a>1.2.2.4 错误处理：识别执行失败的命令</h4><p>在 AWD 的复杂环境中，靶机可能被其他队伍篡改，导致某些命令（如 <code>netstat</code>）不存在或因权限不足而报错。我们需要优雅地处理这些错误。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import subprocess</span><br><span class="line"></span><br><span class="line"># 故意执行一个不存在的目录查看命令</span><br><span class="line">result = subprocess.run([&#x27;ls&#x27;, &#x27;/non_existent_folder_awd&#x27;], capture_output=True, text=True)</span><br><span class="line"></span><br><span class="line"># 通过 returncode 判断命令是否报错</span><br><span class="line">if result.returncode != 0:</span><br><span class="line">    print(&quot;[-] 命令执行失败！&quot;)</span><br><span class="line">    # stdout 此时通常为空，报错详情会被写入 stderr</span><br><span class="line">    print(&quot;[-] 错误原因:&quot;, result.stderr) </span><br><span class="line">else:</span><br><span class="line">    print(&quot;[+] 执行成功:\n&quot;, result.stdout)</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="1-3-底层网络通信：socket"><a href="#1-3-底层网络通信：socket" class="headerlink" title="1.3 底层网络通信：socket"></a>1.3 底层网络通信：<code>socket</code></h2><p><code>socket</code> 是所有网络通信的基石，工作在 TCP/UDP 层面。</p>
+<ul>
+<li><strong>AWD 场景</strong>：编写底层的<strong>端口扫描器</strong>、服务存活探测脚本，或者在无法使用高级库时构造原始的网络数据包，甚至编写反弹 Shell（Reverse Shell）的监听端。</li>
+<li><strong>核心应用</strong>：通过三次握手探测端口开放状态。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line"></span><br><span class="line">def scan_port(ip, port):</span><br><span class="line">    # 创建一个 TCP/IPv4 的 Socket 对象</span><br><span class="line">    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">    s.settimeout(1) # 设置超时时间，避免阻塞</span><br><span class="line">    try:</span><br><span class="line">        s.connect((ip, port))</span><br><span class="line">        print(f&quot;[+] &#123;ip&#125;:&#123;port&#125; is OPEN&quot;)</span><br><span class="line">        return True</span><br><span class="line">    except:</span><br><span class="line">        return False</span><br><span class="line">    finally:</span><br><span class="line">        s.close()</span><br></pre></td></tr></table></figure>
+<h2 id="1-4-数据提取神器：re-正则表达式"><a href="#1-4-数据提取神器：re-正则表达式" class="headerlink" title="1.4 数据提取神器：re (正则表达式)"></a>1.4 数据提取神器：<code>re</code> (正则表达式)</h2><p>在 AWD 中，无论你是获取了网页源码需要提取 Flag，还是在防御阶段分析 Nginx/Apache 日志寻找攻击者的 Payload，正则表达式都是必不可少的工具。</p>
+<ul>
+<li><strong>AWD 场景</strong>：<strong>Flag 自动化提取</strong>（如 <code>flag&#123;...&#125;</code>）、<strong>日志异常 IP 提取</strong>、<strong>SQL注入报错信息匹配</strong>。</li>
+<li><strong>核心方法</strong>：<code>re.findall()</code>, <code>re.search()</code>, <code>re.match()</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line">log_line = &#x27;192.168.1.10 - - [12/Mar/2026:14:00:00 +0000] &quot;GET /index.php?id=1%27 HTTP/1.1&quot; 200&#x27;</span><br><span class="line"># 匹配 IP 地址</span><br><span class="line">ip_pattern = r&#x27;\b(?:[0-9]&#123;1,3&#125;\.)&#123;3&#125;[0-9]&#123;1,3&#125;\b&#x27;</span><br><span class="line">ips = re.findall(ip_pattern, log_line)</span><br><span class="line">print(&quot;提取到的攻击者IP:&quot;, ips) # [&#x27;192.168.1.10&#x27;]</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="2-第三方核心库：Web-攻防与流量控制"><a href="#2-第三方核心库：Web-攻防与流量控制" class="headerlink" title="2 第三方核心库：Web 攻防与流量控制"></a>2 第三方核心库：Web 攻防与流量控制</h1><p>第三方库需要通过 <code>pip install</code> 安装，它们封装了复杂的底层逻辑，极大提升了脚本编写的效率。</p>
+<h2 id="2-1-requests-模块"><a href="#2-1-requests-模块" class="headerlink" title="2.1 requests 模块"></a>2.1 requests 模块</h2><p>在原生 Python 中，自带了 <code>urllib</code> 模块用于网络请求，但它的 API 设计极其反人类且繁琐。<code>requests</code> 作为第三方库，其设计哲学是 “HTTP for Humans”（让人类使用的 HTTP 库），它将底层的 TCP 连接、编码解码、Cookie 处理等复杂逻辑全部完美封装。</p>
+<p><strong>前置准备：</strong></p>
+<p>由于是第三方库，如果你的靶机或物理机尚未安装，需要先通过终端执行：</p>
+<p><code>pip install requests</code></p>
+<hr>
+<h3 id="2-1-1-GET-请求-获取资源"><a href="#2-1-1-GET-请求-获取资源" class="headerlink" title="2.1.1 GET 请求 (获取资源)"></a>2.1.1 GET 请求 (获取资源)</h3><p>GET 是 HTTP 中最常见的请求方法，主要用于向服务器<strong>索取</strong>数据（例如在浏览器地址栏输入网址按回车，就是一个标准的 GET 请求）。</p>
+<p>在 AWD 中，GET 请求常用于：<strong>探测靶机存活状态、读取网页源码以寻找隐藏的注释或后门链接</strong>。</p>
+<h4 id="2-1-1-1-基础发送与状态码判定"><a href="#2-1-1-1-基础发送与状态码判定" class="headerlink" title="2.1.1.1 基础发送与状态码判定"></a>2.1.1.1 基础发送与状态码判定</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line"># 目标靶机的 URL</span><br><span class="line">url = &quot;http://192.168.1.100/index.php&quot;</span><br><span class="line"></span><br><span class="line"># 发起 GET 请求，并将服务器返回的所有信息赋值给 response 变量</span><br><span class="line">response = requests.get(url)</span><br><span class="line"></span><br><span class="line"># 核心属性 1：status_code (状态码)</span><br><span class="line"># 它是判断请求是否成功的最直接标准</span><br><span class="line">print(&quot;HTTP 状态码:&quot;, response.status_code)</span><br><span class="line"></span><br><span class="line">if response.status_code == 200:</span><br><span class="line">    print(&quot;[+] 靶机存活，页面访问成功！&quot;)</span><br><span class="line">elif response.status_code == 404:</span><br><span class="line">    print(&quot;[-] 页面不存在 (可能木马文件已被防守方删除)&quot;)</span><br><span class="line">elif response.status_code == 403:</span><br><span class="line">    print(&quot;[-] 拒绝访问 (可能触发了目标机器的 WAF 或目录权限被锁定)&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-1-2-携带-URL-参数-Query-String"><a href="#2-1-1-2-携带-URL-参数-Query-String" class="headerlink" title="2.1.1.2 携带 URL 参数 (Query String)"></a>2.1.1.2 携带 URL 参数 (Query String)</h4><p>很多时候我们需要向 GET 请求传递参数，例如访问 <code>http://target.com/vuln.php?id=1&amp;cmd=whoami</code>。</p>
+<p>在 <code>requests</code> 中，<strong>绝对不要</strong>手动去拼接字符串，这极易出错且不优雅。标准的做法是使用 <code>params</code> 字典。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &quot;http://192.168.1.100/vuln.php&quot;</span><br><span class="line"></span><br><span class="line"># 将参数封装为字典</span><br><span class="line">payload = &#123;</span><br><span class="line">    &quot;id&quot;: &quot;1&quot;,</span><br><span class="line">    &quot;cmd&quot;: &quot;whoami&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># requests 会自动帮你把字典转换为合法的 URL 编码拼接在网址后面</span><br><span class="line">response = requests.get(url, params=payload)</span><br><span class="line"></span><br><span class="line"># 打印最终实际发出的完整 URL，用于调试验证</span><br><span class="line">print(&quot;实际请求的完整 URL:&quot;, response.url)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-1-2-POST-请求-提交数据"><a href="#2-1-2-POST-请求-提交数据" class="headerlink" title="2.1.2 POST 请求 (提交数据)"></a>2.1.2 POST 请求 (提交数据)</h3><p>POST 请求主要用于向服务器<strong>发送</strong>数据。它将数据放在 HTTP 报文的请求体（Body）中，而不是直接暴露在 URL 里。</p>
+<p>在 AWD 中，POST 请求常用于：<strong>爆破后台登录密码、提交比赛 Flag、向一句话木马发送执行指令</strong>。</p>
+<h4 id="2-1-2-1-提交表单数据-Form-Data"><a href="#2-1-2-1-提交表单数据-Form-Data" class="headerlink" title="2.1.2.1 提交表单数据 (Form Data)"></a>2.1.2.1 提交表单数据 (Form Data)</h4><p>当你模拟网页上的账号密码登录时，使用的是表单提交。在 <code>requests</code> 中，通过 <code>data</code> 参数传入字典即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">login_url = &quot;http://192.168.1.100/admin/login.php&quot;</span><br><span class="line"></span><br><span class="line"># 构造想要爆破或登录的表单数据</span><br><span class="line">login_data = &#123;</span><br><span class="line">    &quot;username&quot;: &quot;admin&quot;,</span><br><span class="line">    &quot;password&quot;: &quot;password123&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 发起 POST 请求，注意这里用的是 data 参数，不是 params</span><br><span class="line">response = requests.post(login_url, data=login_data)</span><br><span class="line"></span><br><span class="line">if &quot;欢迎回来&quot; in response.text:</span><br><span class="line">    print(&quot;[+] 登录成功！&quot;)</span><br><span class="line">else:</span><br><span class="line">    print(&quot;[-] 密码错误。&quot;)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-1-3-深入解析：Response-响应对象-的提取方法"><a href="#2-1-3-深入解析：Response-响应对象-的提取方法" class="headerlink" title="2.1.3 深入解析：Response (响应对象) 的提取方法"></a>2.1.3 深入解析：Response (响应对象) 的提取方法</h3><p>无论是 GET 还是 POST，服务器返回的结果都被封装在了我们定义的 <code>response</code> 变量中。针对不同类型的数据，<code>requests</code> 提供了不同的提取属性：</p>
+<h4 id="2-1-3-1-response-text：提取文本内容"><a href="#2-1-3-1-response-text：提取文本内容" class="headerlink" title="2.1.3.1 response.text：提取文本内容"></a>2.1.3.1 <code>response.text</code>：提取文本内容</h4><p>它是最常用的属性。<code>requests</code> 会自动根据 HTTP 头部信息推测网页的编码（如 utf-8），并将其解码为 <strong>Python 字符串</strong>。</p>
+<ul>
+<li><strong>适用场景</strong>：读取 HTML 源码、读取纯文本、用正则表达式（<code>re</code> 模块）在其中匹配想要的数据。</li>
+</ul>
+<h4 id="2-1-3-2-response-content：提取二进制数据"><a href="#2-1-3-2-response-content：提取二进制数据" class="headerlink" title="2.1.3.2 response.content：提取二进制数据"></a>2.1.3.2 <code>response.content</code>：提取二进制数据</h4><p>获取服务器返回的原始<strong>字节流（bytes）</strong>，不进行任何字符解码。</p>
+<ul>
+<li><strong>适用场景</strong>：当你需要下载靶机上的图片、压缩包源码备份（.zip/.tar.gz）或者可执行文件时，必须用这个属性，否则文件会损坏。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &quot;http://192.168.1.100/backup.zip&quot;</span><br><span class="line">res = requests.get(url)</span><br><span class="line"></span><br><span class="line"># 将二进制流写入本地文件</span><br><span class="line">with open(&quot;target_backup.zip&quot;, &quot;wb&quot;) as f: # &quot;wb&quot; 表示以二进制写模式打开</span><br><span class="line">    f.write(res.content)</span><br><span class="line">print(&quot;[+] 源码备份下载完成！&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-3-3-response-json-：提取-JSON-数据"><a href="#2-1-3-3-response-json-：提取-JSON-数据" class="headerlink" title="2.1.3.3 response.json()：提取 JSON 数据"></a>2.1.3.3 <code>response.json()</code>：提取 JSON 数据</h4><p>现代 Web 架构和 AWD 比赛平台的 API 几乎全部使用 JSON 格式交互。如果服务器返回的是 JSON 数据，调用此方法会直接将其转换为 <strong>Python 的字典（Dict）对象</strong>，省去了引入 <code>json</code> 模块手动解析的麻烦。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line"># 假设这是向比赛平台查询自己队伍分数的 API</span><br><span class="line">api_url = &quot;http://platform.awd.com/api/get_score&quot;</span><br><span class="line">res = requests.get(api_url)</span><br><span class="line"></span><br><span class="line"># 直接解析为字典</span><br><span class="line">data_dict = res.json()</span><br><span class="line"></span><br><span class="line"># 像操作普通字典一样提取数据</span><br><span class="line">print(&quot;当前队伍分数:&quot;, data_dict[&#x27;score&#x27;])</span><br><span class="line">print(&quot;当前排名:&quot;, data_dict[&#x27;rank&#x27;])</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-4-请求头-Headers-伪造与身份隐匿"><a href="#2-1-4-请求头-Headers-伪造与身份隐匿" class="headerlink" title="2.1.4 请求头 (Headers) 伪造与身份隐匿"></a>2.1.4 请求头 (Headers) 伪造与身份隐匿</h3><p>在默认情况下，使用 <code>requests</code> 发起网络请求时，其底层会自动携带一个特征极其明显的 HTTP 请求头：<code>User-Agent: python-requests/2.x.x</code>。</p>
+<p>在 AWD 赛场上，防守方（甚至比赛平台自带的 WAF）通常会配置一条最基础的防御规则：<strong>直接阻断所有 User-Agent 包含 “python” 或 “java” 的流量</strong>。因此，伪造请求头是将你的自动化脚本伪装成“正常人类浏览器行为”的核心步骤。</p>
+<h4 id="2-1-4-1-伪装-User-Agent-浏览器标识"><a href="#2-1-4-1-伪装-User-Agent-浏览器标识" class="headerlink" title="2.1.4.1 伪装 User-Agent (浏览器标识)"></a>2.1.4.1 伪装 User-Agent (浏览器标识)</h4><p>我们需要构造一个字典，将正常的浏览器 UA 覆盖掉默认的 Python UA。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &quot;http://192.168.1.100/vuln.php&quot;</span><br><span class="line"></span><br><span class="line"># 构造自定义的 Headers 字典</span><br><span class="line"># 建议在实战中准备几个常见的主流浏览器 UA 进行随机切换</span><br><span class="line">headers_payload = &#123;</span><br><span class="line">    # 伪装成 Windows 10 下的 Chrome 浏览器</span><br><span class="line">    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36&quot;,</span><br><span class="line">    # 告诉服务器我们接受的数据类型</span><br><span class="line">    &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 发起 GET 请求时，将字典传递给 headers 参数</span><br><span class="line">response = requests.get(url, headers=headers_payload)</span><br><span class="line"></span><br><span class="line">if response.status_code == 200:</span><br><span class="line">    print(&quot;[+] 成功绕过基础 UA 拦截，获取到页面内容！&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-4-2-伪造-Referer-与-X-Forwarded-For-突破特定逻辑漏洞"><a href="#2-1-4-2-伪造-Referer-与-X-Forwarded-For-突破特定逻辑漏洞" class="headerlink" title="2.1.4.2 伪造 Referer 与 X-Forwarded-For (突破特定逻辑漏洞)"></a>2.1.4.2 伪造 Referer 与 X-Forwarded-For (突破特定逻辑漏洞)</h4><p>除了 UA 之外，某些靶机的后台逻辑漏洞（如 SSRF、越权或部分 SQL 注入）可能会校验请求的来源或客户端 IP。我们同样可以通过 Headers 字典进行伪造。</p>
+<ul>
+<li><strong><code>Referer</code></strong>：告诉服务器“我是从哪个页面跳转过来的”。常用于绕过防盗链或极其简陋的 CSRF 防御机制。</li>
+<li><strong><code>X-Forwarded-For</code> (XFF)</strong>：在经过代理或负载均衡时，用于表示客户端的真实 IP。很多靶机的代码中如果使用 <code>$_SERVER[&#39;HTTP_X_FORWARDED_FOR&#39;]</code> 来获取 IP 并存入数据库，这里往往是极佳的<strong>二次注入</strong>或<strong>伪造本地访问（127.0.0.1）</strong>的突破口。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &quot;http://192.168.1.100/admin/system_check.php&quot;</span><br><span class="line"></span><br><span class="line"># 针对特定漏洞的 Headers 伪造</span><br><span class="line">headers_bypass = &#123;</span><br><span class="line">    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Safari/605.1.15&quot;,</span><br><span class="line">    &quot;Referer&quot;: &quot;http://127.0.0.1/admin/index.php&quot;, # 伪造是从本地后台主页跳转过来的</span><br><span class="line">    &quot;X-Forwarded-For&quot;: &quot;127.0.0.1&quot;                 # 伪装成本地 IP，尝试绕过外部 IP 访问限制</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">response = requests.post(url, headers=headers_bypass, data=&#123;&quot;cmd&quot;: &quot;whoami&quot;&#125;)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-4-3-在-Session-中全局配置-Headers-实战最优解"><a href="#2-1-4-3-在-Session-中全局配置-Headers-实战最优解" class="headerlink" title="2.1.4.3 在 Session 中全局配置 Headers (实战最优解)"></a>2.1.4.3 在 Session 中全局配置 Headers (实战最优解)</h4><p>在编写批量扫描或批量攻击脚本时，如果每个 <code>get()</code> 或 <code>post()</code> 都去单独写一遍 <code>headers=...</code> 会导致代码严重冗余。专业的做法是直接修改 <code>Session</code> 对象的全局配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line"># 1. 实例化 Session 维持会话</span><br><span class="line">sess = requests.Session()</span><br><span class="line"></span><br><span class="line"># 2. 全局更新该会话的 Headers</span><br><span class="line"># 此后通过该 sess 发出的所有请求，都会自动带上这个伪装的 UA</span><br><span class="line">sess.headers.update(&#123;</span><br><span class="line">    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36&quot;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"># 3. 正常发起连贯的攻击/测试流程</span><br><span class="line">res_1 = sess.get(&quot;http://192.168.1.100/index.php&quot;)</span><br><span class="line">res_2 = sess.post(&quot;http://192.168.1.100/login.php&quot;, data=&#123;&quot;u&quot;:&quot;admin&quot;, &quot;p&quot;:&quot;123456&quot;&#125;)</span><br><span class="line"></span><br><span class="line"># res_1 和 res_2 在底层抓包时，全部呈现为合法的 Chrome 浏览器流量</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-流量分析与报文伪造：Scapy"><a href="#2-2-流量分析与报文伪造：Scapy" class="headerlink" title="2.2 流量分析与报文伪造：Scapy"></a>2.2 流量分析与报文伪造：<code>Scapy</code></h2><p><code>Scapy</code> 是一个极其强大的交互式数据包处理程序。它能够伪造或者解码大量的网络协议数据包。</p>
+<ul>
+<li><strong>AWD 场景</strong>：<strong>网络抓包与流量分析（PCAP 审计）</strong>发现其他队伍的攻击 Payload，<strong>ARP 欺骗</strong>拦截流量，或者构造特制的畸形数据包进行拒绝服务攻击（DoS）测试。</li>
+<li><strong>注意</strong>：<code>Scapy</code> 运行通常需要系统的最高权限（Root）。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 注意：此模块较为庞大，通常采用按需导入</span><br><span class="line">from scapy.all import sniff, IP, TCP</span><br><span class="line"></span><br><span class="line">def packet_callback(packet):</span><br><span class="line">    # 简单的嗅探逻辑：过滤包含明文密码的 HTTP 流量</span><br><span class="line">    if packet.haslayer(TCP) and packet.haslayer(Raw):</span><br><span class="line">        payload = packet[Raw].load.decode(&#x27;utf-8&#x27;, errors=&#x27;ignore&#x27;)</span><br><span class="line">        if &quot;password=&quot; in payload or &quot;flag=&quot; in payload:</span><br><span class="line">            print(f&quot;[*] 截获敏感流量: &#123;packet[IP].src&#125; -&gt; &#123;packet[IP].dst&#125;&quot;)</span><br><span class="line"></span><br><span class="line"># 开始嗅探网卡 eth0 上的 TCP 80 端口流量</span><br><span class="line"># sniff(iface=&quot;eth0&quot;, filter=&quot;tcp port 80&quot;, prn=packet_callback, store=0)</span><br></pre></td></tr></table></figure>
+<h2 id="2-3-远程服务器运维与管理：paramiko"><a href="#2-3-远程服务器运维与管理：paramiko" class="headerlink" title="2.3 远程服务器运维与管理：paramiko"></a>2.3 远程服务器运维与管理：<code>paramiko</code></h2><p>AWD 不仅有攻击，更重要的是<strong>防守</strong>。当队伍分配到多台靶机时，手动登录服务器修改密码、修补漏洞效率极低，<code>paramiko</code> 提供了 Python 原生的 SSHv2 协议支持。</p>
+<ul>
+<li><strong>AWD 场景</strong>：<strong>批量修改多台服务器的 SSH 密码</strong>、<strong>批量上传防御脚本（WAF）</strong>、<strong>弱口令爆破测试</strong>。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line"></span><br><span class="line">def ssh_command(ip, user, passwd, cmd):</span><br><span class="line">    client = paramiko.SSHClient()</span><br><span class="line">    # 自动添加未知主机的 SSH 密钥</span><br><span class="line">    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line">    try:</span><br><span class="line">        client.connect(ip, username=user, password=passwd, timeout=5)</span><br><span class="line">        stdin, stdout, stderr = client.exec_command(cmd)</span><br><span class="line">        print(f&quot;[&#123;ip&#125;] 结果:\n&#123;stdout.read().decode()&#125;&quot;)</span><br><span class="line">    except Exception as e:</span><br><span class="line">        print(f&quot;[&#123;ip&#125;] 连接失败: &#123;e&#125;&quot;)</span><br><span class="line">    finally:</span><br><span class="line">        client.close()</span><br><span class="line"></span><br><span class="line"># 示例：批量查看当前系统权限</span><br><span class="line"># ssh_command(&quot;192.168.1.100&quot;, &quot;root&quot;, &quot;toor&quot;, &quot;id&quot;)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="3-数据格式解析：API与配置处理"><a href="#3-数据格式解析：API与配置处理" class="headerlink" title="3 数据格式解析：API与配置处理"></a>3 数据格式解析：API与配置处理</h1><p>无论是靶机提供的服务还是比赛平台下发的接口，数据往往以特定的格式进行序列化。Python 提供了极简的内置库来处理这些数据。</p>
+<ul>
+<li><strong><code>json</code> 模块</strong>：AWD 中最常见的格式。用于向比赛平台的 API 获取靶机状态、获取本轮 Flag 的提交结果等。<ul>
+<li><code>json.loads(str)</code>：字符串转字典。</li>
+<li><code>json.dumps(dict)</code>：字典转字符串。</li>
+</ul>
+</li>
+<li><strong><code>csv</code> 模块</strong>：常用于读取或导出批量靶机信息表（如包含 IP、端口、用户名、密码的表格），方便脚本进行迭代读取。</li>
+<li><strong><code>xml</code> 模块</strong>：部分老旧系统（如某些 Java RMI 或 SOAP 接口）使用 XML 传输数据，可能会涉及 XML 外部实体注入（XXE）漏洞的构造与解析。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.chenjichao.site">小chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.chenjichao.site/2026/03/27/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/4%20python%E5%9F%BA%E7%A1%80/1%20python%20awd%20%E5%BA%93/">http://blog.chenjichao.site/2026/03/27/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/4%20python%E5%9F%BA%E7%A1%80/1%20python%20awd%20%E5%BA%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.chenjichao.site" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.chenjichao.site/raw/12.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/03/27/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/awd%E9%98%B2%E5%BE%A1/1%20%E9%98%B2%E5%BE%A1%E6%B5%81%E7%A8%8B/" title=""><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/3.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2026/03/27/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/4%20python%E5%9F%BA%E7%A1%80/0%20python%E5%9F%BA%E7%A1%80/" title=""><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">小chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">210</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">150</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Python-%E6%A0%87%E5%87%86%E5%BA%93%EF%BC%9A%E7%B3%BB%E7%BB%9F%E4%BA%A4%E4%BA%92%E4%B8%8E%E5%BA%95%E5%B1%82%E7%BD%91%E7%BB%9C"><span class="toc-number">1.</span> <span class="toc-text">1 Python 标准库：系统交互与底层网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8E%E7%8E%AF%E5%A2%83%E4%BA%A4%E4%BA%92%EF%BC%9Aos-amp-sys"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 操作系统与环境交互：os &amp; sys</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E4%B8%8E%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%EF%BC%9Asubprocess"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 进程管理与命令执行：subprocess</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8A%9B%E5%BC%83-os-system%EF%BC%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 为什么抛弃 os.system？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%EF%BC%9Asubprocess-run"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 核心函数：subprocess.run()</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-1-%E6%89%A7%E8%A1%8C%E6%97%A0%E5%8F%82%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">1.2.2.1 执行无参命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-2-%E6%89%A7%E8%A1%8C%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">1.2.2.2 执行带参数的命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-3-%E6%8D%95%E8%8E%B7%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">1.2.2.3 捕获输出结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-4-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%EF%BC%9A%E8%AF%86%E5%88%AB%E6%89%A7%E8%A1%8C%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">1.2.2.4 错误处理：识别执行失败的命令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E5%BA%95%E5%B1%82%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%EF%BC%9Asocket"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 底层网络通信：socket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E7%A5%9E%E5%99%A8%EF%BC%9Are-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 数据提取神器：re (正则表达式)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A0%B8%E5%BF%83%E5%BA%93%EF%BC%9AWeb-%E6%94%BB%E9%98%B2%E4%B8%8E%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">2.</span> <span class="toc-text">2 第三方核心库：Web 攻防与流量控制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-requests-%E6%A8%A1%E5%9D%97"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 requests 模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-GET-%E8%AF%B7%E6%B1%82-%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 GET 请求 (获取资源)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-1-%E5%9F%BA%E7%A1%80%E5%8F%91%E9%80%81%E4%B8%8E%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%A4%E5%AE%9A"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">2.1.1.1 基础发送与状态码判定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-2-%E6%90%BA%E5%B8%A6-URL-%E5%8F%82%E6%95%B0-Query-String"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">2.1.1.2 携带 URL 参数 (Query String)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-POST-%E8%AF%B7%E6%B1%82-%E6%8F%90%E4%BA%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 POST 请求 (提交数据)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-1-%E6%8F%90%E4%BA%A4%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE-Form-Data"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">2.1.2.1 提交表单数据 (Form Data)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-3-%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%EF%BC%9AResponse-%E5%93%8D%E5%BA%94%E5%AF%B9%E8%B1%A1-%E7%9A%84%E6%8F%90%E5%8F%96%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.3.</span> <span class="toc-text">2.1.3 深入解析：Response (响应对象) 的提取方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-1-response-text%EF%BC%9A%E6%8F%90%E5%8F%96%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9"><span class="toc-number">2.1.3.1.</span> <span class="toc-text">2.1.3.1 response.text：提取文本内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-2-response-content%EF%BC%9A%E6%8F%90%E5%8F%96%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E6%8D%AE"><span class="toc-number">2.1.3.2.</span> <span class="toc-text">2.1.3.2 response.content：提取二进制数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-3-response-json-%EF%BC%9A%E6%8F%90%E5%8F%96-JSON-%E6%95%B0%E6%8D%AE"><span class="toc-number">2.1.3.3.</span> <span class="toc-text">2.1.3.3 response.json()：提取 JSON 数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-4-%E8%AF%B7%E6%B1%82%E5%A4%B4-Headers-%E4%BC%AA%E9%80%A0%E4%B8%8E%E8%BA%AB%E4%BB%BD%E9%9A%90%E5%8C%BF"><span class="toc-number">2.1.4.</span> <span class="toc-text">2.1.4 请求头 (Headers) 伪造与身份隐匿</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-4-1-%E4%BC%AA%E8%A3%85-User-Agent-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A0%87%E8%AF%86"><span class="toc-number">2.1.4.1.</span> <span class="toc-text">2.1.4.1 伪装 User-Agent (浏览器标识)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-4-2-%E4%BC%AA%E9%80%A0-Referer-%E4%B8%8E-X-Forwarded-For-%E7%AA%81%E7%A0%B4%E7%89%B9%E5%AE%9A%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.4.2.</span> <span class="toc-text">2.1.4.2 伪造 Referer 与 X-Forwarded-For (突破特定逻辑漏洞)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-4-3-%E5%9C%A8-Session-%E4%B8%AD%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE-Headers-%E5%AE%9E%E6%88%98%E6%9C%80%E4%BC%98%E8%A7%A3"><span class="toc-number">2.1.4.3.</span> <span class="toc-text">2.1.4.3 在 Session 中全局配置 Headers (实战最优解)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90%E4%B8%8E%E6%8A%A5%E6%96%87%E4%BC%AA%E9%80%A0%EF%BC%9AScapy"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 流量分析与报文伪造：Scapy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4%E4%B8%8E%E7%AE%A1%E7%90%86%EF%BC%9Aparamiko"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 远程服务器运维与管理：paramiko</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90%EF%BC%9AAPI%E4%B8%8E%E9%85%8D%E7%BD%AE%E5%A4%84%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">3 数据格式解析：API与配置处理</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/http%E5%8D%8F%E8%AE%AE/" title="无题">无题</a><time datetime="2026-03-27T00:59:25.686Z" title="发表于 2026-03-27 08:59:25">2026-03-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/https%E5%8D%8F%E8%AE%AE/" title="无题">无题</a><time datetime="2026-03-27T00:59:25.681Z" title="发表于 2026-03-27 08:59:25">2026-03-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/%E5%89%8D%E7%AB%AF/js/js%E5%9F%BA%E7%A1%80/" title="无题">无题</a><time datetime="2026-03-27T00:59:25.604Z" title="发表于 2026-03-27 08:59:25">2026-03-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/%E5%89%8D%E7%AB%AF/%E5%89%8D%E6%AE%B5%E5%9F%BA%E7%A1%80/" title="无题">无题</a><time datetime="2026-03-27T00:59:25.565Z" title="发表于 2026-03-27 08:59:25">2026-03-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/mathjax/mathjax%E5%B8%B8%E8%A7%81%E8%AF%AD%E6%B3%95/" title="无题">无题</a><time datetime="2026-03-27T00:59:25.295Z" title="发表于 2026-03-27 08:59:25">2026-03-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By 小chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="http://blog.chenjichao.site/categories/网络安全/网络攻防/2-防御技术/电子取证/服务器取证/linux/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 linux (28)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.chenjichao.site/categories/网络安全/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 网络安全 (143)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.chenjichao.site/categories/计算机原理/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (42)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.chenjichao.site/categories/计算机原理/编程语言/编程/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (35)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="http://blog.chenjichao.site/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/5.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-08-06</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">PHP 数据类型</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/3.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-13</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">pandas</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/22/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统状态的查看/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/11.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-22</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/22/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统状态的查看/&quot;);" href="javascript:void(0);" alt="">linux系统状态的查看</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/22/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统状态的查看/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件操作/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/13.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件操作/&quot;);" href="javascript:void(0);" alt="">linux系统文件的查看与安装</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件操作/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/10/21/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件的查找/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/5.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-21</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/10/21/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件的查找/&quot;);" href="javascript:void(0);" alt="">linux系统文件的查找</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/10/21/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件的查找/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/12.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">linux系统变量</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux服务进程/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux服务进程/&quot;);" href="javascript:void(0);" alt="">linux服务进程</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux服务进程/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
