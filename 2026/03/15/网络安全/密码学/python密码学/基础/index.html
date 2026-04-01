@@ -1,0 +1,736 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>python密码学 | 小chen妙妙屋</title><meta name="author" content="chen7chen"><meta name="copyright" content="chen7chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="字符、字节与数字的相互转换在诸如 RSA 的现代密码系统中，加密和解密的底层都是纯粹的数学运算。这就要求我们在加密前，必须将由字符组成的“文本消息”转换为“数字”；解密后，再将“数字”还原回“文本消息”。 以下是实现这些转换的核心流程与 Python 原生&#x2F;第三方方法总结： 1. 基础转换：字符 $\leftrightarrow$ ASCII 序数用于单个字符与其对应的 ASCII 数值之间的转换">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python密码学">
+<meta property="og:url" content="http://blog.xchstudy.site/2026/03/15/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AF%86%E7%A0%81%E5%AD%A6/python%E5%AF%86%E7%A0%81%E5%AD%A6/%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="字符、字节与数字的相互转换在诸如 RSA 的现代密码系统中，加密和解密的底层都是纯粹的数学运算。这就要求我们在加密前，必须将由字符组成的“文本消息”转换为“数字”；解密后，再将“数字”还原回“文本消息”。 以下是实现这些转换的核心流程与 Python 原生&#x2F;第三方方法总结： 1. 基础转换：字符 $\leftrightarrow$ ASCII 序数用于单个字符与其对应的 ASCII 数值之间的转换">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.chenjichao.site/raw/2.webp">
+<meta property="article:published_time" content="2026-03-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-31T14:53:55.399Z">
+<meta property="article:author" content="chen7chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.chenjichao.site/raw/2.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.xchstudy.site/2026/03/15/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AF%86%E7%A0%81%E5%AD%A6/python%E5%AF%86%E7%A0%81%E5%AD%A6/%E5%9F%BA%E7%A1%80/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'python密码学',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2026-03-31 22:53:55'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">225</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/friend-link"><span> 友链</span></a></li><li><a class="site-page child" href="/tech-link"><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.chenjichao.site/raw/2.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/friend-link"><span> 友链</span></a></li><li><a class="site-page child" href="/tech-link"><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">python密码学</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-14T16:00:00.000Z" title="发表于 2026-03-15 00:00:00">2026-03-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-31T14:53:55.399Z" title="更新于 2026-03-31 22:53:55">2026-03-31</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="python密码学"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="字符、字节与数字的相互转换"><a href="#字符、字节与数字的相互转换" class="headerlink" title="字符、字节与数字的相互转换"></a>字符、字节与数字的相互转换</h1><p>在诸如 RSA 的现代密码系统中，加密和解密的底层都是纯粹的数学运算。这就要求我们在加密前，必须将由字符组成的“文本消息”转换为“数字”；解密后，再将“数字”还原回“文本消息”。</p>
+<p>以下是实现这些转换的核心流程与 Python 原生/第三方方法总结：</p>
+<h2 id="1-基础转换：字符-leftrightarrow-ASCII-序数"><a href="#1-基础转换：字符-leftrightarrow-ASCII-序数" class="headerlink" title="1. 基础转换：字符 $\leftrightarrow$ ASCII 序数"></a>1. 基础转换：字符 $\leftrightarrow$ ASCII 序数</h2><p>用于单个字符与其对应的 ASCII 数值之间的转换。</p>
+<ul>
+<li><p><strong><code>chr(整数)</code></strong>：ASCII 序数 $\rightarrow$ 字符。</p>
+<ul>
+<li>_示例_：<code>chr(65)</code> 结果为 <code>&#39;A&#39;</code></li>
+</ul>
+</li>
+<li><p><strong><code>ord(字符)</code></strong>：字符 $\rightarrow$ ASCII 序数（作用与 <code>chr()</code> 相反）。</p>
+<ul>
+<li>_示例_：<code>ord(&#39;A&#39;)</code> 结果为 <code>65</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="2-进阶转换：字节流-leftrightarrow-十六进制-Hex"><a href="#2-进阶转换：字节流-leftrightarrow-十六进制-Hex" class="headerlink" title="2. 进阶转换：字节流 $\leftrightarrow$ 十六进制 (Hex)"></a>2. 进阶转换：字节流 $\leftrightarrow$ 十六进制 (Hex)</h2><p>在密码学中，数据经常以十六进制字符串或原始字节流（Bytes）的形式呈现。</p>
+<ul>
+<li><p><strong><code>bytes.fromhex(&#39;十六进制字符串&#39;)</code></strong>：十六进制 $\rightarrow$ 字节流。</p>
+<ul>
+<li>_示例_：<code>bytes.fromhex(&#39;48656c6c6f&#39;)</code> 结果为 <code>b&#39;Hello&#39;</code></li>
+</ul>
+</li>
+<li><p><strong><code>字节变量.hex()</code></strong>：字节流 $\rightarrow$ 十六进制（这是字节对象自带的实例方法）。</p>
+<ul>
+<li>_示例_：<code>b&#39;Hello&#39;.hex()</code> 结果为 <code>&#39;48656c6c6f&#39;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="3-密码学核心链路：消息如何变成大整数？"><a href="#3-密码学核心链路：消息如何变成大整数？" class="headerlink" title="3. 密码学核心链路：消息如何变成大整数？"></a>3. 密码学核心链路：消息如何变成大整数？</h2><p>为了满足数学运算的需求，标准的转换流程通常如下：</p>
+<ol>
+<li><p><strong>提取序数字节</strong>：将文本消息拆解为对应的字节数值。</p>
+</li>
+<li><p><strong>转换为十六进制</strong>：将这些数值转化为十六进制表示。</p>
+</li>
+<li><p><strong>拼接</strong>：将所有十六进制数值无缝连接在一起。</p>
+</li>
+<li><p><strong>视为大数字</strong>：这个长长的十六进制串，既可以直接作为 Base-16（十六进制）数字参与运算，也可以转换为 Base-10（十进制）大整数。</p>
+</li>
+</ol>
+<h2 id="4-终极武器：PyCryptodome-库"><a href="#4-终极武器：PyCryptodome-库" class="headerlink" title="4. 终极武器：PyCryptodome 库"></a>4. 终极武器：PyCryptodome 库</h2><p>为了省去手动拼接十六进制的繁琐步骤，Python 提供了强大的密码学专用库，可以一步到位实现字节流与大整数的互转。</p>
+<ul>
+<li><p><strong>环境准备</strong>：</p>
+<ul>
+<li><p>安装：<code>pip install pycryptodome</code></p>
+</li>
+<li><p>导入：<code>from Crypto.Util.number import *</code></p>
+</li>
+</ul>
+</li>
+<li><p><strong>核心方法</strong>：</p>
+<ul>
+<li><p><strong><code>bytes_to_long(字节流)</code></strong>：字节流 $\rightarrow$ 大整数（正向过程，加密前准备）。</p>
+</li>
+<li><p><strong><code>long_to_bytes(大整数)</code></strong>：大整数 $\rightarrow$ 字节流（逆向过程，解密后还原）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="XOR-异或运算-及其核心性质"><a href="#XOR-异或运算-及其核心性质" class="headerlink" title="XOR (异或运算) 及其核心性质"></a>XOR (异或运算) 及其核心性质</h1><h2 id="1-核心概念与真值表"><a href="#1-核心概念与真值表" class="headerlink" title="1. 核心概念与真值表"></a>1. 核心概念与真值表</h2><p>XOR（Exclusive OR）是一种按位运算符（Bitwise Operator）。它的核心逻辑非常简单：<strong>相同为 0，不同为 1</strong>。</p>
+<ul>
+<li><strong>符号表示</strong>：在密码学教材和数学公式中通常记作 $\oplus$；在编程语言和 CTF 题目中通常使用脱字符 <code>^</code>。</li>
+</ul>
+<p><strong>XOR 真值表</strong>：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>输出 (A $\oplus$ B)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSkbNA4SGTt8KShSEQks7h8DS1GarIVThA3kzWbN3W3A-ylauMrS22vFdMRhOV025Z9rnqGQKTvRaM6pBcz0NSSdjaVkICj_iOaK-JnWz0PyIwzjJs" alt="XOR logic gate truth table, AI generated"></p>
+<h2 id="2-多字节与数据类型的-XOR"><a href="#2-多字节与数据类型的-XOR" class="headerlink" title="2. 多字节与数据类型的 XOR"></a>2. 多字节与数据类型的 XOR</h2><p>在实际运算中，XOR 并不局限于单个比特，它可以扩展到更长的数据：</p>
+<ul>
+<li><p><strong>二进制数</strong>：逐位进行运算。例如：$0110 \oplus 1010 = 1100$。</p>
+</li>
+<li><p><strong>整数 (Integers)</strong>：在底层会先将十进制整数转换为二进制，再逐位异或。</p>
+</li>
+<li><p><strong>字符串 (Strings)</strong>：先提取每个字符的 Unicode/ASCII 整数值，然后再进行异或（如上一题中将 <code>label</code> 的每个字符与 <code>13</code> 异或）。</p>
+</li>
+<li><p><strong>🛠️ 必备工具</strong>：Python 的 <code>pwntools</code> 库提供了一个极其方便的 <code>xor()</code> 函数，可以直接对不同类型和长度的数据（如字节流、字符串）进行批量异或。</p>
+</li>
+</ul>
+<hr>
+<h2 id="3-XOR-的四大核心数学性质-解密关键"><a href="#3-XOR-的四大核心数学性质-解密关键" class="headerlink" title="3. XOR 的四大核心数学性质 (解密关键)"></a>3. XOR 的四大核心数学性质 (解密关键)</h2><p>在破解密码系统（尤其是块密码 Block Ciphers）时，理解并灵活运用以下四个性质是解开加密链条的关键：</p>
+<ol>
+<li><strong>交换律 (Commutative)</strong>: 运算顺序不影响结果。<ul>
+<li>$A \oplus B = B \oplus A$</li>
+</ul>
+</li>
+<li><strong>结合律 (Associative)</strong>: 链式运算可以无视括号顺序。<ul>
+<li>$A \oplus (B \oplus C) = (A \oplus B) \oplus C$</li>
+</ul>
+</li>
+<li><strong>单位元 (Identity)</strong>: 任何数与 0 异或，结果不变（相当于“无操作”）。<ul>
+<li>$A \oplus 0 = A$</li>
+</ul>
+</li>
+<li><strong>自逆性 / 归零律 (Self-Inverse)</strong>: <strong>这是最重要的性质！</strong> 任何数与自身异或，结果必定为 0。这也意味着 <strong>XOR 两次相同的密钥就能还原数据</strong>。<ul>
+<li>$A \oplus A = 0$</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="4-使用PWNTOOLS进行加密"><a href="#4-使用PWNTOOLS进行加密" class="headerlink" title="4. 使用PWNTOOLS进行加密"></a>4. 使用PWNTOOLS进行加密</h2><p>Pwntools 的 <code>xor()</code> 函数是一个非常强大且灵活的工具，==专门用于在 CTF 比赛中进行字节级 XOR（异或）操作==。它支持字符串、字节串、整数或列表的异或，可以自动处理不同长度的密钥，是处理加密或混淆数据的理想工具。</p>
+<p><strong>常用方法与示例：</strong></p>
+<ol>
+<li><p><strong>单字节/固定密钥异或：</strong></p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from pwn import xor</span><br><span class="line"># 字符与单字节异或</span><br><span class="line">print(xor(b&#x27;hello&#x27;, 0x55)) </span><br><span class="line"># 字符串与字符串异或</span><br><span class="line">print(xor(b&#x27;hello&#x27;, b&#x27;world&#x27;)) </span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>自动循环密钥：</strong><br> 如果密钥比数据短，<code>xor()</code> 会自动重复该密钥。</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># key &#x27;AB&#x27; 会被当作 &#x27;ABABAB&#x27;</span><br><span class="line">print(xor(b&#x27;123456&#x27;, b&#x27;AB&#x27;)) </span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>处理整数：</strong></p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 整数与字节串异或</span><br><span class="line">print(xor(0x1234, b&#x27;\x01\x02&#x27;)) </span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>总结：</strong></p>
+<ul>
+<li><strong>功能：</strong> 异或操作。</li>
+<li><strong>输入：</strong> 支持 <code>bytes</code>, <code>str</code>, <code>int</code>, <code>list</code> 等。</li>
+<li><strong>输出：</strong> 通常为 <code>bytes</code> 类型。</li>
+<li><strong>优点：</strong> 简洁，自动处理数据与密钥长度不一致的情况。</li>
+</ul>
+<h2 id="5-进阶：单字节爆破"><a href="#5-进阶：单字节爆破" class="headerlink" title="5.进阶：单字节爆破"></a>5.进阶：单字节爆破</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 1. 题目给定的十六进制密文  </span><br><span class="line">hex_string = &quot;73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d&quot;  </span><br><span class="line">  </span><br><span class="line"># 2. 将十六进制转换为可操作的字节流 (Bytes)cipher_bytes = bytes.fromhex(hex_string)  </span><br><span class="line">  </span><br><span class="line"># 3. 开始爆破：遍历单字节的所有可能性 (0 到 255)for key in range(256):  </span><br><span class="line">    decrypted_text = &quot;&quot;  </span><br><span class="line">  </span><br><span class="line">    # 将密文的每一个字节都与当前的 key 进行异或，并转回字符  </span><br><span class="line">    for byte in cipher_bytes:  </span><br><span class="line">        decrypted_text += chr(byte ^ key)  </span><br><span class="line">  </span><br><span class="line">    # 4. 自动化筛选：我们已知正确的明文必然包含 &quot;crypto&#123;&quot;if &quot;crypto&#123;&quot; in decrypted_text:  </span><br><span class="line">        print(f&quot;[+] 爆破成功！&quot;)  </span><br><span class="line">        print(f&quot; -&gt; 找到正确密钥: &#123;key&#125; (十六进制: &#123;hex(key)&#125;)&quot;)  </span><br><span class="line">        print(f&quot; -&gt; 最终 Flag: &#123;decrypted_text&#125;&quot;)  </span><br><span class="line">        break  # 找到正确答案后，直接终止循环</span><br></pre></td></tr></table></figure>
+<h1 id="转轮密钥"><a href="#转轮密钥" class="headerlink" title="转轮密钥"></a>转轮密钥</h1><p><code>key[i % len(key)]</code> 的核心逻辑被称为 <strong>轮转密钥</strong> 或 <strong>循环密钥</strong> 机制。它的作用很简单：当需要加密的“明文”长度超过“密钥”长度时，让密钥首尾相连、循环往复地去匹配明文。</p>
+<h1 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h1><h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p><strong>最大公约数 (GCD / Highest Common Factor)</strong> 是指能同时整除两个正整数 $a$ 和 $b$ 的最大整数。</p>
+<ul>
+<li><strong>示例计算</strong>：<ul>
+<li>对于 $a = 12, b = 8$：<ul>
+<li>$12$ 的约数：${1, 2, 3, 4, 6, 12}$</li>
+<li>$8$ 的约数：${1, 2, 4, 8}$</li>
+<li>对比可知最大公共约数为 $4$，因此 $\gcd(12, 8) = 4$。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="互质-Coprime"><a href="#互质-Coprime" class="headerlink" title="互质 (Coprime)"></a>互质 (Coprime)</h2><ul>
+<li><p><strong>定义</strong>：如果两个整数 $a, b$ 满足 <strong>$\gcd(a, b) = 1$</strong>，则称 $a$ 和 $b$ 是互质的（Coprime）。</p>
+<ul>
+<li>例如：$a=11, b=17$ 均为素数（质数），除数只有 1 和自身，故 $\gcd(11,17)=1$，它们互质。</li>
+</ul>
+</li>
+<li><p><strong>素数与互质的性质</strong>：</p>
+<ol>
+<li>如果 $a$ 和 $b$ 都是素数，它们必定互质。</li>
+<li>如果 $a$ 是素数，且 $b &lt; a$，那么 $a$ 和 $b$ 必定互质。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="思考题解答"><a href="#思考题解答" class="headerlink" title="思考题解答"></a>思考题解答</h2><blockquote>
+<p><strong>题目提问：</strong> 考虑 $a$ 是素数且 $b &gt; a$ 的情况，为什么它们不一定互质？</p>
+</blockquote>
+<p><strong>解答</strong>：因为 $b$ 完全有可能是 $a$ 的倍数。</p>
+<p>例如：假设素数 $a = 3$，而 $b = 9$（满足 $b &gt; a$）。此时 $\gcd(3, 9) = 3$。因为最大公约数不是 1，所以这种情况下它们<strong>不互质</strong>。</p>
+<hr>
+<h2 id="算法实现：欧几里得算法"><a href="#算法实现：欧几里得算法" class="headerlink" title="算法实现：欧几里得算法"></a>算法实现：欧几里得算法</h2><p>在密码学和 CTF 中，处理的数字通常非常大，不能用穷举约数的方法。题目推荐使用<strong>欧几里得算法（辗转相除法）</strong>。</p>
+<p><strong>原理</strong>：两个正整数 $a$ 和 $b$ ($a&gt;b$) 的最大公约数等于 $a$ 除以 $b$ 的余数 $c$ 和 $b$ 之间的最大公约数。即：<strong>$\gcd(a, b) = \gcd(b, a \bmod b)$</strong>。</p>
+<h3 id="Python-脚本实现"><a href="#Python-脚本实现" class="headerlink" title="Python 脚本实现"></a>Python 脚本实现</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def gcd(a, b):</span><br><span class="line">    # 当余数 b 为 0 时，a 就是最大公约数</span><br><span class="line">    while b != 0:</span><br><span class="line">        a, b = b, a % b</span><br><span class="line">    return a</span><br><span class="line"></span><br><span class="line"># 测试题目给的例子</span><br><span class="line">print(f&quot;gcd(12, 8) = &#123;gcd(12, 8)&#125;&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="扩展欧几里得算法"><a href="#扩展欧几里得算法" class="headerlink" title="扩展欧几里得算法"></a>扩展欧几里得算法</h2><h2 id="核心概念：贝祖等式"><a href="#核心概念：贝祖等式" class="headerlink" title="核心概念：贝祖等式"></a>核心概念：贝祖等式</h2><p>普通的 GCD 算法只告诉我们两个数的最大公约数是多少。但<strong>扩展欧几里得算法</strong>不仅能求出最大公约数，还能同时找到两个整数 $u$ 和 $v$，使得它们满足以下线性组合方程（即贝祖等式）：</p>
+<script type="math/tex; mode=display">a \cdot u + b \cdot v = \gcd(a, b)</script><p>在实际的密码学计算中，我们往往并不关心最大公约数本身（因为它通常是 1），我们真正渴求的是那两个系数 <strong>$u$</strong> 和 <strong>$v$</strong>。</p>
+<h2 id="思考题解答-1"><a href="#思考题解答-1" class="headerlink" title="思考题解答"></a>思考题解答</h2><blockquote>
+<p><strong>题目提问</strong>：已知 $p, q$ 都是素数（prime），你认为 $\gcd(p, q)$ 应该是多少？</p>
+</blockquote>
+<p><strong>解答</strong>：结果一定是 <strong>1</strong>。因为不同的素数之间没有任何大于 1 的公共约数，它们必然是<strong>互质</strong>的。</p>
+<p>因此，对于这道题，我们要解的终极方程其实是：</p>
+<script type="math/tex; mode=display">26513 \cdot u + 32321 \cdot v = 1</script><h2 id="为何它是解密-RSA-的关键？"><a href="#为何它是解密-RSA-的关键？" class="headerlink" title="为何它是解密 RSA 的关键？"></a>为何它是解密 RSA 的关键？</h2><p>题目中有一句非常关键的提示：“稍后，当我们学习解密 RSA 密文时，我们将需要这个算法来计算公钥指数的模逆元。”</p>
+<p>在 RSA 加密中，为了求出私钥 $d$，我们需要解一个同余方程：$e \cdot d \equiv 1 \pmod{\phi}$。</p>
+<p>这个方程在数学上等价于：$e \cdot d + \phi \cdot k = 1$。</p>
+<p>仔细对比一下贝祖等式 $a \cdot u + b \cdot v = 1$：</p>
+<ul>
+<li><p>$a$ 就是公钥 $e$</p>
+</li>
+<li><p>$b$ 就是 $\phi$</p>
+</li>
+<li><p>求出来的系数 <strong>$u$</strong> 就是我们梦寐以求的 <strong>RSA 私钥 $d$</strong>！</p>
+</li>
+</ul>
+<h2 id="算法实现与挑战解答"><a href="#算法实现与挑战解答" class="headerlink" title="算法实现与挑战解答"></a>算法实现与挑战解答</h2><p>为了在 Python 中实现 eGCD，我们在原本 <code>a, b = b, a % b</code> 的基础上，需要额外跟踪商（quotient），从而逆向推导出 $u$ 和 $v$。</p>
+<h3 id="Python-脚本实现-1"><a href="#Python-脚本实现-1" class="headerlink" title="Python 脚本实现"></a>Python 脚本实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extended_gcd</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="comment"># 初始化系数</span></span><br><span class="line">    old_r, r = a, b</span><br><span class="line">    old_s, s = <span class="number">1</span>, <span class="number">0</span></span><br><span class="line">    old_t, t = <span class="number">0</span>, <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> r != <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># 计算商</span></span><br><span class="line">        quotient = old_r // r</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 核心逻辑：和普通的 gcd 一样更新余数，但同时更新系数</span></span><br><span class="line">        old_r, r = r, old_r - quotient * r</span><br><span class="line">        old_s, s = s, old_s - quotient * s</span><br><span class="line">        old_t, t = t, old_t - quotient * t</span><br><span class="line"></span><br><span class="line">    <span class="comment"># old_r 是最大公约数</span></span><br><span class="line">    <span class="comment"># old_s 和 old_t 就是我们要求的 u 和 v</span></span><br><span class="line">    <span class="keyword">return</span> old_r, old_s, old_t</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    p = <span class="number">26513</span></span><br><span class="line">    q = <span class="number">32321</span></span><br><span class="line">    </span><br><span class="line">    gcd_val, u, v = extended_gcd(p, q)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;最大公约数 GCD: <span class="subst">&#123;gcd_val&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;系数 u: <span class="subst">&#123;u&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;系数 v: <span class="subst">&#123;v&#125;</span>&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 题目要求提交 u 和 v 中较小的那个数字</span></span><br><span class="line">    flag = <span class="built_in">min</span>(u, v)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Flag: <span class="subst">&#123;flag&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这是一份为你整理的关于模运算（Modular Arithmetic）的 Obsidian 笔记，你可以直接复制到你的笔记库中。</p>
+<hr>
+<h1 id="模运算"><a href="#模运算" class="headerlink" title="模运算"></a>模运算</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="核心概念：时钟算术"><a href="#核心概念：时钟算术" class="headerlink" title="核心概念：时钟算术"></a>核心概念：时钟算术</h3><p><strong>模运算</strong> 是现代密码学（如 RSA、ECC 椭圆曲线加密）的绝对基石。为了防止数字在加密计算过程中无限膨胀，同时利用“单向函数”的数学难度，密码学计算几乎全部都在一个特定的<strong>有限域（模数域）</strong>内进行。</p>
+<ul>
+<li><p><strong>通俗理解</strong>：想象一个 12 小时制的表盘。如果现在是下午 4 点，再过 9 个小时，时间不是 13 点，而是凌晨 1 点。</p>
+<ul>
+<li>数学表达：$4 + 9 \equiv 1 \pmod{12}$</li>
+</ul>
+</li>
+<li><p><strong>专业定义</strong>：同余理论。如果两个整数 $a$ 和 $b$ 满足 $a$ 除以 $m$ 的余数等于 $b$ 除以 $m$ 的余数，我们就说 $a$ 和 $b$ 在模 $m$ 下同余，记作 <strong>$a \equiv b \pmod m$</strong>。</p>
+</li>
+<li><p><strong>在编程中的映射</strong>：同余在代码层面等价于<strong>求余数</strong>操作。即 <code>a % m == b</code>。</p>
+</li>
+</ul>
+<h3 id="思考与应用"><a href="#思考与应用" class="headerlink" title="思考与应用"></a>思考与应用</h3><p>在渗透测试或 CTF 实战中，无论是处理古老的凯撒密码、维吉尼亚密码，还是现代的高级公钥密码体制，底层的核心轮转机制都是基于 <code>%</code>（取模运算）来实现数据在指定范围内的循环滚动。</p>
+<h3 id="挑战解答"><a href="#挑战解答" class="headerlink" title="挑战解答"></a>挑战解答</h3><p><strong>题目要求</strong>：计算以下两个同余式中的整数 $x$ 和 $y$，并提交两者中较小的那个数字。</p>
+<ol>
+<li><strong>计算 $x$</strong>：<ul>
+<li>方程：$11 \equiv x \pmod 6$</li>
+<li>逻辑：$11 \div 6 = 1$，余数为 $5$。</li>
+<li>结果：<strong>$x = 5$</strong></li>
+</ul>
+</li>
+<li><strong>计算 $y$</strong>：<ul>
+<li>方程：$8146798528947 \equiv y \pmod{17}$</li>
+<li>逻辑：通过大数取模运算计算余数。</li>
+<li>结果：<strong>$y = 4$</strong></li>
+</ul>
+</li>
+</ol>
+<p><strong>最终答案</strong>：<br>题目要求提交 $x$ 和 $y$ 中较小的整数。因为 $4 &lt; 5$，所以最终的 Flag 为：<br><strong><code>4</code></strong></p>
+<h3 id="算法实现：Python-求模运算"><a href="#算法实现：Python-求模运算" class="headerlink" title="算法实现：Python 求模运算"></a>算法实现：Python 求模运算</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def solve_mod_arithmetic():</span><br><span class="line">    # 1. 计算 11 mod 6</span><br><span class="line">    x = 11 % 6</span><br><span class="line">    print(f&quot;x 的值为: &#123;x&#125;&quot;)</span><br><span class="line">    </span><br><span class="line">    # 2. 计算大数 mod 17</span><br><span class="line">    y = 8146798528947 % 17</span><br><span class="line">    print(f&quot;y 的值为: &#123;y&#125;&quot;)</span><br><span class="line">    </span><br><span class="line">    # 3. 获取两者中较小的值作为 Flag</span><br><span class="line">    flag = min(x, y)</span><br><span class="line">    print(f&quot;最终提交的 Flag: &#123;flag&#125;&quot;)</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    solve_mod_arithmetic()</span><br></pre></td></tr></table></figure>
+<h4 id="python模块求模"><a href="#python模块求模" class="headerlink" title="python模块求模"></a>python模块求模</h4><h5 id="1-模幂运算：原生-Python-的-pow"><a href="#1-模幂运算：原生-Python-的-pow" class="headerlink" title="1. 模幂运算：原生 Python 的 pow()"></a>1. 模幂运算：原生 Python 的 <code>pow()</code></h5><p>在 RSA 等加密中，经常需要计算 $a^b \pmod m$ 这样庞大的数字。千万不要写成 <code>(a ** b) % m</code>，这会导致内存爆炸和极长的计算时间。</p>
+<p><strong>最简便写法：</strong> 使用原生带有三个参数的 <code>pow()</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = 11</span><br><span class="line">b = 3</span><br><span class="line">m = 6</span><br><span class="line"></span><br><span class="line"># 极其高效地计算 (11^3) mod 6</span><br><span class="line">result = pow(a, b, m) </span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<h5 id="2-求模逆元：pycryptodome-的-inverse"><a href="#2-求模逆元：pycryptodome-的-inverse" class="headerlink" title="2. 求模逆元：pycryptodome 的 inverse()"></a>2. 求模逆元：pycryptodome 的 <code>inverse()</code></h5><p>你刚刚学习了用扩展欧几里得算法（eGCD）去手搓求 $u$ 和 $v$。在实际解题中，每次都自己写那个 <code>while</code> 循环太麻烦了。<code>pycryptodome</code> 直接把它封装成了一行代码。</p>
+<p>在求 $e \cdot d \equiv 1 \pmod{\phi}$（即求 $e$ 在模 $\phi$ 下的逆元 $d$）时：</p>
+<p><strong>最简便写法：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import inverse</span><br><span class="line"></span><br><span class="line">e = 65537</span><br><span class="line">phi = 32321 # 假设的 phi 值</span><br><span class="line"></span><br><span class="line"># 直接秒算模逆元（也就是 RSA 的私钥 d）</span><br><span class="line">d = inverse(e, phi) </span><br><span class="line">print(f&quot;算出的私钥 d 为: &#123;d&#125;&quot;)</span><br></pre></td></tr></table></figure>
+<p>注：Python 3.8 以上版本，原生的 <code>pow(e, -1, phi)</code> 也能直接求模逆元，效果和 <code>inverse</code> 一样。</p>
+<h2 id="模逆元与费马小定理"><a href="#模逆元与费马小定理" class="headerlink" title="模逆元与费马小定理"></a>模逆元与费马小定理</h2><h3 id="核心概念：有限域中的“分数”"><a href="#核心概念：有限域中的“分数”" class="headerlink" title="核心概念：有限域中的“分数”"></a>核心概念：有限域中的“分数”</h3><p>在普通的数学运算中，如果 $3 \cdot d = 1$，那么 $d = \frac{1}{3}$，此时 $\frac{1}{3}$ 就是 $3$ 的<strong>乘法逆元</strong>。</p>
+<p>但在<strong>模运算（有限域）</strong>的世界里，不存在小数和分数，只有整数。</p>
+<p><strong>定义</strong>：在模 $p$ 的环境下，如果找一个整数 $d$，使得它与 $a$ 相乘后除以 $p$ 的余数为 1，那么 $d$ 就是 $a$ 的模逆元。</p>
+<ul>
+<li><p><strong>数学表达</strong>：$a \cdot d \equiv 1 \pmod p$</p>
+</li>
+<li><p><strong>通俗理解</strong>：在整数里找一个充当“分数/倒数”的替身。</p>
+</li>
+</ul>
+<p>_示例_：求 $3$ 在模 $13$ 下的逆元。</p>
+<p>因为 $3 \times 9 = 27$，而 $27 = 13 \times 2 + 1$（即 $27 \equiv 1 \pmod{13}$）。</p>
+<p>所以，在模 $13$ 的世界里，$3$ 的逆元就是 <strong>$9$</strong>。</p>
+<hr>
+<h3 id="关键定理：费马小定理"><a href="#关键定理：费马小定理" class="headerlink" title="关键定理：费马小定理"></a>关键定理：费马小定理</h3><p>在处理非常大的数字时，不能靠口算或暴力穷举，需要借助数论定理。</p>
+<ul>
+<li><p><strong>定理内容</strong>：如果 $p$ 是一个素数，且 $a$ 不是 $p$ 的倍数，那么：</p>
+<script type="math/tex; mode=display">a^{p-1} \equiv 1 \pmod p</script></li>
+<li><p><strong>推导逆元公式</strong>：</p>
+<p>  将上式拆解为：$a \cdot a^{p-2} \equiv 1 \pmod p$<br>  对比逆元的定义式 $a \cdot d \equiv 1 \pmod p$，可以直接得出求逆元的绝招：<br>  <strong>逆元 $d = a^{p-2} \pmod p$</strong></p>
+</li>
+</ul>
+<hr>
+<h3 id="挑战解答-Challenge-Solution"><a href="#挑战解答-Challenge-Solution" class="headerlink" title="挑战解答 (Challenge Solution)"></a>挑战解答 (Challenge Solution)</h3><p><strong>题目要求</strong>：计算 $d = 3^{-1}$，使得 $3 \cdot d \equiv 1 \pmod{13}$。</p>
+<p><strong>解题逻辑</strong></p>
+<p>这里模数 $13$ 是素数，直接套用费马小定理推导的公式：<br>$d = 3^{13-2} \pmod{13}$，即求 $3^{11} \pmod{13}$ 的值。</p>
+<p>计算得出 $d = 9$。</p>
+<p><strong>最终提交答案</strong>：</p>
+<p><strong><code>9</code></strong></p>
+<hr>
+<h3 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h3><p><strong>写法 1：原生模幂运算（适用于模数 $p$ 为素数）</strong></p>
+<p>利用费马小定理，结合 Python 极速的原生 <code>pow()</code> 函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = 3</span><br><span class="line">p = 13</span><br><span class="line"># pow(底数, 指数, 模数) -&gt; 计算 a^(p-2) mod p</span><br><span class="line">d = pow(a, p - 2, p) </span><br><span class="line">print(f&quot;逆元为: &#123;d&#125;&quot;)</span><br></pre></td></tr></table></figure>
+<p><strong>写法 2：通用求法（适用于任何互质情况，如 RSA）</strong></p>
+<p>遇到模数不是素数的情况，直接调用 <code>pycryptodome</code> 库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import inverse</span><br><span class="line"></span><br><span class="line">a = 3</span><br><span class="line">m = 13</span><br><span class="line"># 底层自动调用扩展欧几里得算法(eGCD)</span><br><span class="line">d = inverse(a, m)</span><br><span class="line">print(f&quot;逆元为: &#123;d&#125;&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="二次剩余"><a href="#二次剩余" class="headerlink" title="二次剩余"></a>二次剩余</h2><h3 id="核心概念拆解"><a href="#核心概念拆解" class="headerlink" title="核心概念拆解"></a>核心概念拆解</h3><p><strong>1. 什么是二次剩余？</strong></p>
+<p>在普通的实数世界里，正数可以开平方，负数不能开平方。<br>在<strong>模 $p$ 的有限域</strong>世界里，数字同样被分为了两派：</p>
+<ul>
+<li><strong>二次剩余</strong>：如果存在一个整数 $a$，使得 $a^2 \equiv x \pmod p$，那么 $x$ 就是二次剩余。说白了，就是<strong>在这个模环境下，$x$ 能开得出完美的平方根</strong>。</li>
+<li><strong>二次非剩余</strong>：不管你怎么试，都找不到一个 $a$ 的平方模 $p$ 等于它。这就相当于模世界里的“负数”，开不了根号。</li>
+</ul>
+<p><strong>2. 核心特性：成双成对的根</strong><br>就像现实中 $3^2 = 9$，并且 $(-3)^2 = 9$ 一样。题目里也明确提示了：如果 $a^2 = x$，那么 $(-a)^2 = x$。</p>
+<p>在模 $p$ 的世界里，<strong>负数 $-a$ 其实就等价于 $p - a$</strong>。</p>
+<p>所以，一旦某个数字有平方根，它<strong>必定有两个解</strong>，分别是 $a$ 和 $p - a$。</p>
+<h3 id="sympy库实现二次剩余"><a href="#sympy库实现二次剩余" class="headerlink" title="sympy库实现二次剩余"></a>sympy库实现二次剩余</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from sympy.ntheory.residue_ntheory import sqrt_mod  </span><br><span class="line">  </span><br><span class="line">p = 29  </span><br><span class="line"># 我们想看看 6 在模 29 下的平方根  </span><br><span class="line">root = sqrt_mod(6, p)  </span><br><span class="line">  </span><br><span class="line">if root:  </span><br><span class="line">    print(f&quot;6 的较小平方根是: &#123;root&#125;&quot;)  </span><br><span class="line">    print(f&quot;6 的另一个平方根是: &#123;p - root&#125;&quot;)  </span><br><span class="line">else:  </span><br><span class="line">    print(&quot;找不到平方根，它是二次非剩余&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="勒让德符号与大素数二次剩余求解"><a href="#勒让德符号与大素数二次剩余求解" class="headerlink" title="勒让德符号与大素数二次剩余求解"></a>勒让德符号与大素数二次剩余求解</h2><h3 id="核心痛点与解决思路"><a href="#核心痛点与解决思路" class="headerlink" title="核心痛点与解决思路"></a>核心痛点与解决思路</h3><p>在模算术中求解二次剩余（即求模平方根 $x^2 \equiv a \pmod p$）时，如果模数 $p$ 是一个极小的素数（如 29），我们可以通过穷举法遍历 $1$ 到 $p-1$ 来寻找答案。</p>
+<p>然而，在真实的密码学环境或 CTF 竞赛中，$p$ 往往是一个高达 1024 位或 2048 位的超大素数。此时暴力破解的时间复杂度为 $O(p)$，计算到宇宙毁灭也无法完成。</p>
+<p>为了应对超大素数，我们必须将解题过程拆分为两步，并使用数学定理来实现 $O(\log p)$ 级别的极速计算：</p>
+<ol>
+<li><p><strong>第一步（探测）</strong>：在不计算平方根的前提下，瞬间判断一个数到底“能不能”开平方。</p>
+</li>
+<li><p><strong>第二步（提取）</strong>：在确认能开平方后，利用特定条件瞬间提取出平方根。</p>
+</li>
+</ol>
+<hr>
+<h3 id="勒让德符号——-二次剩余探测器"><a href="#勒让德符号——-二次剩余探测器" class="headerlink" title="勒让德符号—— 二次剩余探测器"></a>勒让德符号—— 二次剩余探测器</h3><p><strong>勒让德符号</strong>提供了一种极其高效的方法，用于判断一个整数 $a$ 是否是奇素数 $p$ 的二次剩余。它的核心思想基于费马小定理的推论。</p>
+<p><strong>符号表示</strong>：$(a/p)$ 或 $(a|p)$</p>
+<p><strong>计算公式</strong>：</p>
+<script type="math/tex; mode=display">(a/p) \equiv a^{(p-1)/2} \pmod p</script><h4 id="探测器输出的三种状态："><a href="#探测器输出的三种状态：" class="headerlink" title="探测器输出的三种状态："></a>探测器输出的三种状态：</h4><p>根据欧拉准则（Euler’s criterion），将数字 $a$ 代入上述公式，结果必然且只会是以下三种情况之一：</p>
+<ul>
+<li><p><strong>结果为 $1$</strong>：说明 $a$ <strong>是</strong>模 $p$ 的二次剩余（Quadratic Residue）。即 $a$ 在模 $p$ 下必然存在平方根。</p>
+</li>
+<li><p><strong>结果为 $-1$（在模 $p$ 下表现为 $p-1$）</strong>：说明 $a$ <strong>不是</strong>模 $p$ 的二次剩余（Quadratic Non-Residue）。即 $a$ 在模 $p$ 下绝对无法开平方，属于无解状态。</p>
+</li>
+<li><p><strong>结果为 $0$</strong>：说明 $a \equiv 0 \pmod p$，即 $a$ 是 $p$ 的倍数（在实战中极少考察此种边缘情况）。</p>
+</li>
+</ul>
+<p><strong>数学直觉</strong>：</p>
+<p>由费马小定理可知 $a^{p-1} \equiv 1 \pmod p$。我们可以将其视为 $(a^{(p-1)/2})^2 \equiv 1 \pmod p$。在模 $p$ 的域中，平方等于 $1$ 的数只有 $1$ 和 $-1$。勒让德符号巧妙地利用了这一点，将所有数字强行划分为“有解(1)”和“无解(-1)”两大阵营。</p>
+<h4 id="勒让德符号的重要乘法性质（进阶拓展）："><a href="#勒让德符号的重要乘法性质（进阶拓展）：" class="headerlink" title="勒让德符号的重要乘法性质（进阶拓展）："></a>勒让德符号的重要乘法性质（进阶拓展）：</h4><ul>
+<li><p>$\text{二次剩余} \times \text{二次剩余} = \text{二次剩余}$ （即 $1 \times 1 = 1$）</p>
+</li>
+<li><p>$\text{二次剩余} \times \text{二次非剩余} = \text{二次非剩余}$ （即 $1 \times -1 = -1$）</p>
+</li>
+<li><p>$\text{二次非剩余} \times \text{二次非剩余} = \text{二次剩余}$ （即 $-1 \times -1 = 1$）</p>
+</li>
+</ul>
+<hr>
+<h3 id="第二步：神级捷径公式-——-当-p-equiv-3-pmod-4"><a href="#第二步：神级捷径公式-——-当-p-equiv-3-pmod-4" class="headerlink" title="第二步：神级捷径公式 —— 当 $p \equiv 3 \pmod 4$"></a>第二步：神级捷径公式 —— 当 $p \equiv 3 \pmod 4$</h3><p>当我们使用勒让德符号确认了某个数 $a$ 是二次剩余后，接下来就是求出具体的平方根 $x$。</p>
+<p>在一般情况下，求大素数模平方根需要使用极其复杂的 <strong>Tonelli-Shanks 算法</strong>。但如果出题人给定的素数 $p$ 满足特殊条件 <strong>$p \equiv 3 \pmod 4$</strong>，我们就可以直接使用以下公式秒杀：</p>
+<script type="math/tex; mode=display">x \equiv a^{(p+1)/4} \pmod p</script><p>(注：求出第一个根 $x$ 后，由于模运算中平方根总是成对出现，第二个根必定为 $p - x$)</p>
+<h4 id="为什么探测器与捷径可以完美闭环？（底层代数推导）"><a href="#为什么探测器与捷径可以完美闭环？（底层代数推导）" class="headerlink" title="为什么探测器与捷径可以完美闭环？（底层代数推导）"></a>为什么探测器与捷径可以完美闭环？（底层代数推导）</h4><p>这个捷径公式之所以成立，完全是因为它建立在勒让德符号的结果之上。</p>
+<p>我们将算出的 $x$ 进行平方验证：</p>
+<script type="math/tex; mode=display">x^2 \equiv (a^{(p+1)/4})^2 \equiv a^{(p+1)/2} \pmod p</script><p>将指数拆分为 $\frac{p-1}{2} + 1$：</p>
+<script type="math/tex; mode=display">x^2 \equiv a^{(p-1)/2} \cdot a^1 \pmod p</script><p><strong>关键点</strong>：由于我们在第一步已经用勒让德符号确认了 $a$ 是二次剩余，所以 $a^{(p-1)/2} \pmod p$ 的值<strong>必然等于 1</strong>。</p>
+<p>将其代入式中：</p>
+<script type="math/tex; mode=display">x^2 \equiv 1 \cdot a \equiv a \pmod p</script><p>完美证明了公式得出的 $x$ 就是我们要找的平方根。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.site">chen7chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.site/2026/03/15/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AF%86%E7%A0%81%E5%AD%A6/python%E5%AF%86%E7%A0%81%E5%AD%A6/%E5%9F%BA%E7%A1%80/">http://blog.xchstudy.site/2026/03/15/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AF%86%E7%A0%81%E5%AD%A6/python%E5%AF%86%E7%A0%81%E5%AD%A6/%E5%9F%BA%E7%A1%80/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.xchstudy.site" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.chenjichao.site/raw/2.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/03/25/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/2%20%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90%E4%B8%8E%E5%90%8E%E9%97%A8/windows%E6%8F%90%E6%9D%83/windows%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/" title="windows权限维持"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/13.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">windows权限维持</div></div></a></div><div class="next-post pull-right"><a href="/2026/03/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/05%20%E5%89%8D%E6%B2%BF%E5%AE%89%E5%85%A8%E9%A2%86%E5%9F%9F/AI%E5%AE%89%E5%85%A8/1%20%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F/" title="AI攻击方式"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/6.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">AI攻击方式</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chen7chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">225</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">154</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E3%80%81%E5%AD%97%E8%8A%82%E4%B8%8E%E6%95%B0%E5%AD%97%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.</span> <span class="toc-text">字符、字节与数字的相互转换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9F%BA%E7%A1%80%E8%BD%AC%E6%8D%A2%EF%BC%9A%E5%AD%97%E7%AC%A6-leftrightarrow-ASCII-%E5%BA%8F%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1. 基础转换：字符 $\leftrightarrow$ ASCII 序数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%BF%9B%E9%98%B6%E8%BD%AC%E6%8D%A2%EF%BC%9A%E5%AD%97%E8%8A%82%E6%B5%81-leftrightarrow-%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6-Hex"><span class="toc-number">1.2.</span> <span class="toc-text">2. 进阶转换：字节流 $\leftrightarrow$ 十六进制 (Hex)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%AF%86%E7%A0%81%E5%AD%A6%E6%A0%B8%E5%BF%83%E9%93%BE%E8%B7%AF%EF%BC%9A%E6%B6%88%E6%81%AF%E5%A6%82%E4%BD%95%E5%8F%98%E6%88%90%E5%A4%A7%E6%95%B4%E6%95%B0%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">3. 密码学核心链路：消息如何变成大整数？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BB%88%E6%9E%81%E6%AD%A6%E5%99%A8%EF%BC%9APyCryptodome-%E5%BA%93"><span class="toc-number">1.4.</span> <span class="toc-text">4. 终极武器：PyCryptodome 库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XOR-%E5%BC%82%E6%88%96%E8%BF%90%E7%AE%97-%E5%8F%8A%E5%85%B6%E6%A0%B8%E5%BF%83%E6%80%A7%E8%B4%A8"><span class="toc-number">2.</span> <span class="toc-text">XOR (异或运算) 及其核心性质</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E7%9C%9F%E5%80%BC%E8%A1%A8"><span class="toc-number">2.1.</span> <span class="toc-text">1. 核心概念与真值表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%A4%9A%E5%AD%97%E8%8A%82%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84-XOR"><span class="toc-number">2.2.</span> <span class="toc-text">2. 多字节与数据类型的 XOR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-XOR-%E7%9A%84%E5%9B%9B%E5%A4%A7%E6%A0%B8%E5%BF%83%E6%95%B0%E5%AD%A6%E6%80%A7%E8%B4%A8-%E8%A7%A3%E5%AF%86%E5%85%B3%E9%94%AE"><span class="toc-number">2.3.</span> <span class="toc-text">3. XOR 的四大核心数学性质 (解密关键)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8PWNTOOLS%E8%BF%9B%E8%A1%8C%E5%8A%A0%E5%AF%86"><span class="toc-number">2.4.</span> <span class="toc-text">4. 使用PWNTOOLS进行加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%8D%95%E5%AD%97%E8%8A%82%E7%88%86%E7%A0%B4"><span class="toc-number">2.5.</span> <span class="toc-text">5.进阶：单字节爆破</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AC%E8%BD%AE%E5%AF%86%E9%92%A5"><span class="toc-number">3.</span> <span class="toc-text">转轮密钥</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">最大公约数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">4.1.</span> <span class="toc-text">核心概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%92%E8%B4%A8-Coprime"><span class="toc-number">4.2.</span> <span class="toc-text">互质 (Coprime)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98%E8%A7%A3%E7%AD%94"><span class="toc-number">4.3.</span> <span class="toc-text">思考题解答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%9A%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95"><span class="toc-number">4.4.</span> <span class="toc-text">算法实现：欧几里得算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.4.1.</span> <span class="toc-text">Python 脚本实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95"><span class="toc-number">4.5.</span> <span class="toc-text">扩展欧几里得算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%EF%BC%9A%E8%B4%9D%E7%A5%96%E7%AD%89%E5%BC%8F"><span class="toc-number">4.6.</span> <span class="toc-text">核心概念：贝祖等式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98%E8%A7%A3%E7%AD%94-1"><span class="toc-number">4.7.</span> <span class="toc-text">思考题解答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BD%95%E5%AE%83%E6%98%AF%E8%A7%A3%E5%AF%86-RSA-%E7%9A%84%E5%85%B3%E9%94%AE%EF%BC%9F"><span class="toc-number">4.8.</span> <span class="toc-text">为何它是解密 RSA 的关键？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E4%B8%8E%E6%8C%91%E6%88%98%E8%A7%A3%E7%AD%94"><span class="toc-number">4.9.</span> <span class="toc-text">算法实现与挑战解答</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0-1"><span class="toc-number">4.9.1.</span> <span class="toc-text">Python 脚本实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E8%BF%90%E7%AE%97"><span class="toc-number">5.</span> <span class="toc-text">模运算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-number">5.1.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%EF%BC%9A%E6%97%B6%E9%92%9F%E7%AE%97%E6%9C%AF"><span class="toc-number">5.1.1.</span> <span class="toc-text">核心概念：时钟算术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%8E%E5%BA%94%E7%94%A8"><span class="toc-number">5.1.2.</span> <span class="toc-text">思考与应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%91%E6%88%98%E8%A7%A3%E7%AD%94"><span class="toc-number">5.1.3.</span> <span class="toc-text">挑战解答</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%9APython-%E6%B1%82%E6%A8%A1%E8%BF%90%E7%AE%97"><span class="toc-number">5.1.4.</span> <span class="toc-text">算法实现：Python 求模运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python%E6%A8%A1%E5%9D%97%E6%B1%82%E6%A8%A1"><span class="toc-number">5.1.4.1.</span> <span class="toc-text">python模块求模</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E6%A8%A1%E5%B9%82%E8%BF%90%E7%AE%97%EF%BC%9A%E5%8E%9F%E7%94%9F-Python-%E7%9A%84-pow"><span class="toc-number">5.1.4.1.1.</span> <span class="toc-text">1. 模幂运算：原生 Python 的 pow()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E6%B1%82%E6%A8%A1%E9%80%86%E5%85%83%EF%BC%9Apycryptodome-%E7%9A%84-inverse"><span class="toc-number">5.1.4.1.2.</span> <span class="toc-text">2. 求模逆元：pycryptodome 的 inverse()</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E9%80%86%E5%85%83%E4%B8%8E%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="toc-number">5.2.</span> <span class="toc-text">模逆元与费马小定理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%EF%BC%9A%E6%9C%89%E9%99%90%E5%9F%9F%E4%B8%AD%E7%9A%84%E2%80%9C%E5%88%86%E6%95%B0%E2%80%9D"><span class="toc-number">5.2.1.</span> <span class="toc-text">核心概念：有限域中的“分数”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AE%9A%E7%90%86%EF%BC%9A%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="toc-number">5.2.2.</span> <span class="toc-text">关键定理：费马小定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%91%E6%88%98%E8%A7%A3%E7%AD%94-Challenge-Solution"><span class="toc-number">5.2.3.</span> <span class="toc-text">挑战解答 (Challenge Solution)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.2.4.</span> <span class="toc-text">算法实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E5%89%A9%E4%BD%99"><span class="toc-number">5.3.</span> <span class="toc-text">二次剩余</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E6%8B%86%E8%A7%A3"><span class="toc-number">5.3.1.</span> <span class="toc-text">核心概念拆解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sympy%E5%BA%93%E5%AE%9E%E7%8E%B0%E4%BA%8C%E6%AC%A1%E5%89%A9%E4%BD%99"><span class="toc-number">5.3.2.</span> <span class="toc-text">sympy库实现二次剩余</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7%E7%AC%A6%E5%8F%B7%E4%B8%8E%E5%A4%A7%E7%B4%A0%E6%95%B0%E4%BA%8C%E6%AC%A1%E5%89%A9%E4%BD%99%E6%B1%82%E8%A7%A3"><span class="toc-number">5.4.</span> <span class="toc-text">勒让德符号与大素数二次剩余求解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%97%9B%E7%82%B9%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF"><span class="toc-number">5.4.1.</span> <span class="toc-text">核心痛点与解决思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7%E7%AC%A6%E5%8F%B7%E2%80%94%E2%80%94-%E4%BA%8C%E6%AC%A1%E5%89%A9%E4%BD%99%E6%8E%A2%E6%B5%8B%E5%99%A8"><span class="toc-number">5.4.2.</span> <span class="toc-text">勒让德符号—— 二次剩余探测器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A2%E6%B5%8B%E5%99%A8%E8%BE%93%E5%87%BA%E7%9A%84%E4%B8%89%E7%A7%8D%E7%8A%B6%E6%80%81%EF%BC%9A"><span class="toc-number">5.4.2.1.</span> <span class="toc-text">探测器输出的三种状态：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7%E7%AC%A6%E5%8F%B7%E7%9A%84%E9%87%8D%E8%A6%81%E4%B9%98%E6%B3%95%E6%80%A7%E8%B4%A8%EF%BC%88%E8%BF%9B%E9%98%B6%E6%8B%93%E5%B1%95%EF%BC%89%EF%BC%9A"><span class="toc-number">5.4.2.2.</span> <span class="toc-text">勒让德符号的重要乘法性质（进阶拓展）：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E7%A5%9E%E7%BA%A7%E6%8D%B7%E5%BE%84%E5%85%AC%E5%BC%8F-%E2%80%94%E2%80%94-%E5%BD%93-p-equiv-3-pmod-4"><span class="toc-number">5.4.3.</span> <span class="toc-text">第二步：神级捷径公式 —— 当 $p \equiv 3 \pmod 4$</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8E%A2%E6%B5%8B%E5%99%A8%E4%B8%8E%E6%8D%B7%E5%BE%84%E5%8F%AF%E4%BB%A5%E5%AE%8C%E7%BE%8E%E9%97%AD%E7%8E%AF%EF%BC%9F%EF%BC%88%E5%BA%95%E5%B1%82%E4%BB%A3%E6%95%B0%E6%8E%A8%E5%AF%BC%EF%BC%89"><span class="toc-number">5.4.3.1.</span> <span class="toc-text">为什么探测器与捷径可以完美闭环？（底层代数推导）</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/01/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E6%BC%94%E7%BB%83%E4%B8%8E%E5%AE%9E%E4%B9%A0/01%20HW/%E8%BF%9C%E6%8E%A7%E6%9C%A8%E9%A9%AC/%E8%BF%9C%E6%8E%A7%E6%9C%A8%E9%A9%AC/" title="远控木马">远控木马</a><time datetime="2026-04-01T00:33:52.745Z" title="发表于 2026-04-01 08:33:52">2026-04-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/01/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/07%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/" title="无题">无题</a><time datetime="2026-04-01T00:33:52.656Z" title="发表于 2026-04-01 08:33:52">2026-04-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/01/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/04%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/2%20%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E/3%20%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BC%8F%E6%B4%9E/1%20%E6%A0%88%E6%BA%A2%E5%87%BA/" title="无题">无题</a><time datetime="2026-04-01T00:33:52.569Z" title="发表于 2026-04-01 08:33:52">2026-04-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/01/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/04%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/2%20%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E/%E5%9F%BA%E7%A1%80/" title="无题">无题</a><time datetime="2026-04-01T00:33:52.560Z" title="发表于 2026-04-01 08:33:52">2026-04-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/01/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/04%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/2%20%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E/2%20%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/" title="无题">无题</a><time datetime="2026-04-01T00:33:52.556Z" title="发表于 2026-04-01 08:33:52">2026-04-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By chen7chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.site/categories/网络安全/网络攻防/2-防御技术/电子取证/服务器取证/linux/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 linux (28)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.site/categories/网络安全/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 网络安全 (157)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.site/categories/计算机原理/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (43)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.site/categories/计算机原理/编程语言/编程/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (36)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="http://blog.xchstudy.site/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/5.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-08-06</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">PHP 数据类型</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/7.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-13</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">pandas</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/22/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统状态的查看/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/13.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-22</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/22/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统状态的查看/&quot;);" href="javascript:void(0);" alt="">linux系统状态的查看</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/22/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统状态的查看/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/10/21/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件的查找/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/5.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-21</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/10/21/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件的查找/&quot;);" href="javascript:void(0);" alt="">linux系统文件的查找</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/10/21/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件的查找/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件操作/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/11.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件操作/&quot;);" href="javascript:void(0);" alt="">linux系统文件的查看与安装</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件操作/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/3.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">linux系统变量</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux服务进程/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux服务进程/&quot;);" href="javascript:void(0);" alt="">linux服务进程</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux服务进程/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
