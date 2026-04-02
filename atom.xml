@@ -65,29 +65,6 @@
     <category term="06 后渗透阶段" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/"/>
     <category term="1 免杀" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1-%E5%85%8D%E6%9D%80/"/>
     <category term="windows免杀" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1-%E5%85%8D%E6%9D%80/windows%E5%85%8D%E6%9D%80/"/>
-    <category term="windows基础知识" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1-%E5%85%8D%E6%9D%80/windows%E5%85%8D%E6%9D%80/windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    <content>
-      <![CDATA[<h1 id="进程对象"><a href="#进程对象" class="headerlink" title="进程对象"></a>进程对象</h1><p>进程对象的<code>ProcessBreakOnnTermination</code>成员通常被恶意软件使用。它允许某人将某个关键进程标记为关键进程。这意味着如果你尝试通过<code>TerminnateProcess</code>终止该进程，将会导致蓝屏</p><p>同样线程对象<code>ThreadBreakOnTermination</code>将线程设置为关键线程。如果有人试图终止该进程，它将导致蓝屏</p><p>关键的API</p>]]>
-    </content>
-    <id>http://blog.xchstudy.org/2026/03/31/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1%20%E5%85%8D%E6%9D%80/windows%E5%85%8D%E6%9D%80/windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E7%BA%A2%E9%98%9F%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84windows/</id>
-    <link href="http://blog.xchstudy.org/2026/03/31/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1%20%E5%85%8D%E6%9D%80/windows%E5%85%8D%E6%9D%80/windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E7%BA%A2%E9%98%9F%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84windows/"/>
-    <published>2026-03-30T16:00:00.000Z</published>
-    <summary>
-      <![CDATA[<h1 id="进程对象"><a href="#进程对象" class="headerlink" title="进程对象"></a>进程对象</h1><p>进程对象的<code>ProcessBreakOnnTermination</code>成员通常被恶意软件使用。它允许某人将]]>
-    </summary>
-    <title>红队下的windows</title>
-    <updated>2026-03-31T15:09:57.863Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>chen7chen</name>
-    </author>
-    <category term="网络安全" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
-    <category term="网络攻防" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/"/>
-    <category term="3 攻击技术" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/"/>
-    <category term="06 后渗透阶段" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/"/>
-    <category term="1 免杀" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1-%E5%85%8D%E6%9D%80/"/>
-    <category term="windows免杀" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1-%E5%85%8D%E6%9D%80/windows%E5%85%8D%E6%9D%80/"/>
     <category term="恶意代码开发" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1-%E5%85%8D%E6%9D%80/windows%E5%85%8D%E6%9D%80/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%BC%80%E5%8F%91/"/>
     <content>
       <![CDATA[<h1 id="分配虚拟内存"><a href="#分配虚拟内存" class="headerlink" title="分配虚拟内存"></a>分配虚拟内存</h1><p>每个进程都有自己的虚拟进程。进程之间存在共享内存，但在一般情况下，如果没有Kernel的协助，进程A应该无法查看进程B的虚拟内存。内核当然可以看到所有进程的虚拟内存，因为它必须执行虚拟内存到物理内存的转换。进程A可以使用虚拟内存API在进程B的地址空间中分配新的虚拟内存，这个功能的具体操作由内核在内部实施</p><ol><li>使用OpenProcess或NtOpenProcess打开一个目标进程</li><li>使用VirtualAllocEx或NtAlliocateVirualMemory在目标进程中分配eXecute-Read-Write(XRW)内存</li><li>使用WriteProcessMemory或NtWriteVirtualMemory 将payload复制到新内存中</li><li>执行payload</li><li>使用VirtualFreeEx或NtWriteMemory在目标进程中取消释放的XRW内存</li><li>使用CloseHandle或Ntclose关闭目标进程句柄</li></ol><h1 id="创建section-节-对象"><a href="#创建section-节-对象" class="headerlink" title="创建section(节)对象"></a>创建section(节)对象</h1><p>节对象代表一段可以分享的内存，进程可以使用section对象与其他共享部分内存地址空间。Section对象还提供一种机制，可以通过该机制将文件映射到内存地址空间</p><ol><li>NtCreateSection 创建一个新的内存区段，并返回一个句柄</li><li></li></ol>]]>
@@ -100,6 +77,29 @@
     </summary>
     <title>免杀之进程注入</title>
     <updated>2026-03-31T15:09:10.475Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>chen7chen</name>
+    </author>
+    <category term="网络安全" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    <category term="网络攻防" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/"/>
+    <category term="3 攻击技术" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/"/>
+    <category term="06 后渗透阶段" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/"/>
+    <category term="1 免杀" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1-%E5%85%8D%E6%9D%80/"/>
+    <category term="windows免杀" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1-%E5%85%8D%E6%9D%80/windows%E5%85%8D%E6%9D%80/"/>
+    <category term="windows基础知识" scheme="http://blog.xchstudy.org/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3-%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06-%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1-%E5%85%8D%E6%9D%80/windows%E5%85%8D%E6%9D%80/windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <content>
+      <![CDATA[<h1 id="进程对象"><a href="#进程对象" class="headerlink" title="进程对象"></a>进程对象</h1><p>进程对象的<code>ProcessBreakOnnTermination</code>成员通常被恶意软件使用。它允许某人将某个关键进程标记为关键进程。这意味着如果你尝试通过<code>TerminnateProcess</code>终止该进程，将会导致蓝屏</p><p>同样线程对象<code>ThreadBreakOnTermination</code>将线程设置为关键线程。如果有人试图终止该进程，它将导致蓝屏</p><p>关键的API</p>]]>
+    </content>
+    <id>http://blog.xchstudy.org/2026/03/31/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1%20%E5%85%8D%E6%9D%80/windows%E5%85%8D%E6%9D%80/windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E7%BA%A2%E9%98%9F%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84windows/</id>
+    <link href="http://blog.xchstudy.org/2026/03/31/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1%20%E5%85%8D%E6%9D%80/windows%E5%85%8D%E6%9D%80/windows%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E7%BA%A2%E9%98%9F%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84windows/"/>
+    <published>2026-03-30T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="进程对象"><a href="#进程对象" class="headerlink" title="进程对象"></a>进程对象</h1><p>进程对象的<code>ProcessBreakOnnTermination</code>成员通常被恶意软件使用。它允许某人将]]>
+    </summary>
+    <title>红队下的windows</title>
+    <updated>2026-03-31T15:09:57.863Z</updated>
   </entry>
   <entry>
     <author>
