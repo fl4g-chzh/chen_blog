@@ -1,0 +1,888 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>linux取证——文件取证 | 小chen妙妙屋</title><meta name="author" content="chen7chen"><meta name="copyright" content="chen7chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Linux系统文件信息取证与核心操作在Linux系统的日常维护与安全取证过程中，熟练掌握文件操作与查找命令是至关重要的基础。以下内容将原有的知识体系进行了深度重构与详尽扩展。 Linux核心文件操作指令ls 命令ls（全拼为 list directory contents）是Linux中最基础也是最常用的命令，其核心作用是显示指定工作目录下的内容，精准列出目前工作目录所包含的文件及子目录。 基础语">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux取证——文件取证">
+<meta property="og:url" content="http://blog.xchstudy.org/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="Linux系统文件信息取证与核心操作在Linux系统的日常维护与安全取证过程中，熟练掌握文件操作与查找命令是至关重要的基础。以下内容将原有的知识体系进行了深度重构与详尽扩展。 Linux核心文件操作指令ls 命令ls（全拼为 list directory contents）是Linux中最基础也是最常用的命令，其核心作用是显示指定工作目录下的内容，精准列出目前工作目录所包含的文件及子目录。 基础语">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.chenjichao.site/raw/10.webp">
+<meta property="article:published_time" content="2026-04-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-07T10:05:27.746Z">
+<meta property="article:author" content="chen7chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.chenjichao.site/raw/10.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.xchstudy.org/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'linux取证——文件取证',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2026-04-07 18:05:27'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小chen妙妙屋" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">201</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">50</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">147</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.chenjichao.site/raw/10.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">linux取证——文件取证</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-07T10:05:27.746Z" title="更新于 2026-04-07 18:05:27">2026-04-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="linux取证——文件取证"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Linux系统文件信息取证与核心操作"><a href="#Linux系统文件信息取证与核心操作" class="headerlink" title="Linux系统文件信息取证与核心操作"></a>Linux系统文件信息取证与核心操作</h1><p>在Linux系统的日常维护与安全取证过程中，熟练掌握文件操作与查找命令是至关重要的基础。以下内容将原有的知识体系进行了深度重构与详尽扩展。</p>
+<h2 id="Linux核心文件操作指令"><a href="#Linux核心文件操作指令" class="headerlink" title="Linux核心文件操作指令"></a>Linux核心文件操作指令</h2><h3 id="ls-命令"><a href="#ls-命令" class="headerlink" title="ls 命令"></a><code>ls</code> 命令</h3><p><code>ls</code>（全拼为 list directory contents）是Linux中最基础也是最常用的命令，其核心作用是显示指定工作目录下的内容，精准列出目前工作目录所包含的文件及子目录。</p>
+<p><strong>基础语法与运行逻辑</strong></p>
+<blockquote>
+<p><code>ls [-alrtAFR] [name...]</code></p>
+</blockquote>
+<p><strong>核心参数深度剖析</strong></p>
+<ul>
+<li><p><strong><code>-a</code> (all)</strong>：无死角显示所有文件及目录。在Linux中，以 <code>.</code> 开头的文件属于隐藏文件，该参数强制列出所有隐藏内容，在取证时排查隐藏的恶意文件极其重要。</p>
+</li>
+<li><p><strong><code>-d</code> (directory)</strong>：仅针对目录本身进行列出，而不会递归深入列出目录内部的具体文件。</p>
+</li>
+<li><p><strong><code>-l</code> (long format)</strong>：以极其详尽的长格式输出文件和目录的各项元数据信息。输出内容涵盖了文件的读写执行权限、文件所有者、文件大小以及具体的创建或修改时间等关键取证线索。</p>
+</li>
+<li><p><strong><code>-r</code> (reverse)</strong>：打破默认的正向排序，强制将文件和目录进行倒序显示。</p>
+</li>
+<li><p><strong><code>-t</code> (time)</strong>：依据文件的最后修改时间进行严格排序。默认情况下，系统会将最新被修改过的文件排列在输出列表的最前面，方便排查近期被篡改的文件。</p>
+</li>
+<li><p><strong><code>-A</code> (Almost all)</strong>：功能高度类似于 <code>-a</code>，但更加纯粹，它会列出隐藏文件，但刻意忽略表示当前目录的 <code>.</code> 和表示父目录的 <code>..</code>。</p>
+</li>
+<li><p><strong><code>-F</code> (Classify)</strong>：为不同类型的文件在名称末尾添加特定的标识符号，以便直观辨认。例如，系统会在可执行文件档尾部加上 <code>*</code> 号，在目录尾部加上 <code>/</code> 号。</p>
+</li>
+<li><p><strong><code>-R</code> (Recursive)</strong>：开启递归模式，不仅显示当前目录，还会向下穿透，显示目录中包含的所有文件和极深层级的子目录。</p>
+</li>
+</ul>
+<p><strong>进阶操作场景与特殊字符处理</strong></p>
+<ul>
+<li><p><strong>详尽的递归列出</strong>：使用 <code>ls -lR /bin</code> 可以将 <code>/bin</code> 目录之下潜藏的所有目录及文件详细资料一次性全盘列出。</p>
+</li>
+<li><p><strong>处理非常规文件名</strong>：当文件名包含了空格、特殊符号或是以破折号（-）作为开头时，直接使用 <code>ls</code> 会导致解析错误。此时可以采用反斜杠（<code>\</code>）进行字符转义，或者使用引号包裹文件名。</p>
+<ul>
+<li><p>例如：<code>ls &quot;my file.txt&quot;</code> 或 <code>ls my\ file.txt</code> 可精确列出名为 “my file.txt” 的带空格文件。</p>
+</li>
+<li><p>例如：<code>ls -- -filename</code> 可以安全列出名为 “-filename” 这种容易被误认为命令参数的文件。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>模式匹配与通配符</strong>：<code>ls</code> 完美支持通配符以实现批量查找。</p>
+<ul>
+<li><p><code>*</code> 符号代表匹配任意长度、任意组合的字符。例如 <code>ls *.txt</code> 可列出所有扩展名是 <code>.txt</code> 的文件。</p>
+</li>
+<li><p><code>?</code> 符号代表严格匹配单一的任意字符。例如 <code>ls file?.txt</code> 能精准抓取类似于 <code>file1.txt</code> 或 <code>fileA.txt</code> 的文件。</p>
+</li>
+<li><p><code>[...]</code> 符号用于圈定一个匹配的字符范围。例如 <code>ls [abc]*.txt</code> 可以列出所有以 a、b 或 c 字母开头，且扩展名为 .txt 的文件。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>综合时间排序</strong>：执行 <code>ls -ltr s*</code> 可以列出当前工作目录下所有名称以 s 开头的文件，并且越是近期更新的文件，排列的位置越靠后（结合了逆序和时间排序）。</p>
+</li>
+</ul>
+<hr>
+<h3 id="echo-命令"><a href="#echo-命令" class="headerlink" title="echo 命令"></a><code>echo</code> 命令</h3><p>该命令主要用于在终端屏幕上直接输出指定的字符串，常用于脚本编写和简单的状态打印。</p>
+<p><strong>核心选项</strong></p>
+<ul>
+<li><p><strong><code>-n</code> 参数</strong>：强制系统在输出完指定的字符串后不进行换行动作（默认情况下 <code>echo</code> 会在句尾自动添加换行符）。</p>
+</li>
+<li><p><strong><code>-e</code> 参数</strong>：激活对转义字符的解析与输出能力，使得诸如 <code>\n</code> (换行) 或 <code>\t</code> (制表符) 等转义序列能够生效并被正确打印。</p>
+</li>
+</ul>
+<hr>
+<h3 id="tar-命令"><a href="#tar-命令" class="headerlink" title="tar 命令"></a><code>tar</code> 命令</h3><p><code>tar</code> 命令的全称是 “tape archive”，它最初是被设计用于将数据备份到磁带设备上的，但在现代Linux系统中，它已经演变成为文件管理、全盘备份和数据压缩的标准核心工具。它的强大之处在于能够将成百上千个零散的文件和错综复杂的目录结构打包成一个单一的归档文件，同时还能从该归档文件中精准提取所需内容。</p>
+<p><strong>全参数字典表</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>参数标识</strong></th>
+<th><strong>功能深度解析</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-c</code></td>
+<td>核心创建指令：用于无中生有地创建出一个全新的归档文件（即打包动作）。</td>
+</tr>
+<tr>
+<td><code>-x</code></td>
+<td>核心提取指令：用于从现存的归档文件中将内部的文件及目录提取释放出来（即解包动作）。</td>
+</tr>
+<tr>
+<td><code>-f &lt;文件名&gt;</code></td>
+<td>目标定位指令：必须紧跟在归档文件名之前，用于明确指出操作的归档文件具体名称。</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>可视化指令：在执行打包或解包的过程中，在屏幕上实时显示正在处理的详细文件列表信息。</td>
+</tr>
+<tr>
+<td><code>-z</code></td>
+<td>压缩协议指令：调用 gzip 算法对归档文件进行高强度的压缩或解压操作。</td>
+</tr>
+<tr>
+<td><code>-j</code></td>
+<td>压缩协议指令：调用 bzip2 算法对归档文件进行压缩，通常能提供比 gzip 更高的压缩率。</td>
+</tr>
+<tr>
+<td><code>-C &lt;目录&gt;</code></td>
+<td>路径重定向指令：在执行解包操作前，强制工具先切换到你所指定的目录下再进行释放。</td>
+</tr>
+<tr>
+<td><code>--exclude=&lt;模式&gt;</code></td>
+<td>过滤指令：在打包时，严格排除掉符合所设模式（如特定后缀）的文件或目录。</td>
+</tr>
+<tr>
+<td><code>--list</code></td>
+<td>预览指令：像透视眼一样列出归档文件内部的所有内容明细，而不进行实质的提取解压。</td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>帮助指令：调用系统的帮助文档，展示所有可用的选项与参数说明。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>十大典型实战场景解析</strong></p>
+<ol>
+<li><p><strong>纯粹的打包操作</strong>：如果只需打包而不压缩，可组合使用 <code>-c</code> 和 <code>-f</code>。执行 <code>tar -cf documents.tar /home/user/documents</code>，系统会将指定目录下的所有内容原封不动地塞进 <code>documents.tar</code> 中。</p>
+</li>
+<li><p><strong>常规解包操作</strong>：通过结合 <code>-x</code> 和 <code>-f</code> 参数，使用 <code>tar -xf documents.tar</code> 可以将上述打包好的文件瞬间解包并铺开在当前工作目录下。</p>
+</li>
+<li><p><strong>打包并强力压缩</strong>：结合外部压缩工具是 <code>tar</code> 的拿手好戏。比如使用 <code>-z</code> 参数（代表 gzip），执行 <code>tar -czf documents.tar.gz /home/user/documents</code> 就能一步到位完成打包和压缩双重任务。</p>
+</li>
+<li><p><strong>无损查看归档内容</strong>：在不确定压缩包内部是什么时，利用 <code>--list</code> 参数执行 <code>tar --list -f documents.tar</code> 即可安全地预览归档文件内容清单。</p>
+</li>
+<li><p><strong>智能排除特定文件</strong>：在海量文件打包时，如果不想把无用的文本文件混入其中，可以使用 <code>--exclude=&#39;*.txt&#39;</code> 参数。例如：<code>tar -cf documents.tar --exclude=&#39;*.txt&#39; /home/user/documents</code>，这样所有的 <code>.txt</code> 文件就会被精准抛弃。</p>
+</li>
+<li><p><strong>严格保留文件权限</strong>：在取证和系统迁移时，权限的变更可能是致命的。使用 <code>--preserve-permissions</code> 参数执行 <code>tar --preserve-permissions -cf documents.tar /home/user/documents</code>，能确保源文件的读写权限和所有权信息被原汁原味地保留在压缩包内。</p>
+</li>
+<li><p><strong>冻结访问时间戳</strong>：为了不破坏文件的被访问记录（这在司法取证中极其关键），可以添加 <code>--atime-preserve</code> 参数。如 <code>tar --atime-preserve -cf backup.tar /path/to/backup</code> 会在打包时保持原有文件的访问时间戳绝对不变。</p>
+</li>
+<li><p><strong>企业级增量备份</strong>：对于体积庞大的服务器，每次都全量备份是不现实的。<code>tar</code> 支持通过 <code>--listed-incremental</code> 参数配合一个状态文件（.snar）来实现仅备份修改过的文件。命令示例：<code>tar --create --file=backup-$(date +%Y%m%d).tar --listed-incremental=backup.snar /path/to/backup</code>。</p>
+</li>
+<li><p><strong>依据列表精准制导打包</strong>：如果你有一个极长且散乱的文件清单 <code>files.txt</code>，可以通过 <code>--files-from=files.txt</code> 参数告诉 <code>tar</code> 去哪里找文件。示例：<code>tar -cf backup.tar --files-from=files.txt</code>。</p>
+</li>
+<li><p><strong>极限压缩级别控制</strong>：在使用 gzip 等压缩时，能够通过数字（1-9）控制压缩比。级别 9 代表消耗最长时间换取最小的文件体积。例如 <code>tar -czvf documents.tar.gz -9 /home/user/documents</code>。</p>
+</li>
+</ol>
+<hr>
+<h3 id="wget-命令"><a href="#wget-命令" class="headerlink" title="wget 命令"></a><code>wget</code> 命令</h3><p><strong>核心概念</strong></p>
+<p><code>wget</code> 是一款在命令行环境下运行的非交互式网络下载利器。它具备极其强悍的稳定性，支持从远程服务器进行全自动下载，不仅囊括了断点续传的核心特性，还支持复杂的递归下载（整站抓取）以及无人值守的后台下载模式。</p>
+<p><strong>基础执行语法</strong></p>
+<blockquote>
+<p><code>wget [选项] [URL]</code>（其中 URL 指代目标文件的精确网络地址）。</p>
+</blockquote>
+<p><strong>全量参数字典表</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>参数标识</strong></th>
+<th><strong>功能深度解析</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-O 文件名</code></td>
+<td>重命名利器：强制将网络上下载下来的文件在本地保存为您所指定的全新文件名。</td>
+</tr>
+<tr>
+<td><code>-P 目录</code></td>
+<td>归宿指定：直接将下载完毕的文件存放进您提前规划好的指定目录中，而无需后续手动转移。</td>
+</tr>
+<tr>
+<td><code>-c</code></td>
+<td>续传守护：遇到网络中断时无需从头再来，支持从中断的断点处继续拼接下载文件。</td>
+</tr>
+<tr>
+<td><code>-r</code></td>
+<td>爬虫模式：开启递归下载，能够顺藤摸瓜地下载指定 URL 页面中嵌套的所有关联链接。</td>
+</tr>
+<tr>
+<td><code>-np</code></td>
+<td>边界控制：在进行递归下载时，严格禁止工具向上爬取到父级目录，防止下载范围失控。</td>
+</tr>
+<tr>
+<td><code>-nH</code></td>
+<td>扁平化存储：默认递归会生成带有主机名的冗长文件夹，此参数可禁止创建主机目录，直接把文件散布在当前目录。</td>
+</tr>
+<tr>
+<td><code>-b</code></td>
+<td>隐身模式：立刻将庞大的下载任务丢进系统后台静默执行，释放当前终端控制权。</td>
+</tr>
+<tr>
+<td><code>-q</code></td>
+<td>极简模式：开启静默状态，大幅度减少屏幕上的进度条和输出信息。</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>啰嗦模式：与 <code>-q</code> 相反，输出极其详尽的连接和下载调试信息。</td>
+</tr>
+<tr>
+<td><code>-h</code> 或 <code>--help</code></td>
+<td>呼叫支援：打印出所有可用的选项参数与帮助说明。</td>
+</tr>
+<tr>
+<td><code>-y</code></td>
+<td>强制通过：在遭遇需要用户干预或确认的步骤时，机器自动回答 “yes”。</td>
+</tr>
+<tr>
+<td><code>–limit-rate</code></td>
+<td>宽带节流：在下载超大文件时极其有用，能够限制 wget 的最大下载速率，防止其挤占所有网络带宽。</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>批量作业：允许从一个事先写好的文本文件中读取成百上千个 URL 进行排队下载。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>八大实战运用案例</strong></p>
+<ol>
+<li><p><strong>基础下载并更名</strong>：抓取远程 zip 并重命名保存：<code>wget http://example.com/file.zip -O myfile.zip</code>。</p>
+</li>
+<li><p><strong>断线拯救机制</strong>：如果之前下载了一半断电了，加上 <code>-c</code> 即可拯救：<code>wget -c http://example.com/file.zip</code>。</p>
+</li>
+<li><p><strong>整站目录克隆</strong>：利用 <code>-r -np -nH --cut-dirs=2</code> 等组合拳，可以将目标站点的某个深层目录完美复刻到本地指定路径 <code>/path/to/save</code> 下：<code>wget -r -np -nH --cut-dirs=2 http://example.com/dir/ -P /path/to/save</code>。</p>
+</li>
+<li><p><strong>后台无感下载</strong>：对于几十个G的镜像，直接运行 <code>wget -b http://example.com/file.zip</code> 让它在后台慢慢拖。</p>
+</li>
+<li><p><strong>纯净静默下载</strong>：在编写 shell 脚本时为了不让 wget 输出扰乱日志，加上 <code>-q</code> 参数：<code>wget -q http://example.com/file.zip</code>。</p>
+</li>
+<li><p><strong>全自动确认</strong>：省去所有询问烦恼，一路绿灯：<code>wget -y http://example.com/file.zip</code>。</p>
+</li>
+<li><p><strong>温柔限速下载</strong>：为了不影响同机房的其他业务，将下载速度死死卡在 300KB/s：<code>wget –limit-rate=300k http://example.com/file.zip</code>。</p>
+</li>
+<li><p><strong>海量文件批处理</strong>：先用 <code>cat &gt; filelist.txt</code> 建立一个包含 url1, url2… 的文本清单，随后执行 <code>wget -i filelist.txt</code>，wget 便会按图索骥逐一下载。</p>
+</li>
+</ol>
+<hr>
+<h2 id="Linux文件纵深搜寻与定位"><a href="#Linux文件纵深搜寻与定位" class="headerlink" title="Linux文件纵深搜寻与定位"></a>Linux文件纵深搜寻与定位</h2><p>在庞杂的系统目录中犹如大海捞针般寻找关键文件，是取证人员的基本功。</p>
+<h3 id="find-命令"><a href="#find-命令" class="headerlink" title="find 命令"></a><code>find</code> 命令</h3><p><strong>宏观指令架构</strong></p>
+<blockquote>
+<p><code>find &lt; path &gt; &lt; expression &gt; &lt; cmd &gt;</code></p>
+</blockquote>
+<ul>
+<li><p><strong>path</strong>：明确指定搜寻任务的起点目录（及其所有子孙目录），若留空则默认在当前目录原地搜寻。</p>
+</li>
+<li><p><strong>expression</strong>：高度定制化的搜索特征描述符（如名字、权限、大小等）。</p>
+</li>
+<li><p><strong>cmd</strong>：搜到结果后，顺手对这些结果执行的系统动作。</p>
+</li>
+<li><p>_注意：如果没有任何参数，<code>find</code> 会极其狂野地遍历当前目录下所有层级的所有文件，并毫无保留地喷洒在屏幕上。_</p>
+</li>
+</ul>
+<p><strong>核心过滤参数全景展示与实录</strong></p>
+<ul>
+<li><p><strong><code>-name</code> (按名索骥)</strong>：严格按照文件名进行筛查。</p>
+<ul>
+<li><p>示例1：<code>find /dir -name filename</code> 在 <code>/dir</code> 下精确寻找该名字的文件。</p>
+</li>
+<li><p>示例2：<code>find . -name &quot;*.c&quot;</code> 在当前及子目录抓取所有 <code>.c</code> 结尾的 C 语言源码文件。</p>
+</li>
+<li><p>示例3：<code>find /etc -name &quot;[A-Z]*.txt&quot; -print</code> 借助正则在 etc 下寻找所有必须以大写字母开头的 txt 文本。</p>
+</li>
+<li><p>_高级用法 <code>-iname</code>_：加上 <code>i</code> 代表大小写脱敏（ignore case），搜索时不再区分大小写。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>硬链接与 inode 追踪</strong>：通过 <code>ls -i 1.txt</code> 查明文件的 inode 核心编号（例如 138956），然后使用 <code>find . -num 138956</code> 就能把系统中所有指向该文件的硬链接统统揪出来。</p>
+</li>
+<li><p><strong><code>-perm</code> (权限筛查)</strong>：取证时常用来寻找权限异常配置的文件。例如 <code>find . -perm 755 -print</code> 能把当前目录里所有属主可读写执行、其他人只读执行的文件全部找出来。更进阶地，可以用 <code>find ~ -type f -perm 4755 -print</code> 来查找被设置了高度危险的 SUID 位且权限为 755 的文件。</p>
+</li>
+<li><p><strong><code>-prune</code> (禁区划定)</strong>：明确告诉 find 命令不要踏入指定的目录雷区。</p>
+<ul>
+<li><p>示例1：<code>find /apps -path &quot;/apps/bin&quot; -prune -o -print</code> 表示要在 <code>/apps</code> 下找文件，但严禁涉足 <code>/apps/bin</code> 目录。</p>
+</li>
+<li><p>示例2：<code>find . -name &quot;out*&quot; -prune -o -name &quot;*.txt&quot; -print</code> 意味着在当前目录查找时，凡是碰到 out 开头的不仅不找 txt，甚至直接跳过该分支。</p>
+</li>
+<li><p>_特例_：如果强行与 <code>-depth</code> 同用，<code>-prune</code> 将会彻底失效并被系统无视。</p>
+</li>
+</ul>
+</li>
+<li><p><strong><code>-depth</code> (深潜模式)</strong>：改变搜索逻辑，不先查当前表面文件，而是直接憋气潜入最深层的子目录开始由下往上反向查找。例如 <code>find / -name &quot;CON.FILE&quot; -depth -print</code>。</p>
+</li>
+<li><p><strong>属主与属组追踪</strong>：</p>
+<ul>
+<li><p><code>-user</code>：找特定主人的文件，如 <code>find ~ -user sam -print</code>。</p>
+</li>
+<li><p><code>-group</code>：找特定组的文件，如 <code>find /apps -group gem -print</code>。</p>
+</li>
+<li><p><code>-nouser</code> / <code>-nogroup</code>：这是取证界的明星参数！专门用于在 <code>/etc/passwd</code> 或 <code>/etc/groups</code> 中找出没有合法主人或组的“幽灵文件”（多为黑客残留或删号遗留），如 <code>find /home -nouser -print</code>。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>时间维度追踪</strong>：</p>
+<ul>
+<li><p><code>-mtime -n +n</code>：按文件内文被篡改的日期来找。<code>-n</code> 锁定距离现在的 n 天内，<code>+n</code> 则锁定 n 天之前那段古老岁月。</p>
+</li>
+<li><p>示例：<code>find / -mtime -5 -print</code> 找出根目录下最近5天内被改过的活跃文件。<code>find /var/adm -mtime +3 -print</code> 找出3天以前的陈旧日志。</p>
+</li>
+<li><p><code>-newer file1 ! file2</code>：寻找更新时间恰好卡在 file1 之后，但在 file2 之前的文件区间。</p>
+</li>
+</ul>
+</li>
+<li><p><strong><code>-type</code> (物种分类)</strong>：限定你要找的是什么形态的实体。</p>
+<ul>
+<li><p><code>f</code> - 普普通通的文件。</p>
+</li>
+<li><p><code>d</code> - 文件夹（目录），如 <code>find /etc -type d -print</code>。</p>
+</li>
+<li><p><code>l</code> - 犹如快捷方式的符号链接文件，如 <code>find /etc -type l -print</code>。</p>
+</li>
+<li><p><code>b</code> / <code>c</code> / <code>p</code> - 分别对应极其底层的块设备（磁盘）、字符设备（鼠标网卡）和管道文件。</p>
+</li>
+<li><p>巧用反向逻辑：<code>find . ! -type d -print</code> 就能找出当前目录下除了目录之外的所有东西。</p>
+</li>
+</ul>
+</li>
+<li><p><strong><code>-size</code> (体积称重)</strong>：精准测算大小。</p>
+<ul>
+<li><p><code>+1m</code>：大于 1 兆字节的巨无霸。</p>
+</li>
+<li><p><code>100c</code>：精确到连1个字节都不差，刚好 100 字节的文件。</p>
+</li>
+<li><p><code>+10</code>：超过 10 个数据块的文件（在Linux中一块通常等价于 512 字节）。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>边界与跟踪</strong>：</p>
+<ul>
+<li><p><code>-mount</code>：极其保守的搜索，绝不跨越文件系统的 mount 挂载点去别的文件系统找，如 <code>find . -name &quot;*.XC&quot; -mount -print</code>。</p>
+</li>
+<li><p><code>-follow</code>：极其尽责的搜索，遇到符号链接不把它当普通文件，而是死死追踪到它背后的真实源文件。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>高阶动作挂载 (<code>-exec</code> 与 <code>-ok</code>)</strong>：这是 find 蜕变为自动神器的关键。</p>
+<ul>
+<li><p><code>-exec</code>：对搜到的每一个结果强行执行后面的 shell 命令。格式固定为 <code>&#39;command&#39; &#123;&#125; \;</code>，这里的 <code>&#123;&#125;</code> 代表搜到的文件，且 <code>&#123;&#125;</code> 与 <code>\;</code> 之间必须要有神圣的空格。</p>
+<ul>
+<li><p>杀手锏1：<code>find ./ -size 0 -exec rm &#123;&#125; \;</code> 找出所有0字节空文件并残忍删除。</p>
+</li>
+<li><p>杀手锏2：<code>find . -type f -exec ls -l &#123;&#125; \;</code> 找出所有普通文件并以长格式展示它们。</p>
+</li>
+<li><p>杀手锏3：<code>find /logs -type f -mtime +5 -exec rm &#123;&#125; \;</code> 在 /logs 目录定期清理 5天前的老旧日志文件。</p>
+</li>
+</ul>
+</li>
+<li><p><code>-ok</code>：是 <code>-exec</code> 的安全带版本。它作用完全一致，但在执行每一个删除或修改命令前，系统都会强行暂停并弹窗质问用户是否确认，极其适合防止高危误操作。例如 <code>find . -name &quot;*.conf&quot; -mtime +5 -ok rm &#123; &#125; \;</code> 就会在删旧配置前反复询问。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="grep-命令"><a href="#grep-命令" class="headerlink" title="grep 命令"></a><code>grep</code> 命令</h3><p><strong>宏观指令架构</strong></p>
+<blockquote>
+<p><code>grep [选项] pattern [文件名]</code></p>
+</blockquote>
+<p><strong>命令选项矩阵</strong></p>
+<ul>
+<li><p><code>-?</code>：提供上帝视角，在显示匹配行的同时，一并展示其上下的特定行数上下文，例如 <code>grep -2 pattern filename</code> 显示上下各两行。</p>
+</li>
+<li><p><code>-b</code> / <code>--byte-offset</code>：深度定位，在打印出来的匹配行前方，附加上该行在磁盘上的精确块号码。</p>
+</li>
+<li><p><code>-c</code> / <code>--count</code>：数据统计模式，对内容毫无兴趣，只冷酷地输出总共匹配命中了多少行。</p>
+</li>
+<li><p><code>-f File</code> / <code>--file=File</code>：批量模板匹配，从指定的文本文件（File）中提取出大批量的匹配模板去搜寻（若文件为空则必定什么都搜不到）。</p>
+</li>
+<li><p><code>-h</code> / <code>--no-filename</code>：在横跨多个文件进行广域搜索时，强制不显示命中行所属的文件名前缀，使输出更纯粹。</p>
+</li>
+<li><p><code>-i</code> / <code>--ignore-case</code>：大小写脱敏搜索，彻底忽略字母大小写的鸿沟（默认 grep 是极其严苛区分大小写的）。</p>
+</li>
+<li><p><code>-q</code> / <code>--quiet</code>：特工模式，完全取消屏幕输出反馈，仅通过底层的返回退出状态码（0 代表成功找到）来默默传递结果。</p>
+</li>
+<li><p><code>-l</code> / <code>--files-with-matches</code>：文件筛选器，只要文件里含有符合的内容，就只打印该文件的名称，而不是里面的乱码内容。</p>
+</li>
+<li><p><code>-L</code> / <code>--files-without-match</code>：反向文件筛选，专门挑出那些完全不含有匹配模板的“干净”文件清单。</p>
+</li>
+<li><p><code>-n</code> / <code>--line-number</code>：代码审计最爱，在终端输出的命中内容最前方，烙印上确切的代码行号。</p>
+</li>
+<li><p><code>-s</code> / <code>--silent</code>：容错模式，当遭遇目标文件根本不存在或者因权限过低无法读取时，咽下报错信息，保持版面整洁。</p>
+</li>
+<li><p><code>-v</code> / <code>--revert-match</code>：叛逆逻辑，执行反检索，专门显示那些<strong>没有</strong>被 pattern 匹配上的无辜行。</p>
+</li>
+<li><p><code>-w</code> / <code>--word-regexp</code>：绝对单词匹配。只有当整个单词完全吻合时才抓取（比如找 <code>magic</code> 绝不会牵连 <code>magical</code>），等同于表达式被 <code>&lt;</code> 和 <code>&gt;</code> 严密包裹。</p>
+</li>
+<li><p><code>-V</code> / <code>--version</code>：常规操作，显示软件当前的版本号信息。</p>
+</li>
+<li><p><code>-C number</code>：上下文捕捉，匹配的上下文分别显示指定的 number 行。</p>
+</li>
+</ul>
+<p><strong>正则表达式 (Pattern) 核心符号</strong></p>
+<ul>
+<li><p><code>.</code> 代表匹配天地间任意一个单字符。</p>
+</li>
+<li><p><code>*</code> 赋予力量，匹配其紧随的前方字符 0 次或成千上万次。</p>
+</li>
+<li><p><code>^</code> 和 <code>$</code> 是定海神针，分别强制要求从一行的最开头和最末尾进行锚定匹配。</p>
+</li>
+<li><p><code>[]</code> 构造字符禁区，匹配括号内的任意单字符，可用 <code>-</code> 划定势力范围（如 <code>[a-z]</code> 代表全部小写英文字母大军）。</p>
+</li>
+<li><p><code>\</code> 转义使者，消除特殊符号的魔力使其化为普通字符。</p>
+</li>
+</ul>
+<p><strong>复杂实战场景推演</strong></p>
+<ul>
+<li><p><strong>管道联合作战</strong>：<code>ls -l | grep &#39;^a&#39;</code> 通过管道符（|）截获了 ls 的海量输出，并用正则筛选出绝对以字母 ‘a’ 打头的所有行。</p>
+</li>
+<li><p><strong>多文件狂轰滥炸</strong>：<code>grep &#39;test&#39; d*</code> 深入所有文件名以 d 开头的文件中，无情搜刮包含 ‘test’ 字样的所有行。同理，<code>grep &#39;test&#39; aa bb cc</code> 会在 aa, bb, cc 三个明确文件中同时展开搜索。</p>
+</li>
+<li><p><strong>范围条件苛求</strong>：<code>grep &#39;[a-z]&#39; aa</code> 专挑那些包含了连绵不断至少 5 个连续小写字母的超长字符串的行。</p>
+</li>
+<li><p><strong>极高阶内存缓存匹配 (egrep/转义)</strong>：<code>grep &#39;w\(es\)t.*\1&#39; aa</code> 这是一场复杂的逻辑游戏（文档中提及使用 egrep 或 -E 可以省略双引号转义写为 <code>&#39;w(es)t.*&#39;</code>）。如果 west 匹配成功，中间的 es 会被瞬间封印进内存并标记为编号 1；紧接着允许中间穿插任意字符 (<code>.*</code>)；最后必须紧跟着重现刚刚封印的内存 1 (即 <code>\1</code> 或者在此例中解释为再次寻找另外一个 es)，只有跑通整个迷宫的行才会被展示。</p>
+</li>
+<li><p><strong>双重逻辑管网</strong>：</p>
+<ul>
+<li><p>逻辑“或”近似替代：文档中指出可实现显示匹配 pattern1 <strong>或</strong> pattern2 的行。</p>
+</li>
+<li><p>逻辑“与”层层递进：<code>grep pattern1 files | grep pattern2</code> 先筛出一波包含特征 1 的，再扔进管道进行二次压榨，最终只剩下既包容 pattern1 又包容 pattern2 的黄金数据行。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="xargs-命令"><a href="#xargs-命令" class="headerlink" title="xargs 命令"></a><code>xargs</code> 命令</h3><p><strong>为何需要它？(背景与痛点)</strong></p>
+<p>很多强悍的 Linux 核心命令天生有缺陷，它们极其固执，根本拒不接受标准输入（stdin）或管道符 <code>|</code> 传来的数据作为自己的参数。举个致命的例子：<code>find /sbin -perm +700 | ls -l</code> 这种写法在逻辑上看似完美，但在现实中是彻底失效的错误命令，因为 ls 压根不理会管道送来的文件列表。并且，有些系统对于一次性塞给 <code>-exec</code> 的命令长度有物理极限，一旦文件过多就会引爆“参数列太长”的系统级崩溃报错。</p>
+<p>这就迫切需要 <code>xargs</code> 降临！它的核心使命就是将上游流淌过来的标准输入（stdin）数据，通过识别空格或回车等断行符进行精准切割，化作一个个标准的 arguments（参数），然后喂给下游命令的尾部。正确的姿势应当是：<code>find /sbin -perm +700 | xargs ls -l</code>。</p>
+<p><strong>核心选项深度解剖</strong></p>
+<ul>
+<li><p><strong><code>-0</code> (零字符保护伞)</strong>：由于 xargs 默认把空格当切割刀，一旦遇到带有特殊字元（如空格、单引号、双引号等）的变态文件名，它就会切错导致误判。<code>-0</code> 参数强制它将 stdin 中的所有东西全当成一般纯文本字符处理，保全文件名的完整性。例如：<code>echo &quot;//&quot;|xargs -0 echo</code> 完美输出 <code>/</code>。</p>
+</li>
+<li><p><strong><code>-a file</code> (文本汲取)</strong>：抛弃管道，直接从指定的文件深渊里读取内容作为标准输入。例：<code>xargs -a test echo</code>。</p>
+</li>
+<li><p><strong><code>-e flag</code> 或 <code>-E flag</code> (死亡休止符)</strong>：设定一个强制停止符（必须用空格隔开）。一旦 xargs 在疯狂解析输入时碰到了这个命定的 flag 标志词，它就会像触电一样立刻全盘停止后续的所有解析工作。例：<code>cat txt|xargs -E &#39;shou&#39; echo</code>，遇到 ‘shou’ 瞬间刹车。</p>
+</li>
+<li><p><strong><code>-p</code> (步步惊心模式)</strong>：每当 xargs 准备向后方命令投递参数并执行前，都会强行中断并向人类使用者发出询问，输入 <code>y</code> 确认后才敢放行。</p>
+</li>
+<li><p><strong><code>-n num</code> (定量投喂)</strong>：控制贪欲，设定每次投喂给后方命令的 argument 的确切数量。默认它是全盘托出，加上 <code>-n1</code> 就是一次只喂 1 个，比如 <code>cat txt|xargs -n1 echo</code> 会把一行长文本变成极度规整的一列多行输出。</p>
+</li>
+<li><p><strong><code>-t</code> (透明执行)</strong>：在后台真正开干之前，先把即将执行的完整命令一字不落地打印在终端屏幕上，做到绝对的公开透明。</p>
+</li>
+<li><p><strong><code>-i</code> 或 <code>-I &lt;指示符&gt;</code> (位置黑客)</strong>：这是 xargs 中最逆天的功能！由于默认只能把参数硬塞在下游命令的最后面，但如 <code>cp &#123;上游结果&#125; destFolder</code> 这种需要将参数插在中间的命令就会极其尴尬。使用 <code>-I %</code> 就可以定义 <code>%</code> 为指示占位符。例如 <code>ls *.bak | xargs -I % cp % /tmp/test</code> 中，第一个 <code>%</code> 是神圣声明，第二个 <code>%</code> 则是精确制导的调用占位。你也可以用传统的 <code>&#123;&#125;</code>，像 <code>ls | xargs -t -i mv &#123;&#125; &#123;&#125;.bak</code> 完美实现批量改名。</p>
+</li>
+<li><p><strong><code>-r</code> (空转保护)</strong>：也就是 <code>no-run-if-empty</code>。一旦探测到 xargs 的上游输入空空如也，直接拉闸停止，绝不浪费系统资源去执行下游那毫无意义的空命令。</p>
+</li>
+<li><p><strong><code>-s num</code> (长度天花板)</strong>：严格框定 xargs 后方紧跟着的那个命令的最大字符总长度。一旦传入的参数使其超载，立刻无情报错并拒绝对超标部分执行。</p>
+</li>
+<li><p><strong><code>-L num</code> / <code>-l</code> (行数天花板)</strong>：规定每次执行最多只能吃进多少行的非空白输入数据。</p>
+</li>
+<li><p><strong><code>-d delim</code> (自定义切割刀)</strong>：不满于默认的回车和空格分割？用此参数强行篡改 xargs 识别切分块的边界字符。</p>
+</li>
+<li><p><strong><code>-x</code> (超载自毁)</strong>：通常配合 <code>-s</code> 使用，一旦越界立刻退出系统进程。</p>
+</li>
+<li><p><strong><code>-P</code> (多核并发爆发)</strong>：瞬间提升生产力，修改工具允许同时跑的最大系统进程数。默认可悲的只有 1，若敢于设置为 0，它将彻底解除封印，疯狂拉起 <code>as many as it can</code>（它所能企及的极限）的进程并发执行任务。</p>
+</li>
+</ul>
+<p><strong>极客联合实战案例</strong></p>
+<ul>
+<li><p><strong>配合 file 验明正身</strong>：通过 <code>find / -type f -print |xargs file</code>，将茫茫大海里的普通文件捞出，一批批送进 file 仪测定其真实的底层文件格式。</p>
+</li>
+<li><p><strong>清理崩溃遗迹 core 文件</strong>：<code>find . -name &quot;core*&quot; -print|xargs echo &quot; &quot;&gt;/tmp/core.log</code>，找到系统崩溃吐出的巨大 core 文件，并将其信息重定向记入日志。</p>
+</li>
+<li><p><strong>极致的后台批量抹杀</strong>：用 <code>find ./ -size 0 | xargs rm -f &amp;</code> 在系统后台无声无息地抹去所有碍眼的零字节废文件。</p>
+</li>
+<li><p><strong>批量剥夺权限</strong>：<code>find / -type f -print | xargs chmod o -w</code> 对全盘文件重拳出击，拔除所有“其他人”的写入权限，极大稳固系统安全防线。</p>
+</li>
+<li><p><strong>广域字符串猎杀</strong>：<code>find . -name * -print |xargs grep &quot;DBO&quot;</code> 遍历当下所有文件，并在其中翻江倒海地寻找 “DBO” 字符串。</p>
+</li>
+</ul>
+<hr>
+<h3 id="locate-命令"><a href="#locate-命令" class="headerlink" title="locate 命令"></a><code>locate</code> 命令</h3><p>如果说 find 是地毯式的一寸寸挖掘，那 <code>locate</code> 就是直接翻开上帝视角的账本。它实际上是 <code>find -name</code> 的超级极速版替身，但查询速度有着碾压级的优势。</p>
+<p><strong>极速背后的原理与致命弱点</strong></p>
+<p>其快如闪电的根本原因在于，它绝对不去苦哈哈地遍历真实的硬盘目录，而是直接去查询一个事先建立好的巨大本地信息数据库（路径固定在 <code>/var/lib/locatedb</code>）。Linux 系统极其聪慧，会自动在后台创建这个数据库，并在每天定时执行一次全盘扫描更新。</p>
+<p>但致命代价也随之而来：任何在今天数据库更新之后才刚刚发生变动或被凭空创造的文件，对 <code>locate</code> 而言就像隐形了一样，完全查不到！为了破解这种尴尬，取证人员在搜寻前，必须要有强迫症般地先敲下 <code>updatedb</code> 命令，强迫系统立刻去扫描硬盘刷新该底层数据库。</p>
+<p><strong>实战狙击</strong></p>
+<ul>
+<li><p><strong>前缀速搜</strong>：<code>locate /etc/sh</code> 瞬间锁定 etc 这片区域内所有以 sh 为首缀的文件名单。</p>
+</li>
+<li><p><strong>无视大小写的宽泛搜索</strong>：利用 <code>-i</code> 参数执行 <code>locate -i ~/m</code>，在用户自己的地盘里把所有 m 或 M 开头的文件一锅端。</p>
+</li>
+</ul>
+<hr>
+<h3 id="whereis-命令"><a href="#whereis-命令" class="headerlink" title="whereis 命令"></a><code>whereis</code> 命令</h3><p>这个命令极其偏科且固执，它绝不理会普通的凡夫俗子文件，它的雷达<strong>只能且仅能</strong>用于寻找系统程序名背后的核心三大件：</p>
+<ol>
+<li><p>极其底层的<strong>二进制可执行文件</strong>（通过 <code>-b</code> 参数锁定）。</p>
+</li>
+<li><p>详尽的 <strong>man 帮助说明文档</strong>（通过 <code>-m</code> 参数锁定）。</p>
+</li>
+<li><p>开发者的 <strong>源代码文件</strong>（通过 <code>-s</code> 参数锁定）。</p>
+<p> 如果执行时不带任何偏见参数，它将慷慨地把这三类所有关联信息一次性吐给你。例如执行 <code>whereis grep</code>，它不仅告诉你程序的本体在 <code>/bin/grep</code>，还会连带把藏在 <code>/usr/share/man/...</code> 下的帮助说明文件路径一并甩出。</p>
+</li>
+</ol>
+<hr>
+<h3 id="which-命令"><a href="#which-命令" class="headerlink" title="which 命令"></a><code>which</code> 命令</h3><p>当我们敲击一个指令时，系统究竟唤醒了哪里的幽灵？<code>which</code> 命令的作用就是在极其关键的全局 <code>PATH</code> 环境变量所死死限定的路径列表中，去搜寻某个系统命令的藏身之所，并且一旦找到第一个符合条件的目标就会立刻折返并返回结果。</p>
+<p>这就意味着，利用 <code>which</code> 我们可以一眼看穿某个系统命令当前是否在系统里苟延残喘（是否存在），以及你刚才执行的，到底是系统正规路径下冰清玉洁的命令，还是黑客在其他路径伪造的李鬼版本。例如敲击 <code>which grep</code>，它会老老实实地交代 <code>/bin/grep</code> 这一绝对路径。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org">chen7chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/">http://blog.xchstudy.org/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.xchstudy.org" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.chenjichao.site/raw/10.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/Centos%E5%AD%A6%E4%B9%A0/" title="系统取证——centos"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/9.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">系统取证——centos</div></div></a></div><div class="next-post pull-right"><a href="/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/1%20%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" title="流量分析基础——网络模型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/2.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">流量分析基础——网络模型</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chen7chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">201</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">50</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">147</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81%E4%B8%8E%E6%A0%B8%E5%BF%83%E6%93%8D%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">Linux系统文件信息取证与核心操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E6%A0%B8%E5%BF%83%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4"><span class="toc-number">1.1.</span> <span class="toc-text">Linux核心文件操作指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ls-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.1.</span> <span class="toc-text">ls 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#echo-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.2.</span> <span class="toc-text">echo 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tar-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.3.</span> <span class="toc-text">tar 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wget-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.4.</span> <span class="toc-text">wget 命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E6%96%87%E4%BB%B6%E7%BA%B5%E6%B7%B1%E6%90%9C%E5%AF%BB%E4%B8%8E%E5%AE%9A%E4%BD%8D"><span class="toc-number">1.2.</span> <span class="toc-text">Linux文件纵深搜寻与定位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#find-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text">find 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#grep-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.2.</span> <span class="toc-text">grep 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xargs-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.3.</span> <span class="toc-text">xargs 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#locate-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.4.</span> <span class="toc-text">locate 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#whereis-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.5.</span> <span class="toc-text">whereis 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#which-%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.6.</span> <span class="toc-text">which 命令</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/Linux%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81%E5%9F%BA%E7%A1%80/" title="内存取证基础——linux">内存取证基础——linux</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/Macos%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/" title="内存取证基础——macos">内存取证基础——macos</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/Centos%E5%AD%A6%E4%B9%A0/" title="系统取证——centos">系统取证——centos</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/" title="linux取证——文件取证">linux取证——文件取证</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/1%20%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" title="流量分析基础——网络模型">流量分析基础——网络模型</a><time datetime="2026-04-05T16:00:00.000Z" title="发表于 2026-04-06 00:00:00">2026-04-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By chen7chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络安全/网络攻防/2-防御技术/电子取证/服务器取证/linux/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 linux (10)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络安全/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 网络安全 (141)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/计算机原理/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (43)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/计算机原理/编程语言/编程/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (36)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="http://blog.xchstudy.org/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/2.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-08-06</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">PHP 数据类型</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-13</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">pandas</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">linux系统变量</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>

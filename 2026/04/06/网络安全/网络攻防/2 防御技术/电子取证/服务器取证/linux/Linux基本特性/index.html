@@ -1,0 +1,768 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>linux基本特性 | 小chen妙妙屋</title><meta name="author" content="chen7chen"><meta name="copyright" content="chen7chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="单用户模式与Root密码重置在Linux系统的日常维护中，管理员经常会遇到忘记Root密码或者系统因配置错误无法正常引导的情况。此时，单用户模式（Single-User Mode）就成为了一个至关重要的紧急修复通道。 拦截并进入系统引导菜单 中断内核启动引导：当服务器或虚拟机刚开始启动时，系统会加载GRUB引导加载程序。在屏幕上出现内核启动顺序选择界面时，必须迅速按下键盘上的任意键，打断默认的倒计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux基本特性">
+<meta property="og:url" content="http://blog.xchstudy.org/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/Linux%E5%9F%BA%E6%9C%AC%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="单用户模式与Root密码重置在Linux系统的日常维护中，管理员经常会遇到忘记Root密码或者系统因配置错误无法正常引导的情况。此时，单用户模式（Single-User Mode）就成为了一个至关重要的紧急修复通道。 拦截并进入系统引导菜单 中断内核启动引导：当服务器或虚拟机刚开始启动时，系统会加载GRUB引导加载程序。在屏幕上出现内核启动顺序选择界面时，必须迅速按下键盘上的任意键，打断默认的倒计">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.chenjichao.site/raw/1.webp">
+<meta property="article:published_time" content="2026-04-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-07T10:39:42.472Z">
+<meta property="article:author" content="chen7chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.chenjichao.site/raw/1.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.xchstudy.org/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/Linux%E5%9F%BA%E6%9C%AC%E7%89%B9%E6%80%A7/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'linux基本特性',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2026-04-07 18:39:42'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小chen妙妙屋" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">201</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">50</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">147</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.chenjichao.site/raw/1.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">linux基本特性</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-05T16:00:00.000Z" title="发表于 2026-04-06 00:00:00">2026-04-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-07T10:39:42.472Z" title="更新于 2026-04-07 18:39:42">2026-04-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="linux基本特性"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="单用户模式与Root密码重置"><a href="#单用户模式与Root密码重置" class="headerlink" title="单用户模式与Root密码重置"></a>单用户模式与Root密码重置</h1><p>在Linux系统的日常维护中，管理员经常会遇到忘记Root密码或者系统因配置错误无法正常引导的情况。此时，单用户模式（Single-User Mode）就成为了一个至关重要的紧急修复通道。</p>
+<h2 id="拦截并进入系统引导菜单"><a href="#拦截并进入系统引导菜单" class="headerlink" title="拦截并进入系统引导菜单"></a>拦截并进入系统引导菜单</h2><ul>
+<li><strong>中断内核启动引导</strong>：当服务器或虚拟机刚开始启动时，系统会加载GRUB引导加载程序。在屏幕上出现内核启动顺序选择界面时，必须迅速按下键盘上的任意键，打断默认的倒计时自动引导过程。接着，通过键盘的上下方向键，让光标稳定停留在你需要启动的Linux内核项上。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1769853938636_1370907-20191108150022078-2060309953.png" alt="1370907-20191108150022078-2060309953.png"></p>
+<ul>
+<li><strong>进入内核编辑模式</strong>：在选中目标Linux内核启动项后，仔细阅读屏幕下方的操作提示，此时键入小写字母 <code>e</code>，即可进入内核启动参数的编辑界面。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1769854025941_1370907-20191108150110236-1925877185.png" alt="1370907-20191108150110236-1925877185.png"></p>
+<ul>
+<li><strong>定位核心配置行</strong>：在打开的编辑界面中，文本内容可能较多。请使用键盘方向键向下滚动，准确找到以 <code>kernel</code> 或 <code>linux16</code> 作为开头的那一行（通常在配置块的中间偏下位置）。定位后，可以再次按下按键 <code>e</code> 或直接移动光标准备修改参数。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1769854071215_1370907-20191108150135754-1221782718.png" alt="1370907-20191108150135754-1221782718.png"></p>
+<h2 id="内核启动选项参数深度解析"><a href="#内核启动选项参数深度解析" class="headerlink" title="内核启动选项参数深度解析"></a>内核启动选项参数深度解析</h2><p>在内核启动时，我们可以通过追加不同的参数来改变系统的行为状态：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">核心启动参数</th>
+<th style="text-align:left">底层运行含义与应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>init=/sbin/init</code></td>
+<td style="text-align:left">明确指示Linux内核，在启动的最后阶段使用 <code>/sbin/init</code> 作为系统的第一个用户级进程（PID为1）来接管系统初始化工作。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>init=/bin/bash</code></td>
+<td style="text-align:left">这是一个极其强硬的截断指令。它会告诉内核跳过所有常规的系统初始化脚本和服务加载，直接启动一个处于内存中的 bash shell 解释器。这在进行紧急系统恢复和底层调试时极为有效。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>root=/dev/foo</code></td>
+<td style="text-align:left">用于强制重定向根文件系统。它告诉内核不要使用默认配置，而是强制挂载 <code>/dev/foo</code> 所代表的硬件设备作为系统的根（<code>/</code>）目录。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>single</code></td>
+<td style="text-align:left">指示系统不要进入多用户图形或网络模式，而是直接引导进入只允许单个用户（通常是root）在控制台进行操作的单用户模式。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="密码重置的完整实操流程"><a href="#密码重置的完整实操流程" class="headerlink" title="密码重置的完整实操流程"></a>密码重置的完整实操流程</h2><ul>
+<li><strong>修改参数并执行引导</strong>：使用光标移动到 <code>linux16</code> 这一长行的最末尾，输入一个空格后，加上指令 <code>rw single init=/bin/bash</code>（<code>rw</code>表示以读写模式挂载，以便后续修改密码文件）。参数确认无误后，按下 <code>ctrl+x</code> 组合键，系统将根据你刚刚设定的临时参数开始引导。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1769854428874_image.png" alt="image.png"></p>
+<ul>
+<li><strong>应对“环境缺失”报错</strong>：当成功进入命令行界面后，如果你急于求成直接输入 <code>passwd root</code> 尝试修改密码，系统很大几率会无情地报错：<code>passwd root command not found</code>。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1769854244570_v2-6d1d91ab25ca53b4150ba4926d609dc6_1440w.webp" alt="v2-6d1d91ab25ca53b4150ba4926d609dc6_1440w.webp"></p>
+<ul>
+<li><strong>理解并执行环境切换（chroot）</strong>：为什么会找不到命令？因为此时你所处的运行环境，仅仅是一个由内存虚拟出来的极简安全模式系统（类似微型WinPE），你还没有真正“进入”服务器硬盘上安装的那个完整的Linux操作系统。为了能够修改真实的root密码，必须执行 <code>chroot /sysroot/</code> 命令，将根目录从内存临时环境切换到真实的系统根目录下。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1769854271206_v2-82a9d2afab5eb9f771f66ea4ec1f6b1e_1440w.webp" alt="v2-82a9d2afab5eb9f771f66ea4ec1f6b1e_1440w.webp"></p>
+<ul>
+<li><strong>SELinux上下文自动重置（极其重要）</strong>：在通过 <code>passwd</code> 命令成功修改密码后，必须执行一步关键的安全策略恢复操作：运行 <code>touch /.autorelabel</code> 命令。这一步的作用是在根目录下创建一个隐藏的标记文件。当系统重启时，如果SELinux处于开启状态，它会检测到这个文件，并花费一些时间重新为整个文件系统打上正确的安全标签。<strong>如果不进行这一步操作，修改密码后的安全上下文错乱将导致你重启后依然无法正常登录操作系统</strong>。</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1769854304262_v2-bee961b3a55adaed99bd2e57cd7e4af9_1440w.webp" alt="v2-bee961b3a55adaed99bd2e57cd7e4af9_1440w.webp"></p>
+<hr>
+<h1 id="Shell"><a href="#Shell" class="headerlink" title="Shell"></a>Shell</h1><h2 id="Shell-体系的概念与分类"><a href="#Shell-体系的概念与分类" class="headerlink" title="Shell 体系的概念与分类"></a>Shell 体系的概念与分类</h2><ul>
+<li><strong>核心定义</strong>：Shell在本质上并不是系统内核的一部分，而是一种特殊的应用程序。它在用户和操作系统内核之间搭建了一座沟通的桥梁，提供了一种交互界面。用户正是通过这个界面输入指令，从而访问并调用操作系统内核所提供的各项底层服务和资源。</li>
+<li><strong>两大主要流派</strong>：<ul>
+<li><strong>图形界面shell (GUI shell)</strong>：例如GNOME、KDE等桌面环境，提供窗口、图标等可视化交互方式。</li>
+<li><strong>命令行式shell (CLI shell)</strong>：例如Bash、Zsh等，提供纯文本的字符指令输入与输出环境，是服务器管理的主力工具。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Bash环境下的转义字符与排版控制"><a href="#Bash环境下的转义字符与排版控制" class="headerlink" title="Bash环境下的转义字符与排版控制"></a>Bash环境下的转义字符与排版控制</h2><p>在日常的Bash脚本编写和命令行输出（如使用 <code>echo -e</code>）中，转义字符扮演着格式化输出的重要角色。</p>
+<ul>
+<li><strong><code>\b</code> (退格符 Backspace)</strong><ul>
+<li><strong>作用机制</strong>：转义后，它的作用相当于你在键盘上按了一次退格键（backspace）。</li>
+<li><strong>生效前提</strong>：它发挥作用的前提是 <code>\b</code> 后面必须存在其他的输出字符。</li>
+<li><strong>示例分析</strong>：使用 <code>echo</code> 命令输出时，如果 <code>\b</code> 后面有字符，一个 <code>\b</code> 会将光标回退一格并让后面的字符覆盖掉前一个字符，从而达到“删除前一个字符”的视觉效果。同理，<code>\b\b</code> 则表示删除前两个字符。</li>
+<li>如果 <code>\b</code> 后面不存在任何字符，它仅仅将光标回退，但因为没有新字符覆盖，所以看起来并没有转义为“删除”的效果。</li>
+</ul>
+</li>
+<li><strong><code>\c</code> (抑制换行与截断符)</strong><ul>
+<li><strong>作用机制</strong>：表示在此处停止当前行的输出，并且不进行换行操作。</li>
+<li><strong>特殊效果</strong>：如果 <code>\c</code> 后面仍然紧跟着存在其他字符，那么 <code>\c</code> 后面的所有字符都将被直接丢弃，不会被输出到屏幕上。</li>
+<li><strong>等效操作</strong>：如果在 <code>\c</code> 后面本来就不存在任何字符了，那么它的作用就等同于在使用 <code>echo</code> 命令时加上了 <code>-n</code> 参数（即 <code>echo -n</code>，输出完内容后光标停留在同一行不换行）。</li>
+</ul>
+</li>
+<li><strong><code>\n</code> 与 <code>\f</code>、<code>\v</code> (换行机制群)</strong><ul>
+<li><strong><code>\n</code></strong>：最常见标准的换行操作，光标移动到下一行的行首。</li>
+<li><strong><code>\f</code></strong>：同样执行换行动作，但具有特殊的排版对齐特性。换行后新产生的一行的开头位置，会在垂直方向上严格连接着上一行的行尾位置，形成一种阶梯状的输出效果。</li>
+<li><strong><code>\v</code></strong>：在Bash中，它的实际显示效果与 <code>\f</code> 是完全相同的。</li>
+</ul>
+</li>
+<li><p><strong><code>\t</code> (制表符 Tab)</strong></p>
+<ul>
+<li><strong>作用机制</strong>：转义后表示在当前光标位置插入一个制表符（tab键），常用于文本的列向对齐排版。</li>
+</ul>
+</li>
+<li><strong><code>\r</code> (回车至行首，覆盖输出)</strong><ul>
+<li><strong>作用机制</strong>：将光标直接强制移动至当前行的最左侧行首，但<strong>绝不换行</strong>。</li>
+<li><strong>覆盖效果</strong>：由于光标回到了行首但未换行，紧跟在 <code>\r</code> 之后的字符会被输出在当前行，从而覆盖掉 <code>\r</code> 之前已经输出的同等长度的旧字符。</li>
+</ul>
+</li>
+<li><p><strong><code>\\</code> (反斜杠本体转义)</strong></p>
+<ul>
+<li><strong>作用机制</strong>：反斜杠本身是转义符号，当需要输出字符 <code>\</code> 本身时，需要用两个反斜杠 <code>\\</code> 来表示，从而消除它的转义语义，将其视为普通字符插入。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="伪终端-Pseudo-Terminal-PTY-架构深度剖析"><a href="#伪终端-Pseudo-Terminal-PTY-架构深度剖析" class="headerlink" title="伪终端 (Pseudo Terminal / PTY) 架构深度剖析"></a>伪终端 (Pseudo Terminal / PTY) 架构深度剖析</h1><h2 id="伪终端的基础定义与组件"><a href="#伪终端的基础定义与组件" class="headerlink" title="伪终端的基础定义与组件"></a>伪终端的基础定义与组件</h2><p>伪终端（pseudo terminal，技术上通常简称为 pty）在架构上是由一对字符设备组成的：伪终端 master 端和伪终端 slave 端。</p>
+<ul>
+<li><strong>Slave 端 (从设备)</strong>：它对应于文件系统中 <code>/dev/pts/</code> 目录下的某一个具体设备文件（如 <code>/dev/pts/0</code>）。对于在这个虚拟终端上运行的 CLI (命令行接口) 程序（例如 Bash）来说，slave 端就相当于它们面对的显示器和键盘。</li>
+<li><strong>Master 端 (主设备)</strong>：它在操作系统的内存中被标识为一个打开的文件描述符 (fd)。这一端更加贴近真实的用户交互设备（如用户的物理显示器、物理键盘）或者网络连接。</li>
+<li><strong>提供方</strong>：这对伪终端设备是由“终端模拟器”提供的，而终端模拟器本身仅仅是一个运行在操作系统用户态的普通应用程序，而非底层硬件驱动。</li>
+</ul>
+<h2 id="数据流转与转发机制"><a href="#数据流转与转发机制" class="headerlink" title="数据流转与转发机制"></a>数据流转与转发机制</h2><p>Linux 内核中的伪终端驱动程序，扮演着这对设备之间“数据搬运工”的角色。</p>
+<ul>
+<li><strong>输入流转</strong>：驱动程序会将 master 端（例如用户通过图形界面或SSH网络传输过来的键盘敲击数据）写入的数据，原封不动地转发给 slave 端，从而供运行在后端（如Shell）的程序作为标准输入读取。</li>
+<li><strong>输出流转</strong>：反过来，后端程序（如Shell脚本输出结果）写入 slave 端的数据，驱动程序会将其转发回 master 端，最后由终端模拟器负责读取，并将其渲染到显示器屏幕上供用户观看。</li>
+</ul>
+<h2 id="终端桌面程序的运行原理实录"><a href="#终端桌面程序的运行原理实录" class="headerlink" title="终端桌面程序的运行原理实录"></a>终端桌面程序的运行原理实录</h2><p>以大多数Linux发行版自带的 GNOME Terminal 为例，它就是一个典型的终端模拟软件。</p>
+<ul>
+<li><strong>生命周期开启</strong>：当该软件启动时，它会向系统请求打开 <code>/dev/ptmx</code> 这个特殊的复用设备文件。这一动作会在系统中动态创建出一对相互配对的伪终端 master 和 slave 设备。接着，软件会派生一个子进程，让 shell 程序在这个新生成的 slave 端环境中运行。</li>
+<li><strong>交互闭环</strong>：当用户在 GNOME Terminal 的图形窗口中敲击键盘时，软件会将这些按键事件转化为字节流并写入 master 端。此时，阻塞等待输入的 shell 进程就会从 slave 端读取到这些数据并执行相应的命令。命令执行完毕后，shell 及其子程序的输出内容被写入 slave，传递回 master，最后由 GNOME Terminal 软件将这些字符转换成像素绘制在图形窗口中。</li>
+</ul>
+<h2 id="伪终端使用场景"><a href="#伪终端使用场景" class="headerlink" title="伪终端使用场景"></a>伪终端使用场景</h2><ul>
+<li><strong>图形界面仿真环境</strong>：像 xterm、gnome-terminal 这样的图形界面终端模拟软件，必须依靠伪终端将用户的鼠标键盘GUI事件转换为字符界面的文本输入，同时将程序的纯文本输出转换为图形化窗口内容显示。</li>
+<li><strong>网络远程登录中继</strong>：在 SSH (如 sshd 服务) 等远程 shell 应用程序中，sshd 进程需要在客户机上的远程物理终端和服务器本地生成的伪终端之间，充当输入和输出数据的网络中继站。</li>
+<li><strong>多路复用器隔离与保持</strong>：对于 screen 和 tmux 等多路复用应用，它们利用伪终端把输入和输出从一个终端通道转播到另一个或多个终端上。这使得即使实际的网络连接断开（脱离实际的终端），文本模式下的应用程序依然可以挂靠在伪终端上持续运行。</li>
+</ul>
+<h2 id="伪终端引入原因"><a href="#伪终端引入原因" class="headerlink" title="伪终端引入原因"></a>伪终端引入原因</h2><p>很多人会问：为什么 Linux 不让 shell 等命令行程序直接跨过软件层，去物理显示器和键盘硬件中读取数据呢？</p>
+<ul>
+<li><strong>操作系统的虚拟化宏观思想</strong>：为了能够在同一个屏幕上同时运行多个独立的终端模拟器窗口，并且为了支持成百上千的用户通过网络并发远程登录，就绝对不能让 shell 独占底层的物理硬件。在虚拟化思想的指导下，为每一个终端模拟器或远程用户分配独立的、互不干扰的虚拟终端是系统的刚需。</li>
+<li><strong>模拟真实终端的完备行为</strong>：上图中 shell 所对接的 slave 端就是一个高度虚拟化的终端。与之对应的 Master 端负责模拟用户侧的物理交互。之所以不叫它简单的管道而叫“虚拟化的终端”，是因为它除了转发基础的数据流之外，还需要具备处理终端控制字符（如Ctrl+C中断信号、回显控制等）、具有“终端的样子”等复杂能力。</li>
+<li><strong>本质总结</strong>：伪终端本质上是由运行在用户态的终端模拟程序所创建的一对字符设备。重点在于它是一种用软件在用户空间仿真出来的终端运行环境，这是它与传统物理硬件终端的本质区别所在。</li>
+</ul>
+<hr>
+<h1 id="文件系统与路径管理规范"><a href="#文件系统与路径管理规范" class="headerlink" title="文件系统与路径管理规范"></a>文件系统与路径管理规范</h1><h2 id="绝对路径与相对路径的严谨定义"><a href="#绝对路径与相对路径的严谨定义" class="headerlink" title="绝对路径与相对路径的严谨定义"></a>绝对路径与相对路径的严谨定义</h2><p>在Linux文件系统中，根据文件名书写起点的不同，路径（path）被严格划分为绝对路径（absolute）和相对路径（relative）。</p>
+<ul>
+<li><p><strong>绝对路径 (Absolute Path)</strong></p>
+<ul>
+<li><strong>定义特征</strong>：绝对路径的写法，必须有且仅有由系统的最顶层——即根目录（<code>/</code>）开始起计算的完整文件或者目录名称构成。</li>
+<li><strong>判断标准</strong>：绝对路径的写法一定是由 <code>/</code> 目录直接写起的。例如 <code>/home/dmtais/.bashrc</code>，无论用户当前身在系统何处，这个路径指向的位置永远是唯一不变的。</li>
+</ul>
+</li>
+<li><p><strong>相对路径 (Relative Path)</strong></p>
+<ul>
+<li><strong>定义特征</strong>：相对路径是相对于用户目前所处的工作目录，推导计算出的目标文件名写法。</li>
+<li><strong>判断标准</strong>：极其简单，只要路径的开头不是 <code>/</code>，那么它就属于相对路径的写法。（相对路径的写法不是由 <code>/</code> 目录写起的）。例如 <code>./home/dmtsai</code> 或者是 <code>../../home/dmtsai</code>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="目录导航标识符深入解析"><a href="#目录导航标识符深入解析" class="headerlink" title="目录导航标识符深入解析"></a>目录导航标识符深入解析</h2><p>在路径切换和命令执行中，有两个极其特殊的目录概念至关重要：</p>
+<ul>
+<li><strong><code>.</code> (当前工作目录)</strong>：单点号代表当前的所在目录，在执行当前目录下的程序或脚本时，也常常使用 <code>./</code> 的形式来明确表示执行位置就在当前。</li>
+<li><strong><code>..</code> (父级目录)</strong>：双点号代表当前目录的上一层目录，在书写路径时也可以用 <code>../</code> 来表示向上一级跳转。</li>
+<li><strong>实战操作示例</strong>：我们在日常操作中经常下达类似 <code>cd ..</code> 或 <code>./command</code> 这样的指令，这就是在代表上一层环境与目前所在目录的工作状态。例如，要求“如何先进入到 <code>/var/spool/mail/</code> 目录，随后再进入到同级的 <code>/var/spool/lpd/</code> 目录内”？<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/spool/mail/            <span class="comment">## 第一步：使用绝对路径精确进入到/var/spool/mail/下</span></span><br><span class="line"><span class="built_in">cd</span> ../lpd/                     <span class="comment">## 第二步：利用相对路径的 .. 返回上一层目录(/var/spool/)并直接进入同级的lpd目录</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="根目录与家目录的区别"><a href="#根目录与家目录的区别" class="headerlink" title="根目录与家目录的区别"></a>根目录与家目录的区别</h2><ul>
+<li><strong><code>/</code> 根目录</strong>：系统万物的起源。“/”代表了整个Linux文件系统的根目录。Linux的存储管理是以挂载的方式组织起来的，整体架构相当于是一棵倒置的庞大树状结构，而这棵树的源头节点就是“/”，即根目录。</li>
+<li><strong><code>~</code> 家目录 (Home Directory)</strong>：“~”符号代表的是用户的家目录，也就是系统分配给每个用户的私人专属领地目录。系统对于不同权限的用户，其家目录的默认分配位置有明确规定：<ul>
+<li>拥有最高权限的 root 用户的“家”目录通常位于系统顶层的 <code>/root</code>。</li>
+<li>而普通用户（例如一个名为a的用户），其家目录通常会被统一安放在 <code>/home/a</code> 目录下。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="SSH远程登录与安全验证协议体系"><a href="#SSH远程登录与安全验证协议体系" class="headerlink" title="SSH远程登录与安全验证协议体系"></a>SSH远程登录与安全验证协议体系</h1><h2 id="SSH协议的两大核心安全验证机制"><a href="#SSH协议的两大核心安全验证机制" class="headerlink" title="SSH协议的两大核心安全验证机制"></a>SSH协议的两大核心安全验证机制</h2><p>当我们使用SSH协议进行网络远程登录时，系统主要提供以下两种安全验证机制供选择：</p>
+<ul>
+<li><p><strong>基于口令的安全验证机制 (Password Authentication)</strong></p>
+<ul>
+<li><strong>工作原理</strong>：这是最传统的登录方式，用户只要知道自己的账户名称和相应的密码口令，就可以发起请求并远程登录到目标主机。</li>
+<li><strong>安全缺陷</strong>：这种机制存在明显的安全隐患。它不能绝对保证你当前正在连接的网络服务器就是你真正想连接的那台目标服务器。在复杂的网络传输环境中，可能会有恶意的第三方服务器拦截你的请求并进行冒充，这种截获密码的手法即被称为“中间人攻击”。</li>
+</ul>
+</li>
+<li><p><strong>基于密钥的安全验证机制 (Public-Key Authentication)</strong></p>
+<ul>
+<li><strong>工作原理</strong>：这是一种安全性极高的无密码登录方式，其安全信任完全依靠非对称加密算法生成的密钥对来维系。用户自己必须事先在本地机器上创建一对密钥（包含一把公钥和一把私钥），然后主动将公钥的内容放置在需要被管理的服务器上。</li>
+<li><strong>验证闭环</strong>：当客户端准备使用SSH连接到这台服务器时，客服端软件就会自动向服务器发出请求，请求使用你本地隐藏的私钥信息进行高强度的安全验证。服务器收到这个请求后，会先在该服务器目标账户所在的主目录下寻找事先存放的对应公钥，然后将其和网络上发送过来的私钥数字签名进行数学层面的严密比较。如果运算结果完全一致，则视为验证成功，直接放行登录，全程无需输入常规密码。</li>
+</ul>
+</li>
+</ul>
+<h2 id="配置免密码SSH登录的全流程操作"><a href="#配置免密码SSH登录的全流程操作" class="headerlink" title="配置免密码SSH登录的全流程操作"></a>配置免密码SSH登录的全流程操作</h2><p>要搭建基于密钥的免密环境，需要执行以下命令操作：</p>
+<h3 id="在本地生成专属密钥对"><a href="#在本地生成专属密钥对" class="headerlink" title="在本地生成专属密钥对"></a>在本地生成专属密钥对</h3><p>利用 <code>ssh-keygen</code> 工具，你可以进行身份验证密钥的生成、管理和格式转换。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa // 指定使用强大的RSA算法，配置并生成SSH密钥对至系统的指定文件（如id_rsa）中</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cjc729.oss-cn-beijing.aliyuncs.com/images/eb97c09c922245bfba0ae3d3e9d739ac.png" alt="img" style="zoom: 67%;" /></p>
+<h3 id="将本地公钥安全上传至服务端"><a href="#将本地公钥安全上传至服务端" class="headerlink" title="将本地公钥安全上传至服务端"></a>将本地公钥安全上传至服务端</h3><p>必须将生成的 <code>.pub</code> 后缀的公钥文件内容，追加到目标服务器对应用户的授权文件列表中。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp  root/.ssh/id_rsa.pub user@ip：/root/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p>
+<p>(注：上述命令使用scp进行网络复制，实际生产中也常推荐使用 <code>ssh-copy-id</code> 自动化完成配置)</p>
+<hr>
+<h1 id="核心系统文件与常见配置"><a href="#核心系统文件与常见配置" class="headerlink" title="核心系统文件与常见配置"></a>核心系统文件与常见配置</h1><p>Linux遵循“一切皆文件”的设计理念。理解各大目录的作用和常见配置文件的位置，是掌握Linux系统的必经之路。</p>
+<h2 id="根目录及核心一级子目录结构概述"><a href="#根目录及核心一级子目录结构概述" class="headerlink" title="根目录及核心一级子目录结构概述"></a>根目录及核心一级子目录结构概述</h2><ul>
+<li><strong>/boot</strong>：此目录专用于存放自举加载程序（如LILO 或 GRUB）所需的文件。当计算机刚启动时（如果有多个操作系统，有可能允许你选择启动哪一个操作系统），这里的引导文件会首先被装载入内存。这个目录同样会包含极其重要的LINUX内核文件（通常是压缩文件形式，名为 vmlinuz）。不过，LINUX内核其实也可以存在于系统的别处，前提是只要配置了 LILO 并且 LILO 知道LINUX核到底在哪儿就行。</li>
+<li><strong>/bin</strong>：存放系统启动时需要的核心引导程序（二进制执行文件）。这些基础命令文件可以被所有的普通用户无障碍使用。</li>
+<li><strong>/dev</strong>：代表硬件组件的设备文件所在目录。在LINUX的哲学下，所有的硬件设备都被当成普通文件来处理，这样一来底层的硬件就被抽象化了，极大地方便了系统的读写操作、网络共享，以及需要将设备临时装载到文件系统中的操作。正常情况下，每一种设备在这里都会有一个独立的子目录，这些设备的内容会直接出现在独立的子目录下。这也是为什么LINUX没有所谓的C盘、D盘等驱动符概念的原因。<ul>
+<li><strong>/dev/null</strong>：黑洞文件，代表没有用的文件所放的位置，作用相当于无限吞噬的回收站，被称为吞噬设备。</li>
+<li><strong>/dev/zero</strong>：用于初始化磁盘的工具设备，会源源不断地产生零值数据流（吐零）。</li>
+<li><strong>/dev/random</strong>：系统的硬件随机数生成器，依赖系统环境噪声构成的熵池。</li>
+<li><strong>/dev/urandom</strong>：非阻塞的伪随机数生成器，同样基于熵池。（当系统的硬件熵池数据耗尽时，系统会自动用软件算法继续生成随机数保证供应）。</li>
+</ul>
+</li>
+<li><strong>/etc</strong>：集中存放系统及各种软件服务配置文件的核心地带。</li>
+<li><strong>/etc/rc.d</strong>：存放系统启动时运行的各个配置文件和脚本的目录。</li>
+<li><strong>/home</strong>：系统默认的用户主目录基点。包含用户专属的参数设置文件、个性化配置文件、个人文档、数据、EMAIL、缓存数据等。比如用户user的主目录就是 <code>/home/user</code>，在路径中可以用 <code>~user</code> 来简略表示。</li>
+<li><strong>/lib</strong>：系统的标准程序设计库，又常被叫作动态链接共享库。这些库文件的作用类似于Windows系统里的 <code>.dll</code> 文件，为各个程序提供共享函数支持。</li>
+<li><strong>/sbin</strong>：专门为系统管理员（root）保留的目录，用于存放系统启动时的高级引导程序（二进制执行文件）。这些文件通常不打算被普通用户日常使用（尽管普通用户仍然可以使用它们，但必须在命令前指定完整的绝对目录路径）。</li>
+<li><strong>/tmp</strong>：系统公用的临时文件存储点。该目录具备特殊权限，且该目录内的数据会被系统定期自动清理干净以释放空间。</li>
+<li><strong>/root</strong>：系统最高权限管理员（root）的专属主目录。</li>
+<li><strong>/mnt</strong>：系统专门提供这个空目录，是让用户用来临时挂载其他外部的文件系统（如U盘、外置光驱等）。</li>
+<li><strong>/lost+found</strong>：这个目录在系统平稳运行时平时是空的。当系统不幸遭遇非正常关机（如突然断电）时，修复工具恢复出来的、留下“无家可归”的文件碎片（相当于windows系统下生成的 <code>.chk</code> 文件）就会被统一保存在这里等待人工处理。</li>
+<li><strong>/var</strong>：这是一个动态变化的目录，主要作为某些大文件的溢出区。比方说各种服务的庞大日志文件，它主要包含在系统正常操作运行中被不断改变状态的文件：假脱机文件、系统运行记录文件、加锁文件、缓存临时文件和页格式化文件等。</li>
+<li><strong>/var/spool</strong>：专门用于处理 mail、news、打印机打印队列和其他排队等待处理的工作的目录。每个不同的spool队列服务在 <code>/var/spool</code> 下都有自己的专属子目录。例如，系统中用户的本地邮箱数据就存放在 <code>/var/spool/mail</code> 中。</li>
+<li><strong>/opt</strong>：存放可选的额外安装的应用程序的目录。譬如，在 REDHAT 5.2 系统下的KDE桌面环境曾经安装于此（而在 REDHAT 6.0 系统下，KDE 已经被移动放在其它的 XWINDOWS 应用程序中，其主执行程序位于 <code>/usr/bin</code> 目录下）。</li>
+<li><strong>/srv</strong>：该目录主要用于存放一些特定的网络服务（如Web服务、FTP服务）启动之后，需要向外部提供和提取的公开数据。</li>
+<li><strong>(分区策略建议)</strong>：在服务器分区规划时，<code>/home</code>、 <code>/var</code> 、<code>/usr/local</code> 这三个目录经常被规划为单独的硬盘分区。这是因为它们的数据经常会被大量操作、写入和删除，独立分区能够防止它们产生的大量磁盘碎片影响到根分区的性能和安全。</li>
+</ul>
+<h3 id="etc-目录下深度配置文件名录"><a href="#etc-目录下深度配置文件名录" class="headerlink" title="/etc 目录下深度配置文件名录"></a>/etc 目录下深度配置文件名录</h3><p><code>/etc</code> 掌控着整个Linux系统的配置命脉，包含了众多核心配置文件。</p>
+<ul>
+<li><strong>/etc/passwd</strong>：极其重要的系统用户数据库文件。其中的字段域分别给出了系统每个用户的用户名、真实姓名、家目录路径、加密口令标记和用户的其他属性信息。</li>
+<li><strong>/etc/group</strong>：结构类似于 <code>/etc/passwd</code>，但它记录说明的不是单个用户，而是系统的用户组信息数据库。</li>
+<li><strong>/etc/inittab</strong>：老一代系统管理进程 init 的全局配置文件，控制系统的运行级别。</li>
+<li><strong>/etc/issue</strong>：负责在用户面临登录提示符之前输出的提示信息。通常包括系统版本的一段短说明或自定义欢迎信息。其内容可由系统管理员自行编辑确定。</li>
+<li><strong>/etc/motd</strong>：在用户输入密码成功登录系统后，会自动输出展示的文本文件。内容同样由系统管理员确定，经常被用于发布全局通告信息，例如向全体用户发出计划停机关机时间的预先警告。</li>
+<li><strong>/etc/mtab</strong>：动态记录当前系统中已经安装并挂载的文件系统列表。它由系统 scripts 脚本负责初始化建立，并由系统的 mount 命令在每次挂载操作后自动更新维护。当系统程序需要一个当前已安装的文件系统的清单列表时会读取它。例如使用 df 命令检查磁盘空间时，当执行 <code>df –a</code> 时，屏幕上查看到的信息就应当和此文件内容保持一致。</li>
+<li><strong>/etc/shadow</strong>：这是在安装了影子口令安全软件的系统上存在的影子口令文件。为了安全，影子口令软件将原本存放在 <code>/etc/passwd</code> 文件中容易被截获的加密用户口令，移动保存到了 <code>/etc/shadow</code> 这个独立的文件中，而后者有着极其严格的权限，只允许 root 用户具备可读权限。这一隔离机制使得黑客破译口令变得更加困难。</li>
+<li><strong>/etc/login.defs</strong>：系统的 login 登录命令以及用户密码策略相关的配置文件。（同时也是用户密码信息的默认属性控制文件）。</li>
+<li><strong>/etc/profile , /etc/csh.login , /etc/csh.cshrc</strong>：这些是在用户登录系统或启动 Bourne Shell / C shells 时，系统会自动执行的全局环境初始化文件。这允许系统管理员在此处为服务器上的所有登录用户建立统一的全局缺省环境变量。</li>
+<li><strong>/etc/printcap</strong>：结构格式类似于终端控制文件 <code>/etc/termcap</code>，但它是专门针对系统打印机设备属性配置的，语法规则有所不同。</li>
+<li><strong>/etc/securetty</strong>：安全终端确认文件。它明确列出了哪几个特定的终端是允许 root 账户进行登录的。出于安全考量，一般这里只列出本地的虚拟控制台（tty1-tty6等），这样就不可能（或者至少非常困难）让黑客通过调制解调器 modem 或网络远程闯入系统并直接得到超级用户特权。</li>
+<li><strong>/etc/shells</strong>：安全白名单，列出当前系统认为是合法的、可信任的shell程序路径。系统的 chsh 命令允许用户在本文件指定的路径范围内去改变自己默认的登录shell。此外，提供一台机器外部 FTP 服务的服务进程（如ftpd）在用户尝试连接时，会严格检查该用户的默认shell是否列在 <code>/etc/shells</code> 文件中，如果查不到，将直接拒绝不允许该用户登录FTP。</li>
+<li><strong>/etc/termcap</strong>：古老而庞大的终端性能数据库。它负责向系统说明不同型号厂家的终端究竟需要使用什么样的”转义序列”代码来进行控制。程序员在写程序时，不需要直接输出死板的转义序列代码（因为这样写出来的程序只能工作于特定某个品牌的终端设备上），而是从 <code>/etc/termcap</code> 中查找要做的工作所需的正确序列指令。有了这个抽象层，多数的文本程序就可以在世界上绝大多数终端设备上兼容运行。</li>
+<li><strong>/etc/inputrc</strong>：控制键盘输入设备映射与快捷键的配置文件。</li>
+<li><strong>/etc/default/useradd</strong>：在使用 useradd 命令添加新用户时，系统读取的默认基础属性信息的文件。</li>
+<li><strong>/etc/skel</strong>：存放新建立用户家目录初始化信息的骨架（Skeleton）目录。新建用户时，系统会将该目录下的隐藏配置文件复制到新用户的家目录中。</li>
+<li><strong>/sbin/nologin</strong>：一个特殊的伪shell，当用户在 <code>/etc/passwd</code> 中的shell被设置为此路径时，表示该账户是不能直接登陆系统的服务型用户。</li>
+<li><strong>/var/log/message</strong>：系统非常核心的通用日志文件，记录各种守护进程产生的消息。</li>
+<li><strong>(关于全局环境变量的配置)</strong>：如果你希望全系统可用某个软件，可以在 <code>/etc/profile</code> 这个全局配置文件中添加代码行，例如 <code>PATH=$PATH:/usr/local/mysql/bin</code>，这样设置完成后，全系统的用户就可以直接使用该软件的命令了。</li>
+<li><strong>/root/bashrc</strong>：root用户的私有环境配置，常用于存放该用户个人设定的命令的别名（alias）。</li>
+<li><strong>/etc/yum.repos.d</strong>：RedHat系系统中，用于配置本地或网络 YUM 软件包管理器源列表的存放目录。</li>
+<li><strong>/etc/httpd/conf/httpd.conf</strong>：Apache httpd Web 服务的核心主配置文件。</li>
+<li><strong>/etc/fstab</strong>：文件系统挂载表。系统在启动时，会读取该文件自动加载列表中的硬盘设备（专用于配置开机自动挂载各磁盘设备）。</li>
+<li><strong>/etc/selinux</strong>：系统级强访问控制安全架构 SELinux 的工作模式与策略设定目录。</li>
+<li><strong>/etc/sysconfig/network</strong>：在这个网络配置总管文件中，管理员可以更改系统的 hostname（全局主机名）以及控制全局网卡的总工作状态是否开启。</li>
+<li><strong>/etc/hosts</strong>：本地静态域名解析文件，负责更改和维护主机名和IP地址的对应解析关系。请注意该文件中记录条目的标准格式为 <code>hostname.domain hostname localhost localhost.domian</code>。特别注意：当你在其他地方修改了系统主机名后，必须同时手动修改该文件里的映射，否则会引发各种服务网络错误。（关于该文件的详细机制解析见下文第七节）。</li>
+<li><strong>/etc/resolv.conf</strong>：本地DNS客户端解析配置文件，用户可以在此明确配置外部 DNS 服务器地址（即第一DNS，第二DNS等），以及设定DNS在域名解析时的默认搜索域名路径。</li>
+<li><strong>/etc/sysconfig/networking/profiles/default</strong>：这是一个存放网络配置方案集的目录，内含数个文件。管理员可以在此统筹配置 hosts 映射、各网卡信息、DNS服务器地址及相关的DNS搜索路径等网络要素。</li>
+<li><strong>/etc/sysconfig/network-scripts/ifcfg-eth0</strong>：针对具体某一块物理网卡（如 eth0 设备）的详细 IP 属性配置文件。</li>
+<li><strong>/etc/rc.d/init.d/network restart</strong>：这是一个命令路径，通过执行此脚本并跟上参数，可以重启整个网络服务使配置生效。</li>
+<li><strong>/etc/rc.d/init.d</strong>：在这个特定的目录下，放置了系统中几乎所有系统服务的开关启动控制脚本。</li>
+<li><strong>/etc/sysctl.conf</strong>：操作系统底层内核参数的配置文件，用于在运行时动态调整网络协议栈或内存等内核行为。</li>
+<li><strong>/etc/sysconfig/i18n</strong>：国际化与本地化配置文件，用于设置系统的默认显示语言环境和文本字符集类型。</li>
+<li><strong>/etc/crontab</strong>：系统周期性任务调度守护进程的全局计划任务定义表。</li>
+<li><strong>/etc/anacrontab</strong>：这是一种特殊的定时任务配置文件，它主要用于实现并保障能够检查那些因关机等原因导致过期、未按时完成的 crontab 计划任务，在开机后能得到补偿执行。</li>
+<li><strong>/etc/rc.d/init.d/functions</strong>：这不是一个可执行服务脚本，而是一个专门定义了诸多通用函数（如输出成功/失败绿色红色标记）的库配置文件，供其他服务脚本调用。</li>
+<li><strong>/etc/rc.d/rc.sysinit</strong>：这是系统启动时运行的第一个高级设置配置文件，负责完成大量基础硬件和环境的初始化动作。</li>
+<li><strong>/etc/sysconfig/system-config-firewall</strong>：图形化界面的防火墙配置存档文件。它用于配置防火墙开放的信任端口，以及防火墙的整体工作状态。具体讲，它主要只负责保存用户在图形界面的 otherport 选项里面设置的具体项目。一个值得注意的规则是：如果防火墙的主配置文件（iptables）中已经存在了相应的底层配置条目，那么这个图形化存档文件里面的配置条目是否存在，其实并不重要，系统会以主配置为准。</li>
+<li><strong>/etc/sysconfig/iptables</strong>：这是 Linux 核心防火墙包过滤工具 iptables 的真正主配置文件。</li>
+<li><strong>/etc/sysconfig/system-config-securitylevel</strong>：这是较老的系统安全等级设置文件，在现代详细的防火墙配置操作中通常不会再直接涉及它。</li>
+<li><strong>/etc/xinetd.conf</strong>：超级互联网守护进程（xinetd）的主配置文件，它负责按需唤醒监听其他各种轻量级网络服务。</li>
+<li><strong>/etc/hosts.allow</strong>：TCP Wrappers 安全访问控制机制的白名单许可表，明确定义哪些IP被允许访问本机服务。</li>
+<li><strong>/etc/host.deny</strong>：与前者对应，是TCP Wrappers访问控制的黑名单拒绝表。</li>
+<li><strong>/etc/squid/squid.conf</strong>：大名鼎鼎的开源代理缓存服务器软件（SQUID）的核心配置文件。</li>
+<li><strong>/etc/sysconfig/vncservers</strong>：远程桌面 VNC 服务的启动和分辨率等参数的配置文件。</li>
+<li><strong>/etc/vsftpd/ftpusers</strong>：vsftpd 服务的安全黑名单文件。用于严格保存那些绝对不允许进行外部 FTP 登录验证的本地系统用户账号（例如root、bin等系统级账号）。</li>
+<li><strong>/etc/vsftpd/user_list</strong>：提供了比 ftpusers 更为灵活的用户访问控制列表机制。根据服务主配置文件中的声明参数不同，这个列表可以被配置为白名单模式，也可以配置为黑名单模式。</li>
+<li><strong>/etc/inetd.conf</strong>：老旧的网络超级守护进程 inetd 的配置文件，其中也包含 swat（Samba网页管理工具）服务的启用配置。</li>
+<li><strong>/etc/dhcpd.conf</strong>：网络动态主机配置协议服务（DHCP 服务端）的地址池及参数配置文件。</li>
+<li><strong>/etc/rc.d/init.d/dhcpd stop</strong>：停止当前正在运行的 DHCP 服务的命令脚本。</li>
+<li><strong>/etc/access</strong>：在邮件服务器配置中，可以利用此文件对 sendmail 服务的进出邮件流进行精细的网络源控制。</li>
+<li><strong>/etc/udev/rules.d</strong>：udev 动态设备管理机制的规则目录。udev 本身是一个程序，负责在系统初始化引导时，将硬件探测到的设备信息输出并映射成设备配置文件。这个目录允许用户自定义udev的识别规则，从而实现在创建底层硬件设备文件时，根据硬件属性（如MAC地址）为其分配使用不同的、更具标识性的固定设备文件名。</li>
+<li><strong>/etc/sysconfig/network</strong>：存放全局网卡与网络启停状态信息的配置文件。（注：与上文提及的路径作用一致）。</li>
+<li><strong>/etc/hosts</strong>：存放主机名与固定 ip 地址映射信息的解析文件。（注：同上）。</li>
+</ul>
+<h3 id="proc-虚拟文件系统深度揭秘"><a href="#proc-虚拟文件系统深度揭秘" class="headerlink" title="/proc 虚拟文件系统深度揭秘"></a>/proc 虚拟文件系统深度揭秘</h3><p>Linux上的 <code>/proc</code> 目录本质上是一种极度特殊的文件系统，即 proc 文件系统。</p>
+<ul>
+<li><strong>特性概述</strong>：与其他传统的、建立在硬盘上的文件系统（如ext4, xfs）完全不同的是，<code>/proc</code> 是一种由内核完全在内存中动态生成的“伪文件系统”，也叫虚拟文件系统。它并不占用硬盘，其内部存储的全部都是当前操作系统内核正在运行的一系列特殊状态文件。</li>
+<li><strong>文件属性异象</strong>：基于 <code>/proc</code> 文件系统如上所述的存储于RAM中的特殊性，其内的文件也常被形象地称作虚拟文件，并具有一些非常独特的物理特点。例如，其中有些状态文件虽然你使用 cat 查看命令查看时会返回大量系统信息，但如果你用 ls 命令查看文件本身的大小，却会发现它始终显示为 0 字节。</li>
+<li><strong>时间戳特征</strong>：此外，这些特殊文件中的大多数文件的时间及日期属性，通常会被标记为当前的系统时间和日期。这跟它们的数据并非静态固化，而是随时会被系统内核实时刷新（直接存储和修改于系统 RAM 内存中）有密切关系。</li>
+<li><strong>目录结构逻辑</strong>：为了方便系统管理员查看及工具软件使用上的方便，这些文件内容通常会按照硬件相关性或者业务逻辑，进行分类存储于不同的目录甚至深层子目录中。<ul>
+<li>例如，<code>/proc/scsi</code> 目录中集中存储的就是当前系统上所探测到的所有 SCSI 存储设备的相关信息。</li>
+<li>而 <code>/proc/N</code> 这种以纯数字命名的目录中，存储的则是系统当前正在运行的那个特定进程的相关信息，其中这个数字 N 就是代表那个正在运行的进程的 PID 号。（你可以想象得到，当某个进程由于结束或被杀死后，其对应的那个数字相关目录就会立刻随之在 <code>/proc</code> 下消失）。</li>
+</ul>
+</li>
+<li><strong>读取与应用</strong>：这其中包含的大量虚拟文件，管理员可以直接通过诸如 <code>cat</code>、<code>more</code> 或者 <code>less</code> 这样的普通文本阅读命令来读取内容。有些状态文件信息表述的内容组织得很好，可以让人一目了然看懂。但也有部分底层文件的信息全都是十六进制数据，由于其本身就是留给特定程序读取的，因此直接用肉眼查看却不怎么具有可读性。不过，这些可读性较差的内核文件数据，在被作为数据源，交给一些专门的监控命令（如 <code>apm</code>、<code>free</code>、<code>lspci</code> 或 <code>top</code>）处理并在终端查看时，却可以被转换为人类易读的格式，发挥着极佳的监控表现。</li>
+</ul>
+<p><strong>常见的 <code>/proc</code> 子文件/目录清单：</strong></p>
+<ul>
+<li><strong>/proc/dma</strong>：显示当前系统中所有正在被占用的硬件 DMA (直接内存访问) 通道信息。</li>
+<li><strong>/proc/filesystems</strong>：列出当前核心已经编译支持配置的所有文件系统类型。</li>
+<li><strong>/proc/interrupts</strong>：列出当前系统所有正在被使用的硬件中断请求通道（IRQ），and how many of each there have been (以及每个中断通道已经被触发响应了多少次)。</li>
+<li><strong>/proc/ioports</strong>：记录并显示当前硬件设备正在使用的底层 I/O 端口地址范围。</li>
+<li><strong>/proc/kcore</strong>：极其特殊的文件，它相当于当前系统物理内存的一个实时完整映象。你查看它的容量会发现它显示的体积与物理内存大小完全一样，但它在磁盘上并不实际占用这么多内存空间；it is generated on the fly as programs access it. (它完全是在程序尝试访问它时，由内核动态生成的)。(必须记住的一点是：除非你通过 cp 命令手动把它拷贝到硬盘的什么地方，否则 <code>/proc</code> 下存在的任何东西都绝对不会占用你的任何一点磁盘物理空间。）</li>
+<li><strong>/proc/kmsg</strong>：这是内核环形缓冲区输出的实时日志消息出口。这些极为底层的内核消息通常也会被守护进程捕捉并送到 syslog 日志系统中记录。</li>
+<li><strong>/proc/ksyms</strong>：当前操作系统导出的所有核心符号表（用于模块开发与调试）。</li>
+<li><strong>/proc/loadavg</strong>：极其常用的系统”平均负载”监控文件；包含3个时间维度的指示器数值，客观指出系统当前和过去一段时间的工作量与拥堵程度。</li>
+<li><strong>/proc/meminfo</strong>：极为重要的系统存储器使用状态信息概览文件，其中包括了物理内存总量/剩余、以及 swap 虚拟交换分区的使用数据。</li>
+<li><strong>/proc/modules</strong>：列出当前系统内核已经动态加载了哪些扩展核心模块（如驱动等）。</li>
+<li><strong>/proc/net</strong>：网络协议栈及各网络连接状态信息的专用存储目录。</li>
+<li><strong>/proc/self</strong>：这是一个神奇的动态符号连接。它永远指向当前正在查看 <code>/proc</code> 这个动作的那个程序的进程专属目录。举例来说，当有两个不同的进程同时去查看 <code>/proc</code> 目录时，系统内核返回给它们的连接指向是完全不同的。这个设计主要便于任何程序可以无需查询自身PID，就能快速得到它自己的进程目录路径并读取自身资源使用状况。</li>
+<li><strong>/proc/stat</strong>：宏观记录系统各项底层硬件组件的不同运行状态统计数据，such as the number of page faults since the system was booted (比如包含了自系统引导启动以来所发生的内存缺页中断错误总次数)。</li>
+<li><strong>/proc/uptime</strong>：记录系统从上次启动至今一共运行了多少时间长度的文件（单位为秒）。</li>
+<li><strong>/proc/cpuinfo</strong>：包含极度详细的系统处理器硬件信息，如CPU的架构类型、制造商标识、具体型号、缓存和各类指令集性能参数。</li>
+<li><strong>/proc/devices</strong>：列出当前系统内核正在运行的核心配置的各种主设备和次设备驱动的列表清单。</li>
+<li><strong>/proc/version</strong>：当前正在运行的操作系统的底层核心版本信息及编译时间戳。</li>
+<li><strong>/proc/mdstat</strong>：如果系统配置了软RAID阵列，此文件会实时展示当前 RAID 设备的工作状态和同步信息。</li>
+<li><strong>/proc/cmdline</strong>：记录系统启动时，由引导装载程序传递给系统内核的完整启动参数字符串（如：<code>ro root=/dev/vol0/root rhgb quiet grub信息</code> 等内容）。</li>
+<li><strong>/proc/cpuset</strong>：用于显示系统级的 cpu 核心物理集合分配情况，常用于显示和限制当前进程可以应用及被调度绑定到哪些具体的 cpu 核心上运行。</li>
+<li><strong>/proc/filesystem</strong>：显示当前系统内核真正编译并支持的各类底层文件系统种类清单。</li>
+<li><strong>/proc/mounts</strong>：记录当前整个系统树中挂载的所有的文件系统挂载点信息详细列表。</li>
+<li><strong>/proc/swaps</strong>：详细列出系统当前所有被激活的交换分区（虚拟内存）的路径、大小和优先级信息。</li>
+<li><strong>/proc/sys</strong>：这是一个非常关键的子目录，其内部很多文件(具有内核写权限)。管理员可以通过重定向写入这里的文件，来动态定义和修改系统内核参数的值，从而实现无需重启就能直接定义内核的高级功能或优化性能。</li>
+<li><strong>/proc/sys/kernel/hostname</strong>：存储当前系统生效的主机名设定。由于它在 <code>/proc/sys</code> 下，意味着可以通过修改该文件内容来立刻动态更改主机名（虽然重启后会失效）。</li>
+<li><strong>(关于进程信息的示例)</strong>：在系统的运行逻辑中，系统内每一个进程的信息都对应一个数字目录。例如存在目录 <code>/proc/245/vm</code> （原文件可能笔误写为etc），它就代表着系统分配进程ID号为 245 的那个特定进程的虚拟内存（Virtual Memory）资源占用信息；而 <code>/proc/245/kernel</code> （原文件笔误）对应的则是进程ID号为 245 的进程调用相关的内核级别信息。</li>
+</ul>
+<h3 id="usr-系统资源与应用主目录"><a href="#usr-系统资源与应用主目录" class="headerlink" title="/usr 系统资源与应用主目录"></a>/usr 系统资源与应用主目录</h3><p><code>/usr</code> 目录是Linux系统中最庞大、占用空间最多的目录之一。系统安装的非必要但系统级要用到的各类大型应用程序、库文件和资源文件几乎都在这个目录。</p>
+<ul>
+<li><strong>/usr/X11R6</strong>：存放图形化系统 X window 相关的配置及启动目录。</li>
+<li><strong>/usr/bin</strong>：存放由各种软件包安装所带来的众多的、供所有用户使用的普通应用程序执行文件。</li>
+<li><strong>/usr/sbin</strong>：存放一些仅供超级用户使用的系统级高级管理程序和后台守护进程可执行文件。</li>
+<li><strong>/usr/doc</strong>：存放关于各种已安装 linux 软件的基础说明文档。</li>
+<li><strong>/usr/include</strong>：供开发者使用，集中存放在 linux 平台下进行 C 语言开发和编译应用程序时所需要引用的底层头文件。</li>
+<li><strong>/usr/include/g++</strong>：专门存放针对 C++ 编译器所需的底层头文件。</li>
+<li><strong>/usr/lib</strong>：存放各类应用程序在运行时需要频繁调用的常用的动态链接函数库（.so文件）和一部分软件包的固定配置文件。</li>
+<li><strong>/usr/man</strong>：存放各种系统命令和程序的原始帮助手册（man pages）文档数据库。</li>
+<li><strong>/usr/src</strong>：存放系统各类软件（尤其是有重新编译需求软件）的开源源代码目录。</li>
+<li><strong>/usr/src/linux</strong>：最为关键的源码存放地，存放当前正在运行的 linux 核心的底层源代码。</li>
+<li><strong>/usr/local/bin</strong>：管理员手动编译或通过第三方途径在本地额外增加的、不属于系统默认包管理器的命令可执行文件存放处。</li>
+<li><strong>/usr/local/lib</strong>：配合上述手动安装软件，在本地系统级额外增加的非标准运行函数库。</li>
+<li><strong>/usr/share/fonts</strong>：系统级共享的矢量和点阵字体文件存放库。</li>
+<li><strong>/usr/share/doc</strong>：系统默认软件包管理器安装时附带的大量各种程序的详细参考文档文件库。</li>
+<li><strong>/usr/share/man</strong>：目前更为通用的、规范存放全系统各种命令系统手册页（man page）的目录。</li>
+<li><strong>/usr/local/apache/man</strong>：某些手动安装的软件（如早期Apache），会定义指向它自己专属安装目录下的自定义 man 帮助文档集。</li>
+</ul>
+<h3 id="其他杂项配置与控制文件补充"><a href="#其他杂项配置与控制文件补充" class="headerlink" title="其他杂项配置与控制文件补充"></a>其他杂项配置与控制文件补充</h3><ul>
+<li><strong>/bin/bash</strong>：Bash 解释器的物理存放路径，通常作为大量系统内置脚本解释执行的首选路径头。</li>
+<li><strong>/home/USERNAME</strong>：这是某位具体用户的专属主目录。不仅存放私人文件，也常常隐含存放与该用户对应的磁盘存储配额控制文件。</li>
+<li><strong>/var/spool/cron/USERNAME</strong>：当某位系统用户使用 crontab 命令创建了自己私有的计划任务时，该用户定义的任务计划明细列表就会被独立保存在这个以此用户名命名的系统调度文件中。</li>
+<li><strong>/var/spool/mail/root</strong>：这是系统的特殊邮件投递设置，在某些配置中定义了将本地发出的系统警告等内部 mail 统一设置并强制发送转发给超级管理员 root 用户去查阅处理。</li>
+</ul>
+<hr>
+<h1 id="系统环境变量剖析-Profile与PATH"><a href="#系统环境变量剖析-Profile与PATH" class="headerlink" title="系统环境变量剖析 (Profile与PATH)"></a>系统环境变量剖析 (Profile与PATH)</h1><h2 id="运行环境与环境变量"><a href="#运行环境与环境变量" class="headerlink" title="运行环境与环境变量"></a>运行环境与环境变量</h2><p>Linux 是一个典型的、支持大规模并发的多用户网络操作系统。为了确保各个用户在操作时互不干扰，每个用户在成功通过密码登录进入系统后，系统都会在内存中为该会话动态生成并分配一个专用的、封闭的运行环境。</p>
+<p>通常情况下，如果没有进行特殊设置，每个新用户初始化登录后的默认环境基础都是相同的。这个所谓的系统默认环境，在底层实际上就是由一系列预先定义的键值对组合而成的，即“一组环境变量的定义”。</p>
+<p>当然，用户拥有极大的自由度。用户完全可以根据自身的开发习惯和需要，对自己当前的运行环境进行深度定制。而实现这种个性化定制的最直接方法，就是通过命令去修改相应的系统环境变量的值。</p>
+<h2 id="全局配置与PATH变量注入"><a href="#全局配置与PATH变量注入" class="headerlink" title="全局配置与PATH变量注入"></a>全局配置与PATH变量注入</h2><p>如果要使某项配置（如添加一个新的工具命令路径）能够让整台服务器上的所有人受益，管理员通常会直接修改 <code>/etc/profile</code> 这个全局初始化文件。需要谨记，只有在这里修改加入的配置内容，才是对所有系统用户全局起作用的。</p>
+<p>最常见的一种操作是注入 PATH 搜索路径，写法如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+<p><strong>语法拆解与原理解析：</strong></p>
+<ul>
+<li><strong>语法核心逻辑</strong>：这句脚本的核心意思就是重塑路径搜索机制。它把新定义的 <code>$JAVA_HOME/bin</code> 目录路径，以及系统原本的 <code>$PATH</code> 变量内容打包在一起，重新赋值并覆盖掉当前名为 PATH 的环境变量。</li>
+<li><strong><code>$PATH</code> 保留机制</strong>：由于在这行赋值语句中，操作者故意在尾部又加上了代表原本内容的 <code>$PATH</code>，所以这个操作带来的实际效果，相当于在系统原先固有的 PATH 搜索列表的最前方，无损地额外增加了一个全新的 <code>$JAVA_HOME/bin</code> 搜索目录。</li>
+<li><strong>$$` 符号的特殊语义</strong>：在Bash语法中，美元符号 `$$ 承担着变量引用的工作。它在此处用于明确指明，紧跟其后的字符串不是普通文本，而是要求解释器将其提取并替换为该名称的变量中已存储的值。</li>
+<li><strong><code>:</code> 冒号分隔符</strong>：在环境变量的长字符串中，冒号 <code>:</code> 被用作目录条目之间的分隔符。它不仅起分隔作用，系统在查找命令时，还会根据冒号从左到右的位置顺序，严格指明各个目录被搜索执行的先后顺序。</li>
+</ul>
+<hr>
+<h1 id="hosts-文件详解"><a href="#hosts-文件详解" class="headerlink" title="hosts 文件详解"></a>hosts 文件详解</h1><p>在没有庞大外部 DNS 服务器支持的早期互联网时代，或者是现代高度封闭的内网环境中，<code>/etc/hosts</code> 文件扮演着至关重要的域名解析中枢角色。</p>
+<h2 id="Hosts-文件的基本概念与解析优先级"><a href="#Hosts-文件的基本概念与解析优先级" class="headerlink" title="Hosts 文件的基本概念与解析优先级"></a>Hosts 文件的基本概念与解析优先级</h2><p>hosts文件是存在于所有类 unix 以及 linux 操作系统中的一个基础文本文件，它专门负责完成本机的 ip地址与纯文本域名之间快速映射与解析的底层工作。</p>
+<ul>
+<li><strong>文件格式与位置</strong>：它严格以纯粹的 ASCII 文本格式进行编写和保存，并被永久放置在系统的 <code>/etc</code> 目录下，文件全名为 <code>hosts</code>。但在少数不同的定制版 linux 发行版本中，其控制网络主机名的文件也可能叫别名，比如在 Debian 派系系统中，负责定义本机的对应基础文件名叫 <code>/etc/hostname</code>。</li>
+<li><strong>查询工作流</strong>：hosts 文件内部主要包含了指定的 ip 地址和其对应主机名之间的静态映射条目，并且完全支持为一个 IP 指定多个主机名的别名设定。在完全没有外部局域网域名解析服务器（DNS）辅助的情况下，当前这台操作系统上运行的所有浏览器和网络应用服务程序，都会统一通过查询解析该文件内的数据记录，来反向解析得到那个试图访问的服务器主机名背后的真实 IP 地址。只有在本地文件解析失败时，系统否则才需要使用外部配置的 DNS 服务程序或网络请求来解决该域名的位置问题。</li>
+<li><strong>应用原则</strong>：为了网络的高效和稳定，系统管理员通常都会将网络上或局域网内最常用、最核心的域名和与其对应的IP地址映射关系提前加入到本机的 hosts 文件中，从而实现网络请求时极其快速、方便的内部访问和寻址。</li>
+<li><strong>系统内部网络解析优先级</strong>：在Linux的网络组件中，一次域名解析的查询顺序有着严格的排位：应用自身的 DNS 内部缓存查询 > 本地系统级 /etc/hosts 文件静态查询 > 发送网络包请求外部公网 DNS 服务商进行查询。</li>
+<li><strong>本质定义</strong>：用一句话概括，hosts 文件其实就是 the static table lookup for host name（针对主机名映射查询的一张本地静态表）。</li>
+</ul>
+<h2 id="Hosts-文件的三大实战作用"><a href="#Hosts-文件的三大实战作用" class="headerlink" title="Hosts 文件的三大实战作用"></a>Hosts 文件的三大实战作用</h2><h3 id="强行加快域名解析速度"><a href="#强行加快域名解析速度" class="headerlink" title="强行加快域名解析速度"></a>强行加快域名解析速度</h3><p>对于那些我们在日常办公或服务器间经常需要交互访问的核心网站及API接口，我们可以主动提取其真实的 IP，通过在本地的 hosts 文件中手动配置并写入这些域名和 IP 的绑定映射关系，来跳过网络请求，直接提高域名的解析速度。由于本地磁盘已经直接有了这条映射关系的记录，因此当我们输入域名或发送请求后，本机的操作系统底层的网络组件就能够瞬间、快速地直接解析出对应的 IP 地址，而完全不用再花费时间去请求那些远在互联网远端、有时还可能出现拥堵丢包的公网 DNS 解析服务器了。</p>
+<h3 id="在局域网内构建人性化映射关系"><a href="#在局域网内构建人性化映射关系" class="headerlink" title="在局域网内构建人性化映射关系"></a>在局域网内构建人性化映射关系</h3><p>在众多企业和企事业单位中，通常都会搭建属于自己的封闭局域网，而且机房内还会有很多台不同的、各自承载不同业务的服务器同时提供给公司的不同部门成员使用。但问题在于，由于维护成本，局域网中一般很少会专门去架设一套复杂的内部 DNS 域名解析服务器。因此这就导致在访问这些内网服务器时，员工需要死记硬背并手动输入那些干巴巴、极难记住的数字 IP 地址，这对非技术的大家来说显得相当麻烦且极易出错。因此，为了解决体验问题，管理员就可以分别给局域网内的这些服务器在 hosts 文件里取个带业务含义、容易记住的文本名字（例如 db-server-1），然后在每台客户机的 hosts 文件中统一建立起这些文本名称与机房 IP 的映射。配置完成后，这样在以后大家要访问特定的服务器数据的时候，只要在浏览器或SSH软件里输入这个服务器的名字就一切 OK 了，系统会自动指向正确的机器。</p>
+<h3 id="安全防线与屏蔽垃圾网站拦截"><a href="#安全防线与屏蔽垃圾网站拦截" class="headerlink" title="安全防线与屏蔽垃圾网站拦截"></a>安全防线与屏蔽垃圾网站拦截</h3><p>在互联网上，现在存在有很多流氓网站。在浏览网页时不经过我们任何明确同意的情况下，有些站点就试图利用脚本将各种各样的广告插件甚至是危险程序隐蔽地安装到我们的计算机系统中，这其中更不乏伪装极好的木马和病毒链接。面对这些已知的恶意网站域名池，系统管理员就可以巧妙地利用本地 hosts 文件的最高解析优先权机制。把这些危险网站的域名直接全部映射到一个故意写错的无效网络 IP 上，或者是直接映射到本地计算机的安全回环 IP 地址（如 <code>127.0.0.1</code> 或者 <code>0.0.0.0</code>）上。这样一来，一旦计算机试图连接这些黑名单域名，请求就会立刻在本地被打回或重定向到死胡同，从而干净利落地达到在底层彻底禁止该电脑访问这批网站的安全防护目的了。</p>
+<h2 id="配置文件的修改语法"><a href="#配置文件的修改语法" class="headerlink" title="配置文件的修改语法"></a>配置文件的修改语法</h2><p>编辑 <code>/etc/hosts</code> 非常简单，直接使用文本编辑器添加条目即可。书写规则必须是一行一条记录，格式如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 目标IP地址     映射的域名或主机名</span><br><span class="line">202.108.22.5    www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>此时由于规则的生效，一旦保存该文件，本机的网络底层就已经强制将真实的公网 IP <code>202.108.22.5</code> 与特定的文本域名百度建立了绝对的网络访问联系。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org">chen7chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/Linux%E5%9F%BA%E6%9C%AC%E7%89%B9%E6%80%A7/">http://blog.xchstudy.org/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/Linux%E5%9F%BA%E6%9C%AC%E7%89%B9%E6%80%A7/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.xchstudy.org" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.chenjichao.site/raw/1.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/2%20%E6%B5%81%E9%87%8F%E7%A7%8D%E7%B1%BB/" title="流量种类"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/5.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">流量种类</div></div></a></div><div class="next-post pull-right"><a href="/2026/04/05/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/05%20%E5%89%8D%E6%B2%BF%E5%AE%89%E5%85%A8%E9%A2%86%E5%9F%9F/AI%E5%AE%89%E5%85%A8/2%20%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B%E6%96%B9%E6%A1%88/" title="攻击检测方案"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/6.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">攻击检测方案</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chen7chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">201</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">50</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">147</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E6%A8%A1%E5%BC%8F%E4%B8%8ERoot%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">单用户模式与Root密码重置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%A6%E6%88%AA%E5%B9%B6%E8%BF%9B%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E8%8F%9C%E5%8D%95"><span class="toc-number">1.1.</span> <span class="toc-text">拦截并进入系统引导菜单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E6%A0%B8%E5%90%AF%E5%8A%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">内核启动选项参数深度解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9E%E6%93%8D%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">密码重置的完整实操流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Shell"><span class="toc-number">2.</span> <span class="toc-text">Shell</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shell-%E4%BD%93%E7%B3%BB%E7%9A%84%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%88%86%E7%B1%BB"><span class="toc-number">2.1.</span> <span class="toc-text">Shell 体系的概念与分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bash%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%E4%B8%8E%E6%8E%92%E7%89%88%E6%8E%A7%E5%88%B6"><span class="toc-number">2.2.</span> <span class="toc-text">Bash环境下的转义字符与排版控制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%AA%E7%BB%88%E7%AB%AF-Pseudo-Terminal-PTY-%E6%9E%B6%E6%9E%84%E6%B7%B1%E5%BA%A6%E5%89%96%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">伪终端 (Pseudo Terminal &#x2F; PTY) 架构深度剖析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%AA%E7%BB%88%E7%AB%AF%E7%9A%84%E5%9F%BA%E7%A1%80%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%BB%84%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">伪终端的基础定义与组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E8%BD%AC%E4%B8%8E%E8%BD%AC%E5%8F%91%E6%9C%BA%E5%88%B6"><span class="toc-number">3.2.</span> <span class="toc-text">数据流转与转发机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E6%A1%8C%E9%9D%A2%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86%E5%AE%9E%E5%BD%95"><span class="toc-number">3.3.</span> <span class="toc-text">终端桌面程序的运行原理实录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%AA%E7%BB%88%E7%AB%AF%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">3.4.</span> <span class="toc-text">伪终端使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%AA%E7%BB%88%E7%AB%AF%E5%BC%95%E5%85%A5%E5%8E%9F%E5%9B%A0"><span class="toc-number">3.5.</span> <span class="toc-text">伪终端引入原因</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%B7%AF%E5%BE%84%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83"><span class="toc-number">4.</span> <span class="toc-text">文件系统与路径管理规范</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%E4%B8%8E%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E7%9A%84%E4%B8%A5%E8%B0%A8%E5%AE%9A%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text">绝对路径与相对路径的严谨定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E5%AF%BC%E8%88%AA%E6%A0%87%E8%AF%86%E7%AC%A6%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90"><span class="toc-number">4.2.</span> <span class="toc-text">目录导航标识符深入解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%B8%8E%E5%AE%B6%E7%9B%AE%E5%BD%95%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">4.3.</span> <span class="toc-text">根目录与家目录的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSH%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95%E4%B8%8E%E5%AE%89%E5%85%A8%E9%AA%8C%E8%AF%81%E5%8D%8F%E8%AE%AE%E4%BD%93%E7%B3%BB"><span class="toc-number">5.</span> <span class="toc-text">SSH远程登录与安全验证协议体系</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH%E5%8D%8F%E8%AE%AE%E7%9A%84%E4%B8%A4%E5%A4%A7%E6%A0%B8%E5%BF%83%E5%AE%89%E5%85%A8%E9%AA%8C%E8%AF%81%E6%9C%BA%E5%88%B6"><span class="toc-number">5.1.</span> <span class="toc-text">SSH协议的两大核心安全验证机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%85%8D%E5%AF%86%E7%A0%81SSH%E7%99%BB%E5%BD%95%E7%9A%84%E5%85%A8%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C"><span class="toc-number">5.2.</span> <span class="toc-text">配置免密码SSH登录的全流程操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E6%9C%AC%E5%9C%B0%E7%94%9F%E6%88%90%E4%B8%93%E5%B1%9E%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="toc-number">5.2.1.</span> <span class="toc-text">在本地生成专属密钥对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E6%9C%AC%E5%9C%B0%E5%85%AC%E9%92%A5%E5%AE%89%E5%85%A8%E4%B8%8A%E4%BC%A0%E8%87%B3%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-number">5.2.2.</span> <span class="toc-text">将本地公钥安全上传至服务端</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E4%B8%8E%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE"><span class="toc-number">6.</span> <span class="toc-text">核心系统文件与常见配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E7%9B%AE%E5%BD%95%E5%8F%8A%E6%A0%B8%E5%BF%83%E4%B8%80%E7%BA%A7%E5%AD%90%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="toc-number">6.1.</span> <span class="toc-text">根目录及核心一级子目录结构概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#etc-%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%B7%B1%E5%BA%A6%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%8D%E5%BD%95"><span class="toc-number">6.1.1.</span> <span class="toc-text">&#x2F;etc 目录下深度配置文件名录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc-%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%B7%B1%E5%BA%A6%E6%8F%AD%E7%A7%98"><span class="toc-number">6.1.2.</span> <span class="toc-text">&#x2F;proc 虚拟文件系统深度揭秘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#usr-%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90%E4%B8%8E%E5%BA%94%E7%94%A8%E4%B8%BB%E7%9B%AE%E5%BD%95"><span class="toc-number">6.1.3.</span> <span class="toc-text">&#x2F;usr 系统资源与应用主目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%9D%82%E9%A1%B9%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%8E%A7%E5%88%B6%E6%96%87%E4%BB%B6%E8%A1%A5%E5%85%85"><span class="toc-number">6.1.4.</span> <span class="toc-text">其他杂项配置与控制文件补充</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%89%96%E6%9E%90-Profile%E4%B8%8EPATH"><span class="toc-number">7.</span> <span class="toc-text">系统环境变量剖析 (Profile与PATH)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B8%8E%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">7.1.</span> <span class="toc-text">运行环境与环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%E4%B8%8EPATH%E5%8F%98%E9%87%8F%E6%B3%A8%E5%85%A5"><span class="toc-number">7.2.</span> <span class="toc-text">全局配置与PATH变量注入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#hosts-%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3"><span class="toc-number">8.</span> <span class="toc-text">hosts 文件详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hosts-%E6%96%87%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E8%A7%A3%E6%9E%90%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">8.1.</span> <span class="toc-text">Hosts 文件的基本概念与解析优先级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hosts-%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%89%E5%A4%A7%E5%AE%9E%E6%88%98%E4%BD%9C%E7%94%A8"><span class="toc-number">8.2.</span> <span class="toc-text">Hosts 文件的三大实战作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E8%A1%8C%E5%8A%A0%E5%BF%AB%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E9%80%9F%E5%BA%A6"><span class="toc-number">8.2.1.</span> <span class="toc-text">强行加快域名解析速度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E5%B1%80%E5%9F%9F%E7%BD%91%E5%86%85%E6%9E%84%E5%BB%BA%E4%BA%BA%E6%80%A7%E5%8C%96%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB"><span class="toc-number">8.2.2.</span> <span class="toc-text">在局域网内构建人性化映射关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E9%98%B2%E7%BA%BF%E4%B8%8E%E5%B1%8F%E8%94%BD%E5%9E%83%E5%9C%BE%E7%BD%91%E7%AB%99%E6%8B%A6%E6%88%AA"><span class="toc-number">8.2.3.</span> <span class="toc-text">安全防线与屏蔽垃圾网站拦截</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%AE%E6%94%B9%E8%AF%AD%E6%B3%95"><span class="toc-number">8.3.</span> <span class="toc-text">配置文件的修改语法</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/Linux%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81%E5%9F%BA%E7%A1%80/" title="内存取证基础——linux">内存取证基础——linux</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/Macos%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/" title="内存取证基础——macos">内存取证基础——macos</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/Centos%E5%AD%A6%E4%B9%A0/" title="系统取证——centos">系统取证——centos</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/" title="linux取证——文件取证">linux取证——文件取证</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/1%20%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" title="流量分析基础——网络模型">流量分析基础——网络模型</a><time datetime="2026-04-05T16:00:00.000Z" title="发表于 2026-04-06 00:00:00">2026-04-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By chen7chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络安全/网络攻防/2-防御技术/电子取证/服务器取证/linux/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 linux (10)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络安全/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 网络安全 (141)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/计算机原理/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (43)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/计算机原理/编程语言/编程/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (36)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="http://blog.xchstudy.org/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/2.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-08-06</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">PHP 数据类型</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-13</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">pandas</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">linux系统变量</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>

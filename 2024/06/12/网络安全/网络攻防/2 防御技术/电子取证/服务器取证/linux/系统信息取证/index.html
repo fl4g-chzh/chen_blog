@@ -1,0 +1,744 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>linux取证命令——系统信息 | 小chen妙妙屋</title><meta name="author" content="chen7chen"><meta name="copyright" content="chen7chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Linux 系统信息取证本指南针对 Linux 环境下的系统信息取证、端口排查、进程管理、状态监控以及环境变量配置等核心知识点进行了详尽的梳理与重构。 网络与端口占用排查技术在系统取证和运维排错中，定位端口和网络连接状态是首要任务。 lsof 命令详解 基础概念：lsof 的全称是 “list open files”，它是一个用于列出当前系统中所打开文件的强大工具。 权限要求：执行带有 -i 等深">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux取证命令——系统信息">
+<meta property="og:url" content="http://blog.xchstudy.org/2024/06/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="Linux 系统信息取证本指南针对 Linux 环境下的系统信息取证、端口排查、进程管理、状态监控以及环境变量配置等核心知识点进行了详尽的梳理与重构。 网络与端口占用排查技术在系统取证和运维排错中，定位端口和网络连接状态是首要任务。 lsof 命令详解 基础概念：lsof 的全称是 “list open files”，它是一个用于列出当前系统中所打开文件的强大工具。 权限要求：执行带有 -i 等深">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.chenjichao.site/raw/7.webp">
+<meta property="article:published_time" content="2024-06-12T05:41:58.000Z">
+<meta property="article:modified_time" content="2026-04-07T10:14:49.642Z">
+<meta property="article:author" content="chen7chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.chenjichao.site/raw/7.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.xchstudy.org/2024/06/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'linux取证命令——系统信息',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2026-04-07 18:14:49'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小chen妙妙屋" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">201</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">50</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">147</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.chenjichao.site/raw/7.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">linux取证命令——系统信息</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-06-12T05:41:58.000Z" title="发表于 2024-06-12 13:41:58">2024-06-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-07T10:14:49.642Z" title="更新于 2026-04-07 18:14:49">2026-04-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="linux取证命令——系统信息"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Linux-系统信息取证"><a href="#Linux-系统信息取证" class="headerlink" title="Linux 系统信息取证"></a>Linux 系统信息取证</h1><p>本指南针对 Linux 环境下的系统信息取证、端口排查、进程管理、状态监控以及环境变量配置等核心知识点进行了详尽的梳理与重构。</p>
+<h2 id="网络与端口占用排查技术"><a href="#网络与端口占用排查技术" class="headerlink" title="网络与端口占用排查技术"></a>网络与端口占用排查技术</h2><p>在系统取证和运维排错中，定位端口和网络连接状态是首要任务。</p>
+<h3 id="lsof-命令详解"><a href="#lsof-命令详解" class="headerlink" title="lsof 命令详解"></a><code>lsof</code> 命令详解</h3><ul>
+<li><strong>基础概念</strong>：<code>lsof</code> 的全称是 “list open files”，它是一个用于列出当前系统中所打开文件的强大工具。</li>
+<li><strong>权限要求</strong>：执行带有 <code>-i</code> 等深层探测参数的 <code>lsof</code> 命令时，通常需要 <code>root</code> 用户的最高权限。</li>
+<li><strong>核心语法</strong>：查看特定端口占用情况的语法格式为 <code>lsof -i:端口号</code>。</li>
+<li><strong>实战案例</strong>：使用 <code># lsof -i:8000</code> 可以查看服务器上 8000 端口的占用情况。输出结果会显示占用该端口的 <code>COMMAND</code>（如 nodejs）、<code>PID</code>（进程号，如 26993）、<code>USER</code>（所属用户，如 root）以及状态（如 LISTEN）等详细信息。</li>
+<li><p><strong>扩展参数矩阵</strong>：</p>
+<ul>
+<li><code>lsof -i:8080</code>：专门用于查看 8080 端口的占用情况。</li>
+<li><code>lsof abc.txt</code>：用于显示当前正在开启并使用 <code>abc.txt</code> 这个文件的进程信息。</li>
+<li><code>lsof -c abc</code>：用于显示以 <code>abc</code> 开头的进程当前所打开的所有文件列表。</li>
+<li><code>lsof -c -p 1234</code>：精准列出进程号（PID）为 <code>1234</code> 的进程所打开的全部文件。</li>
+<li><code>lsof -g gid</code>：用于显示归属于特定 <code>gid</code>（用户组 ID）的进程情况。</li>
+<li><code>lsof +d /usr/local/</code>：显示指定目录下被各个进程所开启的文件（不包含子目录）。</li>
+<li><code>lsof +D /usr/local/</code>：功能同上，但会深度遍历并搜索该目录下的所有子目录，由于搜索范围广，执行时间通常较长。</li>
+<li><code>lsof -d 4</code>：显示当前正在使用文件描述符（fd）为 4 的所有进程。</li>
+<li><code>lsof -i -U</code>：综合显示系统中所有打开的网络端口以及 UNIX domain 文件。</li>
+</ul>
+</li>
+</ul>
+<h3 id="netstat-命令详解（网络状态分析）"><a href="#netstat-命令详解（网络状态分析）" class="headerlink" title="netstat 命令详解（网络状态分析）"></a><code>netstat</code> 命令详解（网络状态分析）</h3><ul>
+<li><strong>基础概念</strong>：<code>netstat</code> 是一个极其有用的工具，专门用来监控 TCP/IP 网络，它可以显示路由表、实际的活动网络连接以及每一个网络接口设备的工作状态信息。</li>
+<li><strong>端口占用查看组合</strong>：<code>netstat -tunlp | grep 端口号</code> 是最常用的端口查询黄金组合。</li>
+<li><p><strong>高频核心参数解析</strong>：</p>
+<ul>
+<li><code>-a</code> 或 <code>--all</code>：列出当前系统中所有的连线（包含监听和未监听的 Socket）。</li>
+<li><code>-t</code>：仅过滤并显示 TCP 传输协议相关的连线状况。</li>
+<li><code>-u</code>：仅过滤并显示 UDP 传输协议相关的连线状况。</li>
+<li><code>-n</code> 或 <code>--numeric</code>：拒绝显示别名，直接使用数字格式显示 IP 地址和端口号，不通过域名服务器进行反向解析。</li>
+<li><code>-l</code> 或 <code>--listening</code>：仅列出当前处于 Listen（监听）状态的服务器 Socket。</li>
+<li><code>-p</code> 或 <code>--programs</code>：显示建立相关网络链接的程序名称和对应的程序识别码（PID）。</li>
+<li><code>-c</code> 或 <code>--continuous</code>：持续不断地列出当前的动态网络状态。</li>
+<li><code>-e</code> 或 <code>--extend</code>：显示网络相关的其他延伸信息。</li>
+<li><code>-g</code> 或 <code>--groups</code>：显示多重广播（Multicast）功能群组的组员名单。</li>
+<li><code>-i</code> 或 <code>--interfaces</code>：显示系统的网络界面（网卡）信息表单。</li>
+<li><code>-r</code> 或 <code>--route</code>：显示系统的核心路由表（Routing Table）。</li>
+<li><code>-s</code> 或 <code>--statistics</code>：按协议显示网络工作信息的详细统计表。</li>
+</ul>
+</li>
+<li><p><strong>实战应用场景举例</strong>：</p>
+<ul>
+<li>查看 8000 端口：<code>netstat -tunlp | grep 8000</code>。</li>
+<li>查看所有 TCP 端口：<code>netstat -ntlp</code>。</li>
+<li>追踪 UDP 端口使用：<code>netstat -apu</code> 可以详细显示 UDP 的活跃连接和进程程序名。</li>
+<li>查看网卡流量统计：<code>netstat -i</code> 可以查看诸如 eth0、lo 等网卡的 MTU、RX-OK（接收正常）、TX-OK（发送正常）等数据包统计。</li>
+<li>查看组播组成员：<code>netstat -g</code> 可查阅 IPv4 和 IPv6 的组播订阅情况。</li>
+<li>网络协议全局统计：<code>netstat -s</code> 能够分门别类地输出 Ip、Icmp、Tcp、Udp、TcpExt 等协议的接收、发送、丢弃、重传等海量统计数据。</li>
+<li>查看仅限服务端的监听接口：<code>netstat -l</code> 能够纯粹列出系统对外暴露的监听端口及 UNIX domain sockets。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="核心服务进程管理与监测"><a href="#核心服务进程管理与监测" class="headerlink" title="核心服务进程管理与监测"></a>核心服务进程管理与监测</h2><p>在 Linux 生态中，<code>ps</code> 和 <code>top</code> 被公认为最强大、最核心的进程管理命令。</p>
+<h3 id="ps-命令（静态进程快照）"><a href="#ps-命令（静态进程快照）" class="headerlink" title="ps 命令（静态进程快照）"></a><code>ps</code> 命令（静态进程快照）</h3><ul>
+<li><strong>基础概念</strong>：<code>ps</code> 命令是最基本且功能非常强大的进程查看命令。它常被用于监控后台进程的工作情况，因为后台进程无法与屏幕、键盘等标准输入/输出设备通信。</li>
+<li><strong>核心功能</strong>：通过执行该命令，管理员可以确定哪些进程正在运行、进程所处的运行状态、进程是否已经结束、是否存在僵死（Zombie）进程，以及哪些进程占用了过多的系统资源等。</li>
+<li><p><strong>常用选项与参数</strong>：</p>
+<ul>
+<li><code>-a</code>：显示系统中所有进程的信息快照。</li>
+<li><code>-e</code> 或 <code>-A</code>：列出系统中所有的进程信息。</li>
+<li><code>-f</code>：以全格式显示进程的所有详细信息。</li>
+<li><code>-l</code>：以长格式展现进程的详细信息。</li>
+<li><code>-r</code>：过滤并只显示当前正在运行状态的进程。</li>
+<li><code>-u</code>：以面向用户的格式显示信息（包含用户名、CPU 以及内存的使用情况等）。</li>
+<li><code>-x</code>：显示所有非控制终端上的后台进程信息。</li>
+<li><code>-p</code>：精准显示由特定进程 ID (PID) 指定的进程信息。</li>
+<li><code>-w</code>：加宽输出显示，以便完整呈现较多的命令行资讯。</li>
+</ul>
+</li>
+<li><p><strong>输出字段深度解析</strong>（以 <code>ps -aux</code> 或 <code>ps -axu</code> 格式为例）：</p>
+<ul>
+<li><strong>USER</strong>：指示启动该进程的所属用户名。</li>
+<li><strong>PID</strong>：代表进程的唯一标志号</li>
+<li><strong>%CPU</strong>：反映该进程占用的 CPU 运行时间与总运行时间之比的使用率。</li>
+<li><strong>%MEM</strong>：反映该进程占用的物理内存与系统总内存之比的使用率。</li>
+<li><strong>VSZ</strong>：指示进程所占用的虚拟内存大小（单位通常为 KB）。</li>
+<li><strong>RSS</strong>：指示进程实际占用的物理内存数值（单位为 KB）。</li>
+<li><strong>TTY</strong>：指出该进程建立时所对应的控制终端，如果显示为“?”则表示该进程不占用任何控制终端（通常为后台服务）。</li>
+<li><strong>STAT</strong>：展示进程当前的运行状态代码，核心代码包括：<ul>
+<li><code>D</code>：不可中断的睡眠状态（通常是在等待 I/O 的进程）。</li>
+<li><code>R</code>：就绪或正在执行状态（存在于可运行队列中）。</li>
+<li><code>S</code>：睡眠或静止状态。</li>
+<li><code>T</code>：被跟踪状态或暂停执行状态。</li>
+<li><code>Z</code>：终止（僵死）状态，这类进程实质已不存在，但系统暂时无法消除其记录。</li>
+<li><code>W</code>：表明系统没有足够的内存分页可供分配。</li>
+<li><code>&lt;</code>：标识此进程为高优先级的进程。</li>
+<li><code>N</code>：标识此进程为低优先级的进程。</li>
+<li><code>L</code>：表示该进程有内存分页分配并被强制锁在内存体内（常见于实时系统或 I/O 操作）。</li>
+</ul>
+</li>
+<li><strong>START</strong>：记录了该进程最初的开始启动时间。</li>
+<li><strong>TIME</strong>：记录了该进程实际消耗的 CPU 执行时间。</li>
+<li><strong>COMMAND</strong>：展示启动该进程对应的命令名或执行的指令详细内容。</li>
+</ul>
+</li>
+<li><p><strong>高级查询技巧</strong>：由于 <code>ps</code> 执行后产生的结果条目往往太多，实战中通常会结合 <code>grep</code> 参数来精确定位所需的进程号。例如查找 PHP 进程：<code>ps -ef | grep php</code>；或者查找 Nginx 进程：<code>ps -axu| grep -v grep| grep nginx</code>。</p>
+</li>
+</ul>
+<h3 id="top-命令（动态资源监控器）"><a href="#top-命令（动态资源监控器）" class="headerlink" title="top 命令（动态资源监控器）"></a><code>top</code> 命令（动态资源监控器）</h3><ul>
+<li><p><strong>基础概念</strong>：<code>top</code> 命令能够动态、实时地显示服务器的进程信息，类似于 Windows 系统下的任务管理器。它的特点是会自动把占用系统资源最高的进程排列在最前面。</p>
+</li>
+<li><p><strong>头部全局信息解析（前五行）</strong>：</p>
+<ul>
+<li>第一行：依次表示当前系统时间、系统自启动以来的运行时长、当前登录系统的总用户数、以及系统的平均负载（Load Average）。</li>
+<li>第二行：统计所有任务（Tasks）的状态，包括启动的总数、正在运行的进程数、挂起（Sleeping）的进程数、停止的进程数以及无用（Zombie 僵死）的进程数。</li>
+<li>第三行：详尽显示当前 CPU 的使用率情况，涵盖用户空间占用比例（%us）、系统内核占用比例（%sy）、改变过优先级的进程占用率（%ni）、闲置（Idle）比例（%id）、等待 I/O 的百分比（%wa）、硬件中断（%hi）、软件中断（%si）等。</li>
+<li>第四行：展示物理内存（Mem）的使用分布情况，包括系统总的可使用内存、已经使用的内存、当前空闲内存，以及被缓冲区（buffers）占用的内存。</li>
+<li>第五行：展示交换分区（Swap）的使用详情，包括系统总的交换分区大小、已使用的分区、空闲的分区以及用于高速缓存（cached）的交换分区大小。</li>
+</ul>
+</li>
+<li><p><strong>进程列表字段解析（第六行及以下）</strong>：</p>
+<ul>
+<li><strong>PID</strong> (Process ID)：进程的标志号，表现为非零的正整数。</li>
+<li><strong>USER</strong>：该进程所有者的具体用户名。</li>
+<li><strong>PR</strong>：系统分配给进程的优先级别。</li>
+<li><strong>NI</strong>：代表进程的优先级别数值。</li>
+<li><strong>VIRT</strong>：进程当前占用的虚拟内存总值。</li>
+<li><strong>RES</strong>：进程当前实际占用的物理内存总值。</li>
+<li><strong>SHR</strong>：进程运行过程中使用的共享内存总值。</li>
+<li><strong>STAT</strong>：直观表示进程的状态（如 S 为休眠，R 为运行，Z 为僵死，N 提示优先值为负数等）。</li>
+<li><strong>%CPU</strong>：进程独占的 CPU 使用率百分比。</li>
+<li><strong>%MEM</strong>：进程占用的物理内存与系统总内存的百分比比例。</li>
+<li><strong>TIME+</strong>：进程自启动后累计占用的总 CPU 时间。</li>
+<li><strong>COMMAND</strong>：启动该进程的命令名称；如果终端界面宽度不足，通常会在进程行中包含完整的命令行。</li>
+</ul>
+</li>
+<li><p><strong>交互式快捷键功能</strong>：在 <code>top</code> 命令的动态界面中，可以通过输入快捷键实现交互式控制：</p>
+<ul>
+<li><code>&lt;空格&gt;</code>：立刻强制刷新屏幕并更新各项主要参数指标。</li>
+<li><code>P</code>：强制列表根据 CPU 占用率的多少进行降序排序。</li>
+<li><code>M</code>：强制列表根据进程使用物理内存的大小进行降序排序。</li>
+<li><code>T</code>：强制列表根据进程的累计运行时间进行排序。</li>
+<li><code>m</code>：一键切换是否显示头部内存详细信息。</li>
+<li><code>t</code>：一键切换是否显示头部的进程统计和 CPU 状态信息。</li>
+<li><code>c</code>：动态切换只显示命令简短名称或展开显示完整的命令行路径。</li>
+<li><code>W</code>：将用户当前的交互设置（如排序方式、列显示）永久写入到 <code>~/.toprc</code> 配置文件中，这是官方推荐的保存 top 配置的方法。</li>
+<li><code>q</code>：平滑退出 <code>top</code> 监控界面。</li>
+</ul>
+</li>
+</ul>
+<h3 id="进程检索与终止工具"><a href="#进程检索与终止工具" class="headerlink" title="进程检索与终止工具"></a>进程检索与终止工具</h3><ul>
+<li><p><strong><code>pgrep</code> 进程查找</strong>：</p>
+<ul>
+<li>作用：用于精确查找当前正在运行的进程，并只列出满足匹配给定条件的进程 PID 号。</li>
+<li>规则：所有指定的条件都必须完全匹配，相关的进程才会被列出展示，且该命令对所有用户开放使用权限。例如执行 <code>pgrep nginx</code> 将输出一列干净的 Nginx 相关的 PID 数字。</li>
+</ul>
+</li>
+<li><p><strong><code>kill</code> 进程终止</strong>：</p>
+<ul>
+<li>作用：核心作用是向操作系统内核发送一个系统操作信号和目标程序的 PID，以终止一个特定进程。</li>
+<li>局限与应用场景：对于前台进程，用户通常可以使用 <code>Ctrl+C</code> 组合键直接中断；但对于脱离终端的后台进程，<code>Ctrl+C</code> 是无效的，此时必须动用 <code>kill</code> 命令。</li>
+<li>命令语法：<code>kill [-s signal |-p] [-a] pid…</code> 或者 <code>kill -l [signal]</code>。</li>
+<li>核心选项：<code>-s</code> 用于指定要发送的具体信号；<code>-p</code> 用于模拟发送信号（不实际执行）；<code>-l</code> 打印指定信号的名称列表。</li>
+<li>核心工作信号：系统预设的默认终止信息为 <code>SIGTERM(15)</code>，用于请求程序正常自我终止。如果进程无响应或无法使用预设信号终止，可以使用终极的 <code>SIGKILL(9)</code> 信息（即 <code>kill -9</code>）来尝试强制且无条件地删除程序，此操作尤其适用于清理顽固的僵尸进程。</li>
+</ul>
+</li>
+<li><p><strong><code>killall</code> 批量终止</strong>：</p>
+<ul>
+<li>作用：相较于 <code>kill</code> 必须提供具体的 PID 进行逐一清理，<code>killall</code> 允许管理员通过指定程序的具体名字，一次性、直接地杀死属于该名字的所有相关进程。例如，若要杀掉 nginx 的 9 个进程，用 <code>kill</code> 需要执行 9 次，而使用 <code>killall nginx</code> 则能一次性轻松解决批量进程终止的问题。</li>
+<li>附加工具：工作中还可以利用 <code>pkill</code> 命令，该工具在服务器日常管理中用于“踢出”异常在线用户或批量处理非常方便。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="全面系统状态监控与性能分析"><a href="#全面系统状态监控与性能分析" class="headerlink" title="全面系统状态监控与性能分析"></a>全面系统状态监控与性能分析</h2><h3 id="w-命令（会话监控）"><a href="#w-命令（会话监控）" class="headerlink" title="w 命令（会话监控）"></a><code>w</code> 命令（会话监控）</h3><ul>
+<li><strong>基础概念</strong>：<code>w</code> 是一个用来显示当前系统有哪些登录用户以及这些用户正在执行何种操作的实用命令。</li>
+<li><strong>附加价值</strong>：除了展示用户会话外，该命令还在头部提供系统运行时长（uptime）以及系统的平均负载（load average）宏观情况。</li>
+<li><strong>语法</strong>：<code>w [OPTIONS] [USER]</code>。</li>
+</ul>
+<h3 id="vmstat-命令（虚拟内存与资源简报）"><a href="#vmstat-命令（虚拟内存与资源简报）" class="headerlink" title="vmstat 命令（虚拟内存与资源简报）"></a><code>vmstat</code> 命令（虚拟内存与资源简报）</h3><ul>
+<li><strong>基础概念</strong>：<code>vmstat</code> 是最常见的、轻量级的系统监控工具之一。</li>
+<li><strong>监控范围</strong>：它可以展示在给定时间间隔下的服务器状态评估值，覆盖面包括服务器的 CPU 使用率、物理内存使用、虚拟内存（Swap）的交换情况以及 IO（磁盘）的底层读写情况。</li>
+<li><strong>核心语法</strong>：<code>vmstat [seconds_time] [times]</code>，该语法明确表示将在 <code>seconds_time</code> 秒的时间间隔下，连续进行 <code>times</code> 次的系统状态数据输出。</li>
+</ul>
+<h3 id="sar-命令（全能性能分析巨兽）"><a href="#sar-命令（全能性能分析巨兽）" class="headerlink" title="sar 命令（全能性能分析巨兽）"></a><code>sar</code> 命令（全能性能分析巨兽）</h3><ul>
+<li><p><strong>基础概念</strong>：<code>sar</code> 命令被誉为目前 Linux 系统上最为全面、体系最为完整的系统性能分析分析工具之一，它能够从硬件层面到软件层面进行多维度的深入剖析。</p>
+</li>
+<li><p><strong>核心选项</strong>：</p>
+<ul>
+<li><code>-A</code>：强制输出所有可能报告的最终总和统计。</li>
+<li><code>-u</code>：专门输出关于 CPU 使用情况的各类详细统计信息。</li>
+<li><code>-q</code>：针对系统运行队列和系统平均负载情况进行深度分析。</li>
+<li><code>-r</code>：输出系统的物理内存以及交换空间（Swap）使用率的统计信息。</li>
+<li><code>-W</code>：输出系统的换页活动（Swap I/O）详细统计信息。</li>
+<li><code>-b</code>：显示底层块设备的 I/O 活动和总数据传送速率的统计信息。</li>
+<li><code>-d</code>：详细输出系统中每一个块设备（物理磁盘）的个别活动信息。</li>
+<li><code>-n</code>：针对网络模块进行专门统计（支持 DEV, EDEV, SOCK, TCP 等特定关键字）。</li>
+<li><code>-v</code>：输出系统核心层面的 inode、文件句柄以及其他内核关键表的统计信息。</li>
+<li><code>-p</code>：为每一个独立的 CPU 核心单独报告其运行状态。</li>
+<li><code>-B</code>：专门显示系统内存分页的换页状态。</li>
+<li><code>-y</code>：针对终端设备活动情况的专门统计。</li>
+<li><code>-R</code>：输出底层的内存页面总计统计信息。</li>
+<li><code>-i</code>：用于设定读取或刷新状态信息的特定间隔时间。</li>
+<li><code>-f</code>：支持从之前生成的指定二进制数据文件中提取并回放历史报告。</li>
+<li><code>-e</code>：用于设置历史数据显示报告的最终结束时间点。</li>
+<li><code>-o filename</code>：以二进制的高效格式把当前追踪结果存入到指定的文件中（注意：生成的二进制文件不能使用 cat、more、less 等常规文本工具查看，必须使用 <code>sar -f filename</code> 命令进行还原查看）。</li>
+</ul>
+</li>
+<li><p><strong>专项领域统计深度解析</strong>：</p>
+<ul>
+<li><strong>CPU 统计 (<code>sar -u</code>)</strong>：统计输出包含 <code>%user</code>（用户空间占用率）、<code>%nice</code>（改变优先级的占用率）、<code>%system</code>（内核空间占用率）、<code>%iowait</code>（等待 IO 的比例）、<code>%steal</code>（被虚拟化环境偷取的比例）、<code>%idle</code>（绝对空闲比例）。</li>
+<li><strong>平均负载统计 (<code>sar -q</code>)</strong>：揭示队列压力，输出 <code>runq-sz</code>（运行队列的等待进程长度，经验表明每核不应超过 3 个）、<code>plist-sz</code>（进程列表中总的 processes 和 threads 数量）、以及 <code>ldavg-1</code>、<code>ldavg-5</code>、<code>ldavg-15</code>（分别代表系统最后 1、5、15 分钟将多核 CPU 负载相加后除以核心数得出的动态平均值）。</li>
+<li><strong>内存统计 (<code>sar -r</code>)</strong>：精确分析内存，包括 <code>kbmemfree</code>（空闲物理内存大小）、<code>kbmemused</code>（使用中的物理内存）、<code>%memused</code>（物理内存总使用率）、<code>kbbuffers</code>（内核中纯粹作为缓冲区使用的物理内存大小）、<code>kbcached</code>（系统缓存的文件数据大小）、<code>kbcommit</code>（为确保系统内存不发生溢出崩溃而必须保证的最少内存量）、<code>%commit</code>（kbcommit 量与包含物理和 Swap 在内的系统总内存的百分比）。需要注意，<code>kbbuffers</code> 和 <code>kbcached</code> 的数值与 <code>free</code> 命令输出的 buffer 和 cache 在含义上完全一致。</li>
+<li><strong>Swap 分区统计 (<code>sar -W</code>)</strong>：监控系统虚拟内存的交换速率，输出 <code>pswpin/s</code>（每秒换入）和 <code>pswpout/s</code>（每秒换出）。</li>
+<li><strong>全局磁盘 I/O 统计 (<code>sar -b</code>)</strong>：评估整体吞吐能力，包含 <code>tps</code>（系统所有磁盘每秒钟产生的物理 IO 请求总数，对应 iostat 的 tps）、<code>rtps</code>（每秒读取请求总数）、<code>wtps</code>（每秒写入请求总数）、<code>bread/s</code>（每秒钟从磁盘读取的逻辑块总数）、<code>bwrtn/s</code>（每秒钟实际写入到磁盘的块总数）。</li>
+<li><strong>单盘使用详情 (<code>sar -d</code>)</strong>：若配合 <code>-p</code> 参数可以显示直观的磁盘设备名称（DEV）。输出详情涵盖 <code>tps</code>（每秒传输数）、<code>rd_sec/s</code>（每秒读取的底层扇区总数）、<code>wr_sec/s</code>（每秒写入扇区总数）、<code>avgrq-sz</code>（平均每次磁盘 IO 请求操作包含的扇区数据大小）、<code>avgqu-sz</code>（磁盘底层请求队列堆积的平均长度）、<code>await</code>（完成每次请求的平均消耗耗时，单位为毫秒，该值等于磁盘寻道时间 + 请求队列排队时间 + 服务处理时间）、<code>svctm</code>（仅仅是 IO 服务处理的绝对时间，不含排队时间）、<code>%util</code>（核心指标：IO 请求占用的总 CPU 处理时间百分比，该值越高，明确表明底层 IO 瓶颈越严重，速度越慢）。</li>
+<li><p><strong>网络综合分析 (<code>sar -n</code>)</strong>：支持 6 个核心开关（DEV，EDEV，NFS，NFSD，SOCK，TCP 以及各种 IPv6 变种等），甚至可以使用 FULL 关键字输出 DEV、EDEV、SOCK 的终极综合版。</p>
+<ul>
+<li><code>sar -n DEV</code>：监控网卡常规流量，输出 <code>IFACE</code>（网卡名称，如 eth0, lo）、<code>rxpck/s</code> 与 <code>txpck/s</code>（每秒收发的包数量）、<code>rxKB/S</code> 与 <code>txKB/S</code>（每秒收发的实际千字节带宽）、<code>rxcmp/s</code> 与 <code>txcmp/s</code>（每秒收发的压缩数据包量）、<code>rxmcst/s</code>（每秒接收的多播数据包数量）。</li>
+<li><code>sar -n EDEV</code>：专门诊断网络设备通信层的失败与错误事件，输出 <code>rxerr/s</code> 与 <code>txerr/s</code>（每秒收发阶段的错误包量）、<code>coll/s</code>（在半双工模式下每秒发生的网络冲撞次数）、<code>rxdrop/s</code> 与 <code>txdrop/s</code>（因网卡缓冲区溢出爆满导致在收发端每秒钟强行丢掉的网络包数目）、<code>txcarr/s</code>（发送时每秒钟发生的载波错误总次数）、<code>rxfram</code>（接收时发生的帧对其错误的频次）、<code>rxfifo</code> 与 <code>txfifo</code>（收发阶段底层 FIFO 缓冲区溢出的具体错误发生次数）。</li>
+<li><code>sar -n SOCK</code>：分析系统套接字资源，输出 <code>totsck</code>（系统总计被使用的 socket 总数）、<code>tcpsck</code>（TCP 专用 socket 总数）、<code>udpsck</code>（UDP 专用 socket 总数）、<code>rawsck</code>（RAW 模式 socket 总数）、<code>if-frag</code>（当前系统存在的 IP 分片数目）、<code>tcp-tw</code>（TCP 协议中处于 TIME-WAIT 回收状态的堆积连接数量）。</li>
+<li><code>sar -n TCP</code>：专注 TCP 连接状态，输出 <code>active/s</code>（由本端主动发起的新连接数）、<code>passive/s</code>（本端被动接受的新连接数）、<code>iseg/s</code>（接受的总网段数）、<code>oseg/s</code>（输出的总网段数）。</li>
+<li>其他网络诊断开关包括监控 IP 报文情况（IP/EIP）等。</li>
+</ul>
+</li>
+<li><p><strong>内核进程与文件状态 (<code>sar -v</code>)</strong>：监控内核表溢出风险，追踪指标包括 <code>dentunusd</code>（在系统缓冲目录条目池中尚未被分配使用的可用条目数量）、<code>file-nr</code>（当前被系统及所有进程实际占用的文件句柄总数量）、<code>inode-nr</code>（系统当前已经分配和使用的索引节点总数量）、<code>pty-nr</code>（系统当前正在使用的伪终端 pty 数量）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="辅助网络与内存监控工具"><a href="#辅助网络与内存监控工具" class="headerlink" title="辅助网络与内存监控工具"></a>辅助网络与内存监控工具</h3><ul>
+<li><p><strong><code>nload</code> 网络流量监控仪</strong>：</p>
+<ul>
+<li>作用：专门用于实时、图形化地查看 Linux 系统网络带宽流量状况，输出非常直观。</li>
+<li>安装方式：在 CentOS 体系下执行 <code>yum install -y epel-release</code> 及 <code>yum install -y nload</code> 进行部署；在 Ubuntu 体系下直接执行 <code>apt install -y nload</code> 进行安装。</li>
+</ul>
+</li>
+<li><p><strong><code>free</code> 内存审计命令</strong>：</p>
+<ul>
+<li>作用：专门用于显示当前系统的整体内存使用情况，统计范围包括实体物理内存容量、虚拟的交换文件（Swap）内存、共享内存区段总量，以及被系统核心强制使用的缓冲区总量等关键信息。</li>
+<li><p>参数控制：</p>
+<ul>
+<li><code>-b</code>、<code>-k</code>、<code>-m</code>：强制规定分别以 Byte（字节）、KB、MB 为基本单位来展现系统的内存容量。</li>
+<li><code>-h</code>：启动人类易读模式（Human-readable），系统会自动计算对应的容量并以恰当的单位展现（最大保留三位数），支持自动识别计算的单位包括 B（bytes）、K（kilos）、M（megas）、G（gigas）以及 T（teras）。</li>
+<li><code>-o</code>：在输出界面中强行隐藏/不显示用于缓冲区调节的那一行统计数据。</li>
+<li><code>-s&lt;间隔秒数&gt;</code>：设定定时器，按照给定的秒数间隔持续、不间断地观察并刷新内存的动态使用状况。</li>
+<li><code>-t</code>：在标准的输出列表下方，额外附加并显示所有被使用的物理内存和 Swap 内存的总和列（Total 列）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="安全审计"><a href="#安全审计" class="headerlink" title="安全审计"></a>安全审计</h2><p>在处理应急响应或日常审计时，用户登录行为和历史指令的溯源是关键环节。</p>
+<ul>
+<li><strong>系统时间校验</strong>：<ul>
+<li>可以通过执行 <code>timedatectl status</code> 命令，获取当前服务器内核的精确时间状态及 NTP 同步情况。</li>
+</ul>
+</li>
+<li><p><strong>活跃登录追踪 (<code>who</code> 命令)</strong>：</p>
+<ul>
+<li>使用 <code>who</code> 命令可以立刻查阅并输出当前处于活跃状态、正在登录系统的用户状况信息（如登录终端类型和 IP 地址）。</li>
+</ul>
+</li>
+<li><p><strong>近期登录审计 (<code>last</code> 命令)</strong>：</p>
+<ul>
+<li><code>last</code> 命令能够精准列出最近一段历史时间范围内的系统用户登录时间明细以及来源的 IP 记录数据。</li>
+<li>其底层逻辑是自动读取固定位于 <code>/var/log</code> 目录下的核心数据文件 <code>wtmp</code>，并将该二进制文件中记录的每一次登入系统的历史用户名单转化并全部打印显示出来。</li>
+</ul>
+</li>
+<li><p><strong>全局用户登录历史 (<code>lastlog</code> 命令)</strong>：</p>
+<ul>
+<li>相较于 <code>last</code> 关注近期时间流，<code>lastlog</code> 命令旨在全量列出系统中所有注册用户的最后一次登录情况历史。</li>
+<li>如果某个系统内置账号（如 daemon, bin, sys 等）从未登录过，该命令会直白地标记显示为 “Never logged in”；如果存在真实登录历史，则会清晰完整地显示出登录时所使用的源端 ip 以及精准的登录时间点。</li>
+</ul>
+</li>
+<li><p><strong>授权日志深度分析 (<code>/var/log/auth.log</code> 文件)</strong>：</p>
+<ul>
+<li>除了直接使用命令，审计人员必须通过查看核心的 <code>/var/log/auth.log</code> 文件（基于 Debian/Ubuntu 体系），以深度分析系统中发生的各种用户登录验证以及权限行为。</li>
+<li>通过使用 <code>cat /var/log/auth.log |more</code> 等命令进行分页查看，安全人员可以分析出用户尝试建立会话（session opened）、退出会话（session closed）的历史轨迹，包括系统定时任务（如 pam_unix 模块和 cron 服务）在后台自动执行时的提权或会话记录。</li>
+</ul>
+</li>
+<li><p><strong>操作指令追溯 (<code>history</code> 命令)</strong>：</p>
+<ul>
+<li>利用 <code>history</code> 命令，可以调取当前用户在命令行终端中曾经敲击并执行过的历史命令列表，这是排查人为误操作或恶意后门执行指令的关键取证步骤。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>Linux 系统中定义了大量的变量以控制运行环境，理解其生效周期和配置逻辑是系统管理的基础。</p>
+<h3 id="1-变量种类"><a href="#1-变量种类" class="headerlink" title="1. 变量种类"></a>1. 变量种类</h3><p>按照变量在系统中的生命周期和生效范围长短来严格划分，Linux 系统内的变量可明确分为两大类：</p>
+<ul>
+<li><strong>永久性变量</strong>：这类变量的特点是必须通过修改具体的底层配置文件才能生效，一旦配置完成并被系统加载，该变量将永久保持生效状态，不会因为重启终端而丢失。</li>
+<li><strong>临时性变量</strong>：这类变量仅通过使用 <code>export</code> 命令在当前终端界面中即时声明即可立刻生效，但其致命缺陷在于：一旦关闭当前所处的 shell 终端，该变量将随之彻底失效被销毁。</li>
+</ul>
+<h3 id="2-设置与持久化环境变量"><a href="#2-设置与持久化环境变量" class="headerlink" title="2. 设置与持久化环境变量"></a>2. 设置与持久化环境变量</h3><ul>
+<li><p><strong>途径一：修改 <code>/etc/profile</code>（针对系统所有用户永久生效全局变量）</strong></p>
+<ul>
+<li>操作逻辑：通过文本编辑器（如 VI）对 <code>/etc/profile</code> 这个系统级文件增加变量定义，所定义的该变量将会对当前 Linux 系统下的每一个用户均有效，并且由于写在了磁盘文件中，它具备绝对的“永久性”。</li>
+<li>操作示例：使用 <code>vi /etc/profile</code> 打开文件后，在末尾添加 <code>export CLASSPATH=./JAVA_HOME/lib;$JAVA_HOME/jre/lib</code>。</li>
+<li>生效警告：请注意，直接修改完该文件后系统并不会马上使其生效，必须手动运行指令 <code># source /etc/profile</code> 强行加载一遍，否则该修改只能在下一次重新进行用户登录验证时才会自然生效。</li>
+</ul>
+</li>
+<li><p><strong>途径二：修改 <code>.bash_profile</code>（针对单一用户永久生效局部变量）</strong></p>
+<ul>
+<li>操作逻辑：使用文本编辑器（如 VI）打开并编辑处于特定用户家目录（如 <code>/home/guok</code>）下的隐藏文件 <code>.bash_profile</code>，在此处增加的任何变量，仅会对该特定当前用户产生作用，不影响系统内其他用户，且它同样是固化在文件中的“永久的”属性。</li>
+<li>操作示例：运行 <code>vi /home/guok/.bash_profile</code>，并在文件中追加如下内容 <code>export CLASSPATH=./JAVA_HOME/lib;$JAVA_HOME/jre/lib</code>。</li>
+<li>生效警告：同样地，修改文件后要想让当前环境马上生效加载该参数，必须主动执行 <code>$ source /home/guok/.bash_profile</code> 命令，否则只能被动等待下次重新登录进此用户环境时才会自动生效。</li>
+</ul>
+</li>
+<li><p><strong>途径三：运行 <code>export</code> 命令（仅对当前终端及其子终端生效临时变量）</strong></p>
+<ul>
+<li>操作逻辑：在任意 shell 的命令行提示符界面下，直接通过输入 <code>export 变量名=变量值</code> 这种标准语法格式来快速定义一个变量。</li>
+<li>局限性：通过此方法创建的变量仅仅局限在当前你所在的 shell（即 BASH 进程）或者是其直接衍生派生的子 shell(BASH) 环境下才是完全有效的。一旦当前的 shell 会话被关闭或断开连接，这个存在于内存中的临时变量也就彻底失效了，再次打开新的系统 shell 时将不再存在这个变量，如果业务仍然需要的话，则还需要管理员手动重新执行声明定义。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-环境变量的审阅与销毁机制"><a href="#3-环境变量的审阅与销毁机制" class="headerlink" title="3. 环境变量的审阅与销毁机制"></a>3. 环境变量的审阅与销毁机制</h3><ul>
+<li><p><strong>变量查看命令矩阵</strong>：</p>
+<ul>
+<li><code>echo</code>：可以通过指定具体的变量名（配合美元符号）来查看系统的单个环境变量值，例如使用 <code>echo $PATH</code> 命令。</li>
+<li><code>env</code>：专门用于在终端中铺开显示当前系统配置下的所有的全局环境变量清单。</li>
+<li><code>set</code>：除了环境变量外，使用该命令还能查看所有包括本地在内定义的复杂环境变量及内部功能变量参数。该命令同时还能用于手动设定某个环境变量的具体值。</li>
+</ul>
+</li>
+<li><p><strong>变量安全销毁 (<code>unset</code>)</strong>：</p>
+<ul>
+<li>作用机制：如果需要彻底清除内存中某个环境变量的内容与值，必须使用 <code>unset</code> 命令，如果在销毁前未特别指定赋新值，则该指定的变量值将直接被底层系统强行设为 <code>NULL</code>（空）。</li>
+<li>销毁验证流程实例：<ol>
+<li>首先使用 <code>export TEST=&quot;Test...&quot;</code> 新增加并定义一个名为 TEST 的临时环境变量。</li>
+<li>接着运行 <code>env|grep TEST</code>，此时屏幕将有输出内容（显示 <code>TEST=Test...</code>），该现象反向证明我们刚刚建立的环境变量 TEST 已经切实存在于系统之中了。</li>
+<li>然后我们执行 <code>unset TEST</code> 命令，要求系统彻底删除名为 TEST 的这个环境变量。</li>
+<li>最后，我们再次运行 <code>env|grep TEST</code> 进行复测，此时将发现此命令已经没有任何输出了，该静默现象直接证明了环境变量 TEST 已经被成功且彻底地删除掉了。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-重点系统预设环境变量速查表"><a href="#4-重点系统预设环境变量速查表" class="headerlink" title="4. 重点系统预设环境变量速查表"></a>4. 重点系统预设环境变量速查表</h3><p>Linux 系统内部自带并维护了大量决定系统底层运行规律的常量，以下为最核心常用的几个系统预设环境变量字典：</p>
+<ul>
+<li><strong><code>PATH</code></strong>：该核心变量决定了用户在命令行输入指令时，系统底层的 shell 程序将会自动到哪些指定的系统目录路径中去寻找对应的执行命令或程序二进制文件。</li>
+<li><strong><code>HOME</code></strong>：该变量永远指向当前正在操作系统的那个用户所拥有的私有主目录（家目录）绝对路径。</li>
+<li><strong><code>HISTSIZE</code></strong>：该数值变量明确规定了系统 shell 命令执行记录（即 history 命令所依赖的日志池）所允许保留的系统历史记录最大条数。</li>
+<li><strong><code>LOGNAME</code></strong>：该变量记录了当前正在使用系统的用户的原始登录名名称。</li>
+<li><strong><code>HOSTNAME</code></strong>：该变量特指并记录了当前这台 Linux 操作系统所在的网络主机的完整名称字符串。</li>
+<li><strong><code>SHELL</code></strong>：该变量用于标识当前用户所身处和正在使用的命令行 Shell 程序的类型标识（例如 <code>/bin/bash</code> 等）。</li>
+<li><strong><code>LANGUGE</code></strong>：该系统级变量专门存放语言编码相关的环境变量设定，如涉及到系统的多语言包或国际化显示要求，则通常需要手动或自动去修改配置此特定的环境变量。</li>
+<li><strong><code>MAIL</code></strong>：该变量指向了当前操作系统用户对应的电子邮件默认存放收件箱物理目录路径。</li>
+<li><strong><code>PS1</code></strong>：该变量全权决定了我们在命令行界面所看到的左侧基本输入提示符的具体外观形式。默认设定下，对于拥有最高权限的 root 系统级超级用户，其符号呈现为严肃的 <code>#</code> 号；而对于普通的基层用户权限，其基本提示符则默认呈现为标准的 <code>$</code> 号。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org">chen7chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org/2024/06/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/">http://blog.xchstudy.org/2024/06/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.xchstudy.org" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.chenjichao.site/raw/7.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/%E7%BC%96%E7%A8%8B/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/python/%E5%BA%93%E4%BB%8B%E7%BB%8D/Tkinter/" title="Tkinter"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Tkinter</div></div></a></div><div class="next-post pull-right"><a href="/2024/06/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/" title="linux磁盘管理"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">linux磁盘管理</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chen7chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">201</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">50</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">147</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81"><span class="toc-number">1.</span> <span class="toc-text">Linux 系统信息取证</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E6%8E%92%E6%9F%A5%E6%8A%80%E6%9C%AF"><span class="toc-number">1.1.</span> <span class="toc-text">网络与端口占用排查技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#lsof-%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.1.1.</span> <span class="toc-text">lsof 命令详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#netstat-%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%EF%BC%88%E7%BD%91%E7%BB%9C%E7%8A%B6%E6%80%81%E5%88%86%E6%9E%90%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">netstat 命令详解（网络状态分析）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%9C%8D%E5%8A%A1%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E4%B8%8E%E7%9B%91%E6%B5%8B"><span class="toc-number">1.2.</span> <span class="toc-text">核心服务进程管理与监测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ps-%E5%91%BD%E4%BB%A4%EF%BC%88%E9%9D%99%E6%80%81%E8%BF%9B%E7%A8%8B%E5%BF%AB%E7%85%A7%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">ps 命令（静态进程快照）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#top-%E5%91%BD%E4%BB%A4%EF%BC%88%E5%8A%A8%E6%80%81%E8%B5%84%E6%BA%90%E7%9B%91%E6%8E%A7%E5%99%A8%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">top 命令（动态资源监控器）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%A3%80%E7%B4%A2%E4%B8%8E%E7%BB%88%E6%AD%A2%E5%B7%A5%E5%85%B7"><span class="toc-number">1.2.3.</span> <span class="toc-text">进程检索与终止工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E9%9D%A2%E7%B3%BB%E7%BB%9F%E7%8A%B6%E6%80%81%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="toc-number">1.3.</span> <span class="toc-text">全面系统状态监控与性能分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#w-%E5%91%BD%E4%BB%A4%EF%BC%88%E4%BC%9A%E8%AF%9D%E7%9B%91%E6%8E%A7%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">w 命令（会话监控）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vmstat-%E5%91%BD%E4%BB%A4%EF%BC%88%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%80%E6%8A%A5%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">vmstat 命令（虚拟内存与资源简报）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sar-%E5%91%BD%E4%BB%A4%EF%BC%88%E5%85%A8%E8%83%BD%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A8%E5%85%BD%EF%BC%89"><span class="toc-number">1.3.3.</span> <span class="toc-text">sar 命令（全能性能分析巨兽）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%86%85%E5%AD%98%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7"><span class="toc-number">1.3.4.</span> <span class="toc-text">辅助网络与内存监控工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E5%AE%A1%E8%AE%A1"><span class="toc-number">1.4.</span> <span class="toc-text">安全审计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.5.</span> <span class="toc-text">环境变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%98%E9%87%8F%E7%A7%8D%E7%B1%BB"><span class="toc-number">1.5.1.</span> <span class="toc-text">1. 变量种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%BE%E7%BD%AE%E4%B8%8E%E6%8C%81%E4%B9%85%E5%8C%96%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.5.2.</span> <span class="toc-text">2. 设置与持久化环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E5%AE%A1%E9%98%85%E4%B8%8E%E9%94%80%E6%AF%81%E6%9C%BA%E5%88%B6"><span class="toc-number">1.5.3.</span> <span class="toc-text">3. 环境变量的审阅与销毁机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%87%8D%E7%82%B9%E7%B3%BB%E7%BB%9F%E9%A2%84%E8%AE%BE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-number">1.5.4.</span> <span class="toc-text">4. 重点系统预设环境变量速查表</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/Linux%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81%E5%9F%BA%E7%A1%80/" title="内存取证基础——linux">内存取证基础——linux</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/Macos%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/" title="内存取证基础——macos">内存取证基础——macos</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/Centos%E5%AD%A6%E4%B9%A0/" title="系统取证——centos">系统取证——centos</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%96%E8%AF%81/linux/%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E5%8F%96%E8%AF%81/" title="linux取证——文件取证">linux取证——文件取证</a><time datetime="2026-04-06T16:00:00.000Z" title="发表于 2026-04-07 00:00:00">2026-04-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/1%20%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" title="流量分析基础——网络模型">流量分析基础——网络模型</a><time datetime="2026-04-05T16:00:00.000Z" title="发表于 2026-04-06 00:00:00">2026-04-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By chen7chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络安全/网络攻防/2-防御技术/电子取证/服务器取证/linux/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 linux (10)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络安全/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 网络安全 (141)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/计算机原理/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (43)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/计算机原理/编程语言/编程/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (36)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="http://blog.xchstudy.org/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/2.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-08-06</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">PHP 数据类型</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-13</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">pandas</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">linux系统变量</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
