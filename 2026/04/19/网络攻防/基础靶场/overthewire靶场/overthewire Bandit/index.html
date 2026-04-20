@@ -1,0 +1,478 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>overthewire Bandit靶场 | 小chen妙妙屋</title><meta name="author" content="chen7chen"><meta name="copyright" content="chen7chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="xrh推荐的基础靶场，来玩一玩 第0关挺简单的，不说了 第1关 这里有linux的特殊符号’-‘号 这种情况下直接cta .&#x2F;- 第2关--spaces in this filename--文件，加了空格 之前.&#x2F;就不行了，会被终端识别为多个文件，只能cat .&#x2F;&quot;--spaces in this filename--&quot; 第三关 第四关 需要使用file查看文本文件 正常输出即">
+<meta property="og:type" content="article">
+<meta property="og:title" content="overthewire Bandit靶场">
+<meta property="og:url" content="http://blog.xchstudy.org/2026/04/19/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E5%9F%BA%E7%A1%80%E9%9D%B6%E5%9C%BA/overthewire%E9%9D%B6%E5%9C%BA/overthewire%20Bandit/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="xrh推荐的基础靶场，来玩一玩 第0关挺简单的，不说了 第1关 这里有linux的特殊符号’-‘号 这种情况下直接cta .&#x2F;- 第2关--spaces in this filename--文件，加了空格 之前.&#x2F;就不行了，会被终端识别为多个文件，只能cat .&#x2F;&quot;--spaces in this filename--&quot; 第三关 第四关 需要使用file查看文本文件 正常输出即">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.chenjichao.site/raw/3.webp">
+<meta property="article:published_time" content="2026-04-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-20T02:03:39.342Z">
+<meta property="article:author" content="chen7chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.chenjichao.site/raw/3.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.xchstudy.org/2026/04/19/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E5%9F%BA%E7%A1%80%E9%9D%B6%E5%9C%BA/overthewire%E9%9D%B6%E5%9C%BA/overthewire%20Bandit/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'overthewire Bandit靶场',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2026-04-20 10:03:39'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小chen妙妙屋" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://wiki.xchstudy.org/"><i class="fa-fw fas fa-book-open"></i><span> wiki</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.chenjichao.site/raw/3.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://wiki.xchstudy.org/"><i class="fa-fw fas fa-book-open"></i><span> wiki</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">overthewire Bandit靶场</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-18T16:00:00.000Z" title="发表于 2026-04-19 00:00:00">2026-04-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-20T02:03:39.342Z" title="更新于 2026-04-20 10:03:39">2026-04-20</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="overthewire Bandit靶场"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>xrh推荐的基础靶场，来玩一玩</p>
+<h1 id="第0关"><a href="#第0关" class="headerlink" title="第0关"></a>第0关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776559439148_20260419084354985.webp" alt="image.png"><br>挺简单的，不说了</p>
+<h1 id="第1关"><a href="#第1关" class="headerlink" title="第1关"></a>第1关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776568875022_20260419112106224.webp" alt="image.png"></p>
+<p>这里有linux的特殊符号’-‘号</p>
+<p>这种情况下直接<code>cta ./-</code></p>
+<h1 id="第2关"><a href="#第2关" class="headerlink" title="第2关"></a>第2关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776568944452_20260419112223386.webp" alt="image.png"><br><code>--spaces in this filename--</code>文件，加了空格<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776569015719_20260419112335052.webp" alt="image.png"></p>
+<p>之前<code>./</code>就不行了，会被终端识别为多个文件，只能<code>cat ./&quot;--spaces in this filename--&quot;</code></p>
+<h1 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776582074535_20260419150104306.webp" alt="image.png"></p>
+<h1 id="第四关"><a href="#第四关" class="headerlink" title="第四关"></a>第四关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776582280214_20260419150430349.webp" alt="image.png"></p>
+<p>需要使用file查看文本文件</p>
+<p>正常输出即可</p>
+<h1 id="第五关"><a href="#第五关" class="headerlink" title="第五关"></a>第五关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776583327616_20260419152204548.webp" alt="image.png"><br>有提示<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -type f -size 1033c</span><br></pre></td></tr></table></figure></p>
+<p>然后<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat &quot;./maybehere07/.file2&quot;</span><br></pre></td></tr></table></figure><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776583437920_20260419152344529.webp" alt="image.png"></p>
+<h1 id="第六关"><a href="#第六关" class="headerlink" title="第六关"></a>第六关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776583725684_20260419152833714.webp" alt="image.png"></p>
+<p>其中<code>2&gt;/dev/null</code>是说错误输出就不弹出</p>
+<h1 id="第七关"><a href="#第七关" class="headerlink" title="第七关"></a>第七关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776583920626_20260419153156539.webp" alt="image.png"><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776583935107_20260419153206494.webp" alt="image.png"></p>
+<h1 id="第八关"><a href="#第八关" class="headerlink" title="第八关"></a>第八关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776584404686_20260419153959925.webp" alt="image.png"><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776584414576_20260419154007732.webp" alt="image.png"></p>
+<h1 id="第九关"><a href="#第九关" class="headerlink" title="第九关"></a>第九关</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings data.txt</span><br></pre></td></tr></table></figure>
+<p><code>strings</code>命令，用于查看文件可识别字符串</p>
+<h1 id="第十关"><a href="#第十关" class="headerlink" title="第十关"></a>第十关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776584714781_20260419154507838.webp" alt="image.png"></p>
+<h1 id="第11关"><a href="#第11关" class="headerlink" title="第11关"></a>第11关</h1><p>考凯撒密码<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776587334871_20260419162843826.webp" alt="image.png"></p>
+<h1 id="第12关"><a href="#第12关" class="headerlink" title="第12关"></a>第12关</h1><p>考解压缩<br>就是一直解压-<code>file</code>-解压到最后就行<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776588472046_20260419164741608.webp" alt="image.png"></p>
+<h1 id="第13关"><a href="#第13关" class="headerlink" title="第13关"></a>第13关</h1><p>考察ssh命令<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776589412742_20260419170327505.webp" alt="image.png"></p>
+<p>这里说了本地无法连接，必须退到本地连接<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776589439883_20260419170347704.webp" alt="image.png"><br>看看私钥文件</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776589500194_20260419170449750.webp" alt="image.png"><br>创建好文件后用ssh连接就行，注意如果报错的话应该是权限问题，改一下权限就好了<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776589565285_20260419170552630.webp" alt="image.png"></p>
+<h1 id="第14关"><a href="#第14关" class="headerlink" title="第14关"></a>第14关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776589881832_20260419171115795.webp" alt="image.png"></p>
+<h1 id="第15关"><a href="#第15关" class="headerlink" title="第15关"></a>第15关</h1><p>使用ssl连接<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776590180820_20260419171613824.webp" alt="image.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl s_client -connect localhost:30001</span><br></pre></td></tr></table></figure>
+<h1 id="第16关"><a href="#第16关" class="headerlink" title="第16关"></a>第16关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776590813332_20260419172639736.webp" alt="image.png"><br>nmap扫描</p>
+<h1 id="第17关"><a href="#第17关" class="headerlink" title="第17关"></a>第17关</h1><p>使用<code>diff</code>命令比对密码就行<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776591315979_20260419173511444.webp" alt="image.png"></p>
+<h1 id="第18关"><a href="#第18关" class="headerlink" title="第18关"></a>第18关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776591272815_20260419173428933.webp" alt="image.png"></p>
+<p>在 Linux 系统中，<code>.bashrc</code> 是一个在用户打开终端（登录）时会自动执行的配置文件。这关的守门人在 bandit18 的 <code>.bashrc</code> 文件里写了一个类似 <code>exit</code> 或 <code>logout</code> 的命令。 </p>
+<p>所以正常的流程变成了：你输入密码 -&gt; 验证成功 -&gt; 系统准备给你分配终端 -&gt; 系统读取 <code>.bashrc</code> -&gt; 执行到 <code>exit</code> -&gt; “Byebye!” 强行切断连接。</p>
+<p>使用ssh直接执行命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh bandit18@bandit.labs.overthewire.org -p 2220 cat readme</span><br></pre></td></tr></table></figure>
+<h1 id="第19关"><a href="#第19关" class="headerlink" title="第19关"></a>第19关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776591798749_20260419174316489.webp" alt="image.png"></p>
+<p>用它给的二进制文件就可以查看文件</p>
+<h1 id="第20关"><a href="#第20关" class="headerlink" title="第20关"></a>第20关</h1><p>这关的意思其实类似于反弹shell，让我们的机器发送静默命令，然后使用它给的程序连接我们的端口</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776592232843_20260419175024854.webp" alt="image.png"></p>
+<h1 id="第21关"><a href="#第21关" class="headerlink" title="第21关"></a>第21关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776592746952_20260419175857351.webp" alt="image.png"><br>查看计划任务</p>
+<h1 id="第22关"><a href="#第22关" class="headerlink" title="第22关"></a>第22关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776593079837_20260419180425439.webp" alt="image.png"></p>
+<p>其实就是上面的翻版</p>
+<h1 id="第23关"><a href="#第23关" class="headerlink" title="第23关"></a>第23关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776593703224_20260419181454828.webp" alt="image.png"><br>前面的和之前一样，然后看一下这个代码<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">shopt -s nullglob</span><br><span class="line"></span><br><span class="line">myname=$(whoami)</span><br><span class="line"></span><br><span class="line">cd /var/spool/&quot;$myname&quot;/foo || exit </span><br><span class="line">echo &quot;Executing and deleting all scripts in /var/spool/$myname/foo:&quot;</span><br><span class="line">for i in * .*;</span><br><span class="line">do</span><br><span class="line">    if [ &quot;$i&quot; != &quot;.&quot; ] &amp;&amp; [ &quot;$i&quot; != &quot;..&quot; ];</span><br><span class="line">    then</span><br><span class="line">        echo &quot;Handling $i&quot;</span><br><span class="line">        owner=&quot;$(stat --format &quot;%U&quot; &quot;./$i&quot;)&quot;</span><br><span class="line">        if [ &quot;$&#123;owner&#125;&quot; = &quot;bandit23&quot; ] &amp;&amp; [ -f &quot;$i&quot; ]; then</span><br><span class="line">            timeout -s 9 60 &quot;./$i&quot;</span><br><span class="line">        fi</span><br><span class="line">        rm -rf &quot;./$i&quot;</span><br><span class="line">    fi</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>这段脚本每分钟都会以 <strong>bandit24</strong> 的高权限身份在后台悄悄运行，它的核心逻辑如下：</p>
+<ol>
+<li><code>cd /var/spool/bandit24/foo</code>：进入这个特定的文件夹。</li>
+<li><code>owner=&quot;$(stat --format &quot;%U&quot; &quot;./$i&quot;)&quot;</code>：检查里面每个文件的主人是谁。</li>
+<li><code>if [ &quot;$&#123;owner&#125;&quot; = &quot;bandit23&quot; ] ... then timeout -s 9 60 &quot;./$i&quot;</code>：<strong>高能预警！</strong> 如果它发现这个文件的主人是 bandit23（也就是<strong>你</strong>），它就会<strong>直接执行这个文件</strong>！执行完毕后，再用 <code>rm -rf</code> 把它删掉。</li>
+</ol>
+<p>然后就可以创建临时目录用来写脚本了<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776593815932_20260419181644035.webp" alt="image.png"><br>给脚本执行命令，就可以发送过去了<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776593823059_20260419181656111.webp" alt="image.png"></p>
+<h1 id="第24关"><a href="#第24关" class="headerlink" title="第24关"></a>第24关</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for i in &#123;0000..9999&#125;; do echo &quot;gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8 $i&quot;; done | nc localhost 30002 | grep -v &quot;Wrong&quot;</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776595287533_20260419184116745.webp" alt="image.png"></p>
+<h1 id="第25关"><a href="#第25关" class="headerlink" title="第25关"></a>第25关</h1><p>这关考察逃逸受限shell<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776596065301_20260419185418381.webp" alt="image.png"><br>先看看信息<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776596086571_20260419185435329.webp" alt="image.png"><br>获取ssh密钥<br>然后就是逃逸了</p>
+<p><code>more</code> 命令是一个分页显示工具。如果文本内容<strong>超过了你当前终端窗口的高度</strong>，<code>more</code> 就会暂停，并在屏幕左下角显示 <code>--More--</code>，等待你按空格键继续看。<br><strong>重点来了：</strong> 在显示 <code>--More--</code> 的这个暂停状态下，如果你按一下键盘上的 <strong><code>v</code></strong> 键，<code>more</code> 就会立刻调用 <strong><code>vi</code> 编辑器</strong> 来打开这个文件！一旦进入了 <code>vi</code>，你就掌握了执行系统命令的最高权力！</p>
+<ol>
+<li>物理缩小窗口： 把你现在用的终端窗口（比如你图里的 Windows Terminal）<strong>高度拉到极小</strong>，弄成只有 4 到 5 行那么扁。目的是确保那段文本能撑爆你的屏幕，触发 <code>--More--</code> 暂停。</li>
+<li>发起 SSH 登录： 在你的 bandit25 主目录下，有一个专门用来登录 26 的私钥（可以用 <code>ls</code> 确认一下名叫 <code>bandit26.sshkey</code>）。执行：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i bandit26.sshkey bandit26@localhost</span><br></pre></td></tr></table></figure></li>
+<li>按下 <code>v</code> 键： 登录成功后，你的扁扁的屏幕左下角一定会出现 <code>--More--</code>。<em>**</em></li>
+<li>你进入 <code>vi</code> 了！ 此时屏幕会变成 <code>vi</code> 编辑器的界面。</li>
+<li><p>召唤真正的 Bash： 在 <code>vi</code> 中，先输入冒号 <code>:</code> 进入命令模式（注意看屏幕左下角会出现冒号），然后依次输入以下两行命令（每行输完回车）：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:set shell=/bin/bash</span><br><span class="line">:sh</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="第26关"><a href="#第26关" class="headerlink" title="第26关"></a>第26关</h1><p>和之前有几个很像<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776596351817_20260419185908909.webp" alt="image.png"></p>
+<h1 id="第27关"><a href="#第27关" class="headerlink" title="第27关"></a>第27关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776596569177_20260419190238422.webp" alt="image.png"></p>
+<h1 id="第28关"><a href="#第28关" class="headerlink" title="第28关"></a>第28关</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776596903732_20260419190819119.webp" alt="image.png"><br>正常读取就行了</p>
+<h1 id="第29道"><a href="#第29道" class="headerlink" title="第29道"></a>第29道</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776596900203_20260419190809843.webp" alt="image.png"></p>
+<h1 id="第30题"><a href="#第30题" class="headerlink" title="第30题"></a>第30题</h1><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776597290701_20260419191441694.webp" alt="image.png"></p>
+<h1 id="第31题"><a href="#第31题" class="headerlink" title="第31题"></a>第31题</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;May I come in?&#x27; &gt; key.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add -f key.txt</span><br><span class="line">git commit -m &quot;add key&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1776597938431_20260419192534601.webp" alt="image.png"></p>
+<h1 id="第32题"><a href="#第32题" class="headerlink" title="第32题"></a>第32题</h1><ul>
+<li><code>$</code> 是符号，<code>0</code> 是数字。它们都不会被转换成大写。</li>
+<li><code>$0</code> 的含义是：<strong>“代表当前正在运行的程序或 Shell 本身”</strong></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org">chen7chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org/2026/04/19/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E5%9F%BA%E7%A1%80%E9%9D%B6%E5%9C%BA/overthewire%E9%9D%B6%E5%9C%BA/overthewire%20Bandit/">http://blog.xchstudy.org/2026/04/19/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E5%9F%BA%E7%A1%80%E9%9D%B6%E5%9C%BA/overthewire%E9%9D%B6%E5%9C%BA/overthewire%20Bandit/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.xchstudy.org" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.chenjichao.site/raw/3.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/04/20/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E5%9F%BA%E7%A1%80%E9%9D%B6%E5%9C%BA/overthewire%E9%9D%B6%E5%9C%BA/overthewire%20natas/" title="overthewire natas靶场"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/12.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">overthewire natas靶场</div></div></a></div><div class="next-post pull-right"><a href="/2026/04/12/%E5%8F%96%E8%AF%81/2026%E5%B9%B3%E8%88%AA%E6%9D%AF/" title="2026平航团体赛"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/6.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">2026平航团体赛</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chen7chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC0%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">第0关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC1%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">第1关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC2%E5%85%B3"><span class="toc-number">3.</span> <span class="toc-text">第2关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%85%B3"><span class="toc-number">4.</span> <span class="toc-text">第三关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%85%B3"><span class="toc-number">5.</span> <span class="toc-text">第四关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%85%B3"><span class="toc-number">6.</span> <span class="toc-text">第五关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E5%85%B3"><span class="toc-number">7.</span> <span class="toc-text">第六关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E5%85%B3"><span class="toc-number">8.</span> <span class="toc-text">第七关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AB%E5%85%B3"><span class="toc-number">9.</span> <span class="toc-text">第八关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B9%9D%E5%85%B3"><span class="toc-number">10.</span> <span class="toc-text">第九关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E5%85%B3"><span class="toc-number">11.</span> <span class="toc-text">第十关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC11%E5%85%B3"><span class="toc-number">12.</span> <span class="toc-text">第11关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC12%E5%85%B3"><span class="toc-number">13.</span> <span class="toc-text">第12关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC13%E5%85%B3"><span class="toc-number">14.</span> <span class="toc-text">第13关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC14%E5%85%B3"><span class="toc-number">15.</span> <span class="toc-text">第14关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC15%E5%85%B3"><span class="toc-number">16.</span> <span class="toc-text">第15关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC16%E5%85%B3"><span class="toc-number">17.</span> <span class="toc-text">第16关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC17%E5%85%B3"><span class="toc-number">18.</span> <span class="toc-text">第17关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC18%E5%85%B3"><span class="toc-number">19.</span> <span class="toc-text">第18关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC19%E5%85%B3"><span class="toc-number">20.</span> <span class="toc-text">第19关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC20%E5%85%B3"><span class="toc-number">21.</span> <span class="toc-text">第20关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC21%E5%85%B3"><span class="toc-number">22.</span> <span class="toc-text">第21关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC22%E5%85%B3"><span class="toc-number">23.</span> <span class="toc-text">第22关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC23%E5%85%B3"><span class="toc-number">24.</span> <span class="toc-text">第23关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC24%E5%85%B3"><span class="toc-number">25.</span> <span class="toc-text">第24关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC25%E5%85%B3"><span class="toc-number">26.</span> <span class="toc-text">第25关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC26%E5%85%B3"><span class="toc-number">27.</span> <span class="toc-text">第26关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC27%E5%85%B3"><span class="toc-number">28.</span> <span class="toc-text">第27关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC28%E5%85%B3"><span class="toc-number">29.</span> <span class="toc-text">第28关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC29%E9%81%93"><span class="toc-number">30.</span> <span class="toc-text">第29道</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC30%E9%A2%98"><span class="toc-number">31.</span> <span class="toc-text">第30题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC31%E9%A2%98"><span class="toc-number">32.</span> <span class="toc-text">第31题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC32%E9%A2%98"><span class="toc-number">33.</span> <span class="toc-text">第32题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/20/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E5%9F%BA%E7%A1%80%E9%9D%B6%E5%9C%BA/overthewire%E9%9D%B6%E5%9C%BA/overthewire%20leviathan/" title="overthewire leviathan靶场">overthewire leviathan靶场</a><time datetime="2026-04-20T14:57:11.100Z" title="发表于 2026-04-20 22:57:11">2026-04-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/20/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E5%9F%BA%E7%A1%80%E9%9D%B6%E5%9C%BA/overthewire%E9%9D%B6%E5%9C%BA/overthewire%20natas/" title="overthewire natas靶场">overthewire natas靶场</a><time datetime="2026-04-19T16:00:00.000Z" title="发表于 2026-04-20 00:00:00">2026-04-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/19/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E5%9F%BA%E7%A1%80%E9%9D%B6%E5%9C%BA/overthewire%E9%9D%B6%E5%9C%BA/overthewire%20Bandit/" title="overthewire Bandit靶场">overthewire Bandit靶场</a><time datetime="2026-04-18T16:00:00.000Z" title="发表于 2026-04-19 00:00:00">2026-04-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/12/%E5%8F%96%E8%AF%81/2026%E5%B9%B3%E8%88%AA%E6%9D%AF/" title="2026平航团体赛">2026平航团体赛</a><time datetime="2026-04-11T16:00:00.000Z" title="发表于 2026-04-12 00:00:00">2026-04-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/29/%E5%8F%96%E8%AF%81/2025%E7%8D%AC%E8%B1%B8%E6%9D%AF/" title="2025獬豸杯">2025獬豸杯</a><time datetime="2026-03-28T16:00:00.000Z" title="发表于 2026-03-29 00:00:00">2026-03-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By chen7chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/取证/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 取证 (3)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络攻防/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 网络攻防 (7)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络攻防/自建靶场/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 自建靶场 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item" style="visibility: hidden"></div><a class="magnet_link_more"  href="http://blog.xchstudy.org/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2026/03/29/取证/2025獬豸杯/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/12.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2026-03-29</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2026/03/29/取证/2025獬豸杯/&quot;);" href="javascript:void(0);" alt="">2025獬豸杯</a><div class="blog-slider__text">2025年獬豸</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2026/03/29/取证/2025獬豸杯/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2026/01/20/取证/2025年美亚杯/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/1.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2026-01-20</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2026/01/20/取证/2025年美亚杯/&quot;);" href="javascript:void(0);" alt="">2025年美亚杯个人赛</a><div class="blog-slider__text">2025年美亚取证个人赛</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2026/01/20/取证/2025年美亚杯/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
