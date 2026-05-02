@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>ctfshow 爆破</title>
+      <link href="/2026/05/02/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/CTF%E9%9D%B6%E5%9C%BA/ctfshow/ctfshow%20%E7%88%86%E7%A0%B4/"/>
+      <url>/2026/05/02/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/CTF%E9%9D%B6%E5%9C%BA/ctfshow/ctfshow%20%E7%88%86%E7%A0%B4/</url>
+      
+        <content type="html"><![CDATA[<h1 id="第21-第22关"><a href="#第21-第22关" class="headerlink" title="第21-第22关"></a>第21-第22关</h1><h2 id="第21关"><a href="#第21关" class="headerlink" title="第21关"></a>第21关</h2><p><img src="https://imagebot.chenjichao.site/file/1777722777317_20260502195251363.webp" alt="image.png"></p><p>首先他给了我们一个字典，然后我们就可以根据他给的字典爆破</p><p>他的认证方式是这样的</p><p><img src="https://imagebot.chenjichao.site/file/1777722904646_20260502195456551.webp" alt="image.png"><br>首先我们抓包，抓的是用户名和密码那个界面的包</p><p><img src="https://imagebot.chenjichao.site/file/1777722915075_20260502195509760.webp" alt="image.png"><br>所以我们可以发现<br><img src="https://imagebot.chenjichao.site/file/1777723089969_20260502195804077.webp" alt="image.png"><br>在这里我们发现多了一行奇怪的东西<br><img src="https://imagebot.chenjichao.site/file/1777723125096_20260502195831296.webp" alt="image.png"><br>发现他是以admin:XXX的格式去显示的，我们后续准备爆破的时候需要记住这个格式。<br>准备开始爆破，在这里先对bp的intruder模块进行介绍<br><img src="https://imagebot.chenjichao.site/file/1777723141674_20260502195857038.webp" alt="image.png"><br>Payload position (载荷位置) ：选择你需要爆破的位置<br><img src="https://imagebot.chenjichao.site/file/1777723160956_20260502195917021.webp" alt="image.png"><br>这里给了你几个选项，Add Clear Auto 分别是增加，清除和自动<br>bp选中方式是把你光标选中后的字符串包裹<br><img src="https://imagebot.chenjichao.site/file/1777723178649_20260502195934623.webp" alt="image.png"><br>比如你的光标在这里，我们添加以后就会遇到这种情况<br><img src="https://imagebot.chenjichao.site/file/1777723199183_20260502195948773.webp" alt="image.png"><br>他是成对的添加，所以我们需要爆破那一个字符串的话，我们就需要用光标选中那一串字符串<br>就像这样我们在添加的时候就会把这串字符串包裹上<br><img src="https://imagebot.chenjichao.site/file/1777723219728_20260502200015532.webp" alt="image.png"></p><p>Payload type (载荷类型)：决定了数据的生成方式。图中当前选择的是 Simple list (简单列表)，即手动或<br>导入一列字符串。Burp 还支持很多其他类型，比如 Numbers（数字递增）、Dates（日期生成）、Brute<br>forcer（字符组合爆破）等</p><p><img src="https://imagebot.chenjichao.site/file/1777723255482_20260502200046442.webp" alt="image.png"><br><img src="https://imagebot.chenjichao.site/file/1777723258053_20260502200052700.webp" alt="image.png"><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Simple list (简单列表)：最基础也最常用的类型。你可以手动输入、粘贴或者从电脑导入一个文本文件（如</span><br><span class="line">密码本）作为字典，Burp 会逐行读取并发送。</span><br><span class="line">Runtime file (运行时文件)：与 Simple list 类似，也是读取文件。但它是在攻击进行时逐行实时读取硬盘</span><br><span class="line">上的文件，而不是一开始就把整个文件加载到内存里。非常适合读取几个 GB 的超大字典文件，能有效防</span><br><span class="line">止 Burp 内存溢出卡死。</span><br><span class="line">Numbers (数字)：自动生成数字序列。你可以设置起始值、结束值、递增步长（比如从 1 到 1000，每次</span><br><span class="line">加 1），还可以设置数字的格式（比如前缀补零 001, 002...）。常用于爆破订单号、验证码、ID 遍历等。</span><br><span class="line">Dates (日期)：生成日期序列。你可以指定日期的格式（如 yyyy-MM-dd）和时间跨度。常用于测试按日</span><br><span class="line">期查询的接口或找回特定日期的历史记录。</span><br><span class="line">组合与变形测试</span><br><span class="line">Custom iterator (自定义迭代器)：允许你将多个基础列表拼接到一起。比如，列表 1 是“颜色”，列表 2 </span><br><span class="line">是“衣服”，列表 3 是“尺码”，它会自动帮你组合出诸如 Red-Shirt-XL 这样的数据。</span><br><span class="line">Character substitution (字符替换)：根据你预设的规则替换基础词汇中的字符。例如著名的“黑客语</span><br><span class="line">（Leet Speak）”，把 a 换成 @，e 换成 3，i 换成 1。用于密码变种爆破。</span><br><span class="line">Case modification (大小写修改)：自动对基础单词进行大小写转换。例如输入 admin，它会生成 Admin, </span><br><span class="line">ADMIN, aDmIn 等组合。</span><br><span class="line">Username generator (用户名生成器)：你输入一些全名或邮箱（如 John Smith），它会根据欧美常见规</span><br><span class="line">则自动生成各种用户名组合，如 jsmith, john.smith, smithj 等。</span><br><span class="line"></span><br></pre></td></tr></table></figure><br><img src="https://imagebot.chenjichao.site/file/1777723340323_20260502200210042.webp" alt="image.png"><br>Payload count / Request count：只读的统计信息。它会根据你的配置实时计算当前有多少个有效载荷，<br>以及最终组合起来会发出多少个 HTTP 请求。<br><img src="https://imagebot.chenjichao.site/file/1777723357393_20260502200226768.webp" alt="image.png"><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Payload configuration (载荷配置)</span><br><span class="line">因为上面类型选择了 &quot;Simple list&quot;，这里显示的便是如何向这个“简单列表”中添加数据的操作区。</span><br><span class="line">右侧的大黑框：这就是你的 Payload 列表，当前是空的。</span><br><span class="line">Paste (粘贴)：直接将剪贴板里的多行文本粘贴到列表中（每行作为一个独立的 Payload）。</span><br><span class="line">Load... (加载)：从你的电脑本地选择一个 .txt 字典文件，将其内容导入列表。</span><br><span class="line">Remove (移除) / Clear (清空)：删除你在右侧列表中选中的某几项，或者一键清空整个列表。</span><br><span class="line">Deduplicate (去重)：自动扫描整个列表，删除重复的字符串，这样可以避免发送完全相同的无效请求，节</span><br><span class="line">省测试时间。</span><br><span class="line">Add (添加) 与 输入框 (Enter a new item)：在输入框中手动输入你想要测试的字符串，然后点击 Add 按</span><br><span class="line">钮（或直接回车），将其加入列表。</span><br><span class="line">Add from list... (从内置列表添加)：这是一个下拉菜单，Burp 官方内置了一些常用的基础字典（例如常见</span><br><span class="line">用户名、密码、短目录名等），方便你快速调用。</span><br></pre></td></tr></table></figure><br><img src="https://imagebot.chenjichao.site/file/1777723372831_20260502200244353.webp" alt="image.png"><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Payload processing (载荷处理)</span><br><span class="line">这个模块非常强大，它允许你定义一套规则，在 Payload 被实际插入到 HTTP 请求发出去 之前，对其进行</span><br><span class="line">自动化的加工处理。</span><br><span class="line">使用逻辑：你可以点击 Add (添加) 来增加处理规则。常见的规则包括：在字符串前后拼接特定字符（Add </span><br><span class="line">prefix/suffix）、进行哈希计算（Hash）、Base64 编码/解码、或者使用正则表达式替换掉某些内容等。</span><br><span class="line">执行顺序：添加到框内的规则会自上而下依次执行。你可以选中某条规则，通过 Up (向上) 和 Down (向</span><br><span class="line">下) 按钮调整它们的处理顺序。</span><br><span class="line">Edit (编辑) / Remove (移除)：用于修改或删除已添加的处理规则。</span><br><span class="line">在我们这一题，就需要把格式给base64以后去爆破，所以会用到这个模块</span><br></pre></td></tr></table></figure><br><img src="https://imagebot.chenjichao.site/file/1777723386184_20260502200302653.webp" alt="image.png"><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Payload encoding (载荷编码)</span><br><span class="line">为了确保你的 Payload 在放入 HTTP 请求发送给服务器时，不会破坏 HTTP 协议本身的结构，通常需要进</span><br><span class="line">行 URL 编码。</span><br><span class="line">URL-encode these characters (勾选项)：启用后，Burp 会在最终发送请求的最后一刻，对 Payload 中包</span><br><span class="line">含的特定字符进行 URL 编码。</span><br><span class="line">右侧的字符框：图中默认填写了 .\/=&lt;&gt;&amp;+*;:&quot;&#123;&#125;|^# 等字符。因为这些字符（如 &amp; 和 =）在 HTTP 请求体</span><br><span class="line">或 URL 中有特殊的语法含义，如果不进行编码（例如把 &amp; 变成 %26），服务器可能会解析错误，导致你</span><br><span class="line">的 Payload 无法完整地到达目标代码中。你可以根据需要在此处增加或删除需要转义的字符。</span><br><span class="line">在这一题目里也不能使用，因为base64里的等号会被变成url编码</span><br></pre></td></tr></table></figure></p><h2 id="第22关"><a href="#第22关" class="headerlink" title="第22关"></a>第22关</h2><p><img src="https://imagebot.chenjichao.site/file/1777723509640_20260502200457490.webp" alt=""></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络攻防 </category>
+          
+          <category> CTF靶场 </category>
+          
+          <category> ctfshow </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ctfshow 信息收集</title>
       <link href="/2026/05/02/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/CTF%E9%9D%B6%E5%9C%BA/ctfshow/ctfshow%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"/>
       <url>/2026/05/02/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/CTF%E9%9D%B6%E5%9C%BA/ctfshow/ctfshow%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</url>
@@ -367,9 +390,9 @@
             
             <tag> 网络攻防 </tag>
             
-            <tag> 自建靶场 </tag>
-            
             <tag> sql注入 </tag>
+            
+            <tag> 自建靶场 </tag>
             
         </tags>
       
@@ -433,9 +456,9 @@
             
             <tag> 网络攻防 </tag>
             
-            <tag> 命令执行 </tag>
-            
             <tag> 自建靶场 </tag>
+            
+            <tag> 命令执行 </tag>
             
         </tags>
       
