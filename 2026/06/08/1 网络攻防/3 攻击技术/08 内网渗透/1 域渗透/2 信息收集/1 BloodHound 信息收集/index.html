@@ -1,0 +1,785 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>BloodHound 信息收集 | 小chen妙妙屋</title><meta name="author" content="chen7chen"><meta name="copyright" content="chen7chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="BloodHound设置和安装BloodHound 使用 Neo4j，这是一个图数据库管理系统，用于存储、管理和查询以图形式表示的数据。它是一个 NoSQL 数据库，使用图数据模型来表示和存储数据，其中节点和边分别表示数据和关系。这使得 Neo4j 能够比传统的关系型数据库更直观、更高效地表示复杂且相互关联的数据结构。 Neo4j 是用 Java 编写的，运行它需要一个 Java 虚拟机 (JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BloodHound 信息收集">
+<meta property="og:url" content="http://blog.xchstudy.org/2026/06/08/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/2%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1%20BloodHound%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="BloodHound设置和安装BloodHound 使用 Neo4j，这是一个图数据库管理系统，用于存储、管理和查询以图形式表示的数据。它是一个 NoSQL 数据库，使用图数据模型来表示和存储数据，其中节点和边分别表示数据和关系。这使得 Neo4j 能够比传统的关系型数据库更直观、更高效地表示复杂且相互关联的数据结构。 Neo4j 是用 Java 编写的，运行它需要一个 Java 虚拟机 (JVM">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.636865.xyz/raw/7.webp">
+<meta property="article:published_time" content="2026-06-07T16:10:03.502Z">
+<meta property="article:modified_time" content="2026-06-08T02:26:06.538Z">
+<meta property="article:author" content="chen7chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.636865.xyz/raw/7.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.xchstudy.org/2026/06/08/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/2%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1%20BloodHound%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BloodHound 信息收集',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-06-08 10:26:06'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小chen妙妙屋" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">244</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">173</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://wiki.xchstudy.org/"><i class="fa-fw fas fa-book-open"></i><span> wiki</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.636865.xyz/raw/7.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://wiki.xchstudy.org/"><i class="fa-fw fas fa-book-open"></i><span> wiki</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BloodHound 信息收集</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-07T16:10:03.502Z" title="发表于 2026-06-08 00:10:03">2026-06-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-08T02:26:06.538Z" title="更新于 2026-06-08 10:26:06">2026-06-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="BloodHound 信息收集"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="BloodHound设置和安装"><a href="#BloodHound设置和安装" class="headerlink" title="BloodHound设置和安装"></a><code>BloodHound</code>设置和安装</h1><p>BloodHound 使用 Neo4j，这是一个图数据库管理系统，用于存储、管理和查询以图形式表示的数据。它是一个 NoSQL 数据库，使用图数据模型来表示和存储数据，其中节点和边分别表示数据和关系。这使得 Neo4j 能够比传统的关系型数据库更直观、更高效地表示复杂且相互关联的数据结构。</p>
+<p>Neo4j 是用 Java 编写的，运行它需要一个 Java 虚拟机 (JVM)。</p>
+<h1 id="BloodHound概述"><a href="#BloodHound概述" class="headerlink" title="BloodHound概述"></a><code>BloodHound</code>概述</h1><h2 id="AD访问管理"><a href="#AD访问管理" class="headerlink" title="AD访问管理"></a><code>AD</code>访问管理</h2><p>Active Directory 中的访问管理很复杂，在日常配置中很容易引入漏洞或不良做法。</p>
+<p>攻击者和防御者通常难以发现或审计所有用户访问，或这些访问如何相互关联以赋予用户不应存在的权限。</p>
+<p>由于攻击面和活动目录环境中产生数据的复杂性和不断演变，并且我们需要一种自动化收集和分析这些数据的方法，@wald0、@harmj0y 和@CptJesus 创建了 BloodHound。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>BloodHound 是一个开源工具，攻击者和防御者都使用它来分析活动目录域的安全。该工具从活动目录域收集大量数据。它使用图论来直观地表示对象之间的关系，并识别传统枚举难以或不可能检测到的域攻击路径。自 4.0 版本起，BloodHound 现在也支持 Azure。</p>
+<p>BloodHound 将使用的数据是通过 SharpHound 收集器收集的，该收集器可在 PowerShell 和 C# 中使用。我们将在以下部分讨论数据收集。</p>
+<h2 id="BloodHound图论与Cypher查询语言"><a href="#BloodHound图论与Cypher查询语言" class="headerlink" title="BloodHound图论与Cypher查询语言"></a>BloodHound图论与Cypher查询语言</h2><p><code>BloodHound</code> 利用图论，图论是用于模拟对象之间成对关系的数学结构。在此上下文中，图由节点（例如 Active Directory 对象如用户、组、计算机等）组成，这些节点通过边（对象之间的关系，如组成员、AdminTo 等）连接。我们将在另一部分进一步讨论节点和边，但让我们通过一个例子来看看 BloodHound 是如何工作的。</p>
+<p>该工具使用 Cypher 查询语言来分析关系。Cypher 是 Neo4j 的图查询语言，允许我们从图中检索数据。它就像图 SQL，并受 SQL 启发，因此让我们专注于我们想从图中获取哪些数据（而不是如何获取它）。由于与其他语言的相似性和直观性，它是迄今为止最容易学习的图语言。我们将在本模块的稍后部分更详细地讨论 Cypher 查询。</p>
+<p>下面的图表显示了两个节点， <code>A</code> 和 <code>B</code> 。在这个例子中，我们只能从节点 <code>A</code> 到节点 <code>B</code> ，不能反过来。<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1780849030698_image.png" alt="image.png"></p>
+<p>这可以模拟 <code>A</code> 作为用户 <code>Grace</code> ， <code>B</code> 作为组 <code>SQL Admins</code> ，两者之间的线是边，在这种情况下是 <code>MemberOf</code> 。下一个图形显示的是在 BloodHound 中，用户 <code>Grace</code> 是组 <code>SQL Admins</code> 的成员。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1780849045770_image.png" alt="image.png"></p>
+<p>让我们看看节点之间更复杂的关系。下面的图形显示了八个（8）节点和十个（10）边。节点 <code>H</code> 可以到达节点 <code>G</code> ，但没有节点可以直接到达节点 <code>H</code> 。要从节点 <code>A</code> 到达节点 <code>C</code> ，我们可以跳转到节点 <code>G</code> ，移动到节点 <code>F</code> ，然后到节点 <code>C</code> ，但这不是最短路径。BloodHound 的一项功能是寻找最短路径。在这个例子中，从节点 <code>A</code> 到节点 <code>C</code> 的最短路径是通过节点 <code>B</code> 进行一次跳跃。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1780849067808_image.png" alt="image.png"></p>
+<h1 id="收集信息"><a href="#收集信息" class="headerlink" title="收集信息"></a>收集信息</h1><h2 id="SharpHound"><a href="#SharpHound" class="headerlink" title="SharpHound"></a><code>SharpHound</code></h2><p>SharpHound 是 BloodHound 的官方数据收集工具，用 C# 编写，可以在安装了 .NET 框架的 Windows 系统上运行。该工具使用多种技术从活动目录收集数据，包括原生 Windows API 函数和 LDAP 查询。</p>
+<p>SharpHound 收集的数据可用于识别活动目录环境中的安全弱点以攻击它或计划进行修复。</p>
+<h3 id="基本枚举"><a href="#基本枚举" class="headerlink" title="基本枚举"></a>基本枚举</h3><p>默认情况下，如果没有任何选项运行 SharpHound，它将识别运行它的用户所属的域，并执行默认的收集。让我们没有任何选项执行 SharpHound。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sharphound.exe</span><br></pre></td></tr></table></figure>
+<p>将收集以下内容：</p>
+<ol>
+<li>Users and Computers.  用户和计算机。</li>
+<li>Active Directory security group membership.<br> 活动目录安全组成员资格。</li>
+<li>Domain trusts.  域信任。</li>
+<li>Abusable permissions on AD objects.<br> AD 对象上的可滥用权限。</li>
+<li>OU tree structure.  组织单位树结构。</li>
+<li>Group Policy links.  组策略链接。</li>
+<li>The most relevant AD object properties.<br> 最相关的 AD 对象属性。</li>
+<li>Local groups from domain-joined Windows systems and local privileges such as RDP, DCOM, and PSRemote.<br> 来自域连接的 Windows 系统的本地组以及本地权限，如 RDP、DCOM 和 PSRemote。</li>
+<li>User sessions.  用户会话。</li>
+<li>All SPN (Service Principal Names).<br>所有服务主体名称 (SPN)。</li>
+</ol>
+<p>为了获取本地组和会话的信息，SharpHound 将尝试连接到它收集的计算机列表中的每个已加入域的 Windows 计算机。</p>
+<h3 id="随机化输出"><a href="#随机化输出" class="headerlink" title="随机化输出"></a>随机化输出</h3><p>众所周知，SharpHound 默认会生成不同的 <code>.json</code> 文件，然后将它们保存到一个 <code>zip</code> 文件中。它还会生成一个随机命名的、带有 <code>.bin</code> 扩展名的文件，对应于它执行的查询的缓存。防御团队可以利用这些模式来检测 bloodhound。一种尝试隐藏这些痕迹的方法是结合一些这些选项：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Option  选项</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--memcache</code></td>
+<td>Keep cache in memory and don’t write to disk.  <br>将缓存保留在内存中，不写入磁盘。</td>
+</tr>
+<tr>
+<td><code>--randomfilenames</code></td>
+<td>Generate random filenames for output, including the zip file.  <br>为输出生成随机文件名，包括 zip 文件。</td>
+</tr>
+<tr>
+<td><code>--outputprefix</code></td>
+<td>String to prepend to output file names.  <br>输出文件名前缀的字符串。</td>
+</tr>
+<tr>
+<td><code>--outputdirectory</code></td>
+<td>Directory to output file too.  <br>输出文件目录 too。</td>
+</tr>
+<tr>
+<td><code>--zipfilename</code></td>
+<td>Filename for the zip.  <br>zip 文件名。</td>
+</tr>
+<tr>
+<td><code>--zippassword</code></td>
+<td>Password protects the zip with the specified password.  <br>使用指定的密码保护压缩文件。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="BloodHpund-py"><a href="#BloodHpund-py" class="headerlink" title="BloodHpund.py"></a><code>BloodHpund.py</code></h2><p>SharpHound 没有官方的 Linux 数据收集工具。然而，Dirk-jan Mollema 创建了 BloodHound.py，这是一个基于 Impacket 的 Python 收集器，用于 BloodHound，使我们能够从 Linux 收集 Active Directory 信息用于 BloodHound。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>要在 Linux 上使用 BloodHound.py，我们需要 <code>--domain</code> 和 <code>--collectionmethod</code> 选项以及认证方法。认证可以是一个用户名和密码、一个 NTLM 哈希、一个 AES 密钥或一个 ccache 文件。BloodHound.py 默认会尝试使用 Kerberos 认证方法，如果失败，则会回退到 NTLM。</p>
+<p>另一个关键点是域名解析。如果我们的 DNS 服务器不是域名 DNS 服务器，我们可以使用选项 <code>--nameserver</code> ，这允许我们指定一个替代的名称服务器进行查询。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bloodhound-python -d inlanefreight.htb -c DCOnly -u htb-student -p HTBRocks! -ns 10.129.204.207 -k</span><br></pre></td></tr></table></figure>
+<p>注意：Kerberos 认证需要主机解析域名 FQDN。这意味着选项 <code>--nameserver</code> 不足以进行 Kerberos 认证，因为我们的主机需要解析 Kerberos 工作所需的 DNS 名称 KDC。如果我们想使用 Kerberos 认证，我们需要将 DNS 服务器设置为目标机器或配置我们主机文件中的 DNS 条目。</p>
+<h1 id="传输数据"><a href="#传输数据" class="headerlink" title="传输数据"></a>传输数据</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo impacket-smbserver share ./ -smb2support -user test -password test</span><br></pre></td></tr></table></figure>
+<p>测试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\10.10.14.33\share /user:test test</span><br></pre></td></tr></table></figure>
+<p>现在让我们连接到共享文件夹并将 SharpHound 输出保存在那里：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SharpHound.exe --memcache --outputdirectory \\10.10.14.33\share\ --zippassword HackTheBox --outputprefix HTB --randomfilenames</span><br></pre></td></tr></table></figure></p>
+<h1 id="结构与数据分析"><a href="#结构与数据分析" class="headerlink" title="结构与数据分析"></a>结构与数据分析</h1><ol>
+<li>一旦上传完成，我们就可以分析数据。如果我们想查看域的信息，我们可以在搜索框中输入 <code>Domain:INLANEFREIGHT.HTB</code> 。这将显示一个带有域名图标。如果你点击该图标，它将显示有关节点（域）的信息，例如用户数量、组、计算机、OU 等。</li>
+<li>现在，我们可以开始分析血猎犬中的信息，寻找通往目标的路。</li>
+</ol>
+<h2 id="路径规划"><a href="#路径规划" class="headerlink" title="路径规划"></a>路径规划</h2><p>搜索栏中的另一个强大功能是 <code>Pathfinding</code> 。我们可以用它来找到两个给定节点之间的攻击路径。</p>
+<p>此路径包含边缘 <code>ForceChangePassword</code> ；假设我们想要避免更改用户的密码。我们可以使用过滤器选项，取消选中 <code>ForceChangePassword</code> ，并搜索不包含此边缘的路径。</p>
+<h2 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Node  节点</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Users  用户</td>
+<td>代表可以登录网络并访问资源的个人对象。每个用户都有一个唯一的用户名和密码，这允许他们进行身份验证并访问文件、文件夹和打印机等资源。</td>
+</tr>
+<tr>
+<td>Groups  组</td>
+<td>用于将用户和计算机组织成逻辑集合，然后可以用来为资源分配权限。通过为组分配权限，您可以轻松地一次性管理多个用户对资源的访问。</td>
+</tr>
+<tr>
+<td>Computers  计算机</td>
+<td>代表连接到网络的设备的对象。每台计算机对象都有一个唯一名称和标识符，允许它在域内进行管理和控制。</td>
+</tr>
+<tr>
+<td>Domains  域</td>
+<td>网络资源（如用户、组和计算机）的逻辑分组。它允许您以集中方式管理和控制这些资源，提供单一的行政管理点和安全点。</td>
+</tr>
+<tr>
+<td>GPOs</td>
+<td>组策略对象用于定义和强制执行活动目录域内用户和计算机的一组策略和设置。这些策略可以控制从用户权限到网络配置等各种设置。</td>
+</tr>
+<tr>
+<td>OUs  组织单位</td>
+<td>组织单元是域内的容器，允许您以更细粒度的方式对资源进行分组和管理。它们可以包含用户、组和计算机，并可用于将管理任务委托给特定个人或组。</td>
+</tr>
+<tr>
+<td>Containers  容器</td>
+<td>容器类似于组织单元（OU），但用于非管理目的。它们可以用于按组织目的将对象分组，但与组织单元相比，它们没有相同级别的管理控制。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Category  分类</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overview  概述</td>
+<td>对象的一般信息。</td>
+</tr>
+<tr>
+<td>Node Properties  节点属性</td>
+<td>此部分显示节点的默认信息</td>
+</tr>
+<tr>
+<td>Extra Properties  附加属性</td>
+<td>此部分显示有关节点的其他信息，以及如果您使用了–CollectAllProperties 标志，则从活动目录中获取的所有其他非默认字符串类型属性值。</td>
+</tr>
+<tr>
+<td>Group Membership  群组成员</td>
+<td>本节显示该对象所属的 Active Directory 安全组的统计数据。</td>
+</tr>
+<tr>
+<td>Local Admin Rights  本地管理员权限</td>
+<td>显示该对象拥有管理员权限的位置</td>
+</tr>
+<tr>
+<td>Execution Rights  执行权</td>
+<td>涉及用户、组或计算机在网络上有权执行特定操作或命令的权限和特权。这可能包括 RDP 访问、DCOM 执行、SQL 管理权限等。</td>
+</tr>
+<tr>
+<td>Outbound Object Control  出站对象控制</td>
+<td>可视化用户、组或计算机在 AD 环境中对其他对象拥有的权限和特权</td>
+</tr>
+<tr>
+<td>Inbound Control Rights  入站控制权限</td>
+<td>可视化特定 AD 对象（用户、组、域等）对其他对象的权限和特权。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="主机"><a href="#主机" class="headerlink" title="主机"></a>主机</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Category  分类</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local Admins  本地管理员</td>
+<td>指在特定计算机上获得本地管理员权限的用户、组和计算机。</td>
+</tr>
+<tr>
+<td>Inbound Execution Rights  <br>入站执行权限</td>
+<td><br>显示已被授予在特定计算机上执行权限的所有对象（用户、组和计算机）</td>
+</tr>
+<tr>
+<td>Outbound Execution Rights  <br>外发执行权限</td>
+<td><br>指特定计算机执行命令或脚本到网络中其他计算机或对象的权限。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="群组"><a href="#群组" class="headerlink" title="群组"></a>群组</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>ategory  分类</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Group Members  成员组</td>
+<td>指特定组的用户、组和计算机成员。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Category  分类</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Foreign Members  外国成员</td>
+<td>属于不同域或林的用户或组，当前正在分析的域或林</td>
+</tr>
+<tr>
+<td>Inbound Trusts  入境信托</td>
+<td>指代信任关系，其中另一个域或林信任当前域。这意味着来自受信任域的用户和组可以访问当前域的资源，反之亦然。</td>
+</tr>
+<tr>
+<td>Outbound Trusts  出向信托</td>
+<td>涉及当前域或林信任另一个域的信任关系。这意味着来自当前域的用户和组可以访问受信任域中的资源，反之亦然。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="组织单元"><a href="#组织单元" class="headerlink" title="组织单元"></a>组织单元</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Category  分类</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Affecting GPOs  影响 GPO</td>
+<td>指在特定 OU 或容器中影响的组策略对象（GPO）。</td>
+</tr>
+<tr>
+<td>Descendant Objects  子对象</td>
+<td>指在 Active Directory（AD）环境中特定 OU 或容器内所有对象。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Edges"><a href="#Edges" class="headerlink" title="Edges"></a>Edges</h2><p>BloodHound 使用边来表示 Active Directory (AD) 环境中对象之间的关系。这些关系可以包括用户到用户、用户到组、组到组、用户到计算机以及其他许多关系。每条边代表连接两个对象的一条线，线的方向表示关系的方向。</p>
+<p>Edges代表 AD 环境中对象之间的权限、权限和信任关系。这些边创建 AD 环境的图形表示，使红蓝团队人员能够可视化和快速分析对象之间的关系。这有助于识别潜在的安全漏洞，例如具有过多权限或访问敏感服务器的用户。它还可以帮助确定对手可能用来横向移动和提升权限的潜在攻击路径。</p>
+<h2 id="List-of-Edges-边的列表"><a href="#List-of-Edges-边的列表" class="headerlink" title="List of Edges  边的列表"></a>List of Edges  边的列表</h2><p>The following is a list of the edges available for Active Directory in BloodHound:<br>以下是 BloodHound 中可用于 Active Directory 的边列表：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>List of Edges  边列表<br></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#adminto">AdminTo</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#adminto">MemberOf  成员身份/属于该群体</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#hassession">HasSession  是否有会话记录</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#forcechangepassword">ForceChangePassword  强制修改密码</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#addmembers">AddMembers  添加成员</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#addself">AddSelf  自訂</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#canrdp">CanRDP</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#canrdp">CanPSRemote</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#canrdp">ExecuteDCOM  执行 DCOM 操作</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#canrdp">SQLAdmin</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">AllowedToDelegate  允许委托</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">DCSync</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">GetChanges/GetChangesAll</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">GenericAll  通用所有</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">WriteDacl</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">GenericWrite  通用写入</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">WriteOwner</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">WriteSPN</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">Owns  拥有/持有</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">AddKeyCredentialLink  添加密钥凭证链接</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">ReadLAPSPassword  读取 LAPSPassword</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">ReadGMSAPassword  读取 GMSAPassword</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">Contains  包含</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">AllExtendedRights  所有扩展权限</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">GPLink</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">AllowedToAct  允许操作</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">AddAllowedToAct  允许其行事/允许其采取行动</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">TrustedBy  受信任</a></td>
+<td><a target="_blank" rel="noopener" href="https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#allowedtodelegate">SyncLAPSPassword  同步 LAPS 密码</a></td>
+<td><a target="_blank" rel="noopener" href="https://dirkjanm.io/active-directory-forest-trusts-part-one-how-does-sid-filtering-work/">HasSIDHistory  具有 SID 历史</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://dirkjanm.io/abusing-forgotten-permissions-on-precreated-computer-objects-in-active-directory/">WriteAccountRestrictions  <br>写入账户限制</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="分析过程"><a href="#分析过程" class="headerlink" title="分析过程"></a>分析过程</h2><p>一旦数据被导入到 <code>BloodHound</code> 中，我们就可以从上到下开始进行审查了。首先，让我们在搜索栏中输入 <code>domain:INLANEFREIGHT.HTB</code> ，来进行整体的领域分析吧。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1780885246607_image.png" alt="image.png"><br>以这个小型域做例子：<br>第一步步是查看 <code>Domain Users</code> 组所拥有的权限。这一点非常重要，因为域中的每个用户都会继承该组所拥有的所有权限。这意味着，哪怕是微小的配置错误，都可能对域的安全性造成严重影响。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1780885336351_image.png" alt="image.png"></p>
+<p>该域中的用户同时在域内的两台主机上拥有会话。这些用户直接属于 31 个用户组，同时由于嵌套组的关系，他们还属于另外 45 个用户组。如果我们查看 <code>Local Admin Rights</code> 部分，会发现该数值为 0。这是因为在任意一台机器上， <code>Domain Users</code> 组都不是 <code>Administrators</code> 组的成员。不过，如果我们转到 <code>Outbound Object Control</code> 部分并点击 <code>Transitive Object Control</code> ，就能看到所有由 <code>Domain Users</code> 所控制的对象。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1780885347574_image.png" alt="image.png"></p>
+<p>接下来，我们可以点击 <code>pathfinding</code> 按钮，在上方的输入框中输入 <code>DOMAIN [email protected]</code> ，在下方的输入框中输入 <code>DOMAIN [email protected]</code> ，以此查看是否所有用户都有通往“域管理员”角色的直接路径。该查询没有返回任何结果，这意味着不存在这样的路径。</p>
+<p>接下来，我们可以开始运行一些 <code>Pre-Built Analytics Queries</code> 程序，以获取更多有用的信息。</p>
+<p>列出所有 <code>Domain Admins</code> 的成员名单是个不错的主意。在这里，我们可以看到该组有 3 个直接成员，还有 4 个间接成员——因为 <code>peter</code> 用户也是嵌套组 <code>ITSecurity</code> 的成员。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1780885400731_image.png" alt="image.png"></p>
+<p>接下来，看看 <code>Find Shortest Paths to Domain Admins</code> 查询的结果。该查询返回了几条路径。我们可以看到，其中有一些路径属于那些不属于“域管理员”组的用户。用户 <code>Gil</code> 对域控制器 <code>DC01</code> 拥有 <code>AddAllowedToAct</code> 权限；用户 <code>Pedro</code> 对容器 <code>Users</code> 拥有 <code>GenericAll</code> 权限。用户 <code>Sarah</code> 能够控制用户 <code>Pedro</code> ；而服务账户 <code>svc_backups</code> 则能够控制那些应用于域控制器的 GPO。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://imagebot.chenjichao.site/file/1780885550240_image.png" alt="image.png"></p>
+<p>其他有趣的查询还包括：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Query  查询</strong></th>
+<th><strong>Result  结果</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Find Principals with DCSync Rights</code></td>
+<td>找出那些能够发动 DCSync 攻击的账户。</td>
+</tr>
+<tr>
+<td><code>Users with Foreign Domain Group Membership</code></td>
+<td>找出属于其他域中各个组的用户。这有助于实施跨域信任攻击。</td>
+</tr>
+<tr>
+<td><code>Groups with Foreign Domain Group Membership</code></td>
+<td>找出那些属于其他领域中某个更大群体的子群体。这样做有助于实施跨域信任攻击。</td>
+</tr>
+<tr>
+<td><code>Map Domain Trusts</code></td>
+<td>查找与当前域的所有信任关系。</td>
+</tr>
+<tr>
+<td><code>Shortest Paths to Unconstrained Delegation Systems</code></td>
+<td>找出通往那些采用“无限制委托”模式的主机的最短路径。</td>
+</tr>
+<tr>
+<td><code>Shortest Paths from Kerberoastable Users</code></td>
+<td>从所有可能成为 Kerberoasting 攻击目标的用户中选择，从而显示出通往“域管理员”角色的最短路径。</td>
+</tr>
+<tr>
+<td><code>Shortest Path from Owned Principals</code></td>
+<td>如果我们右键点击某个节点并选择 <code>Mark user as owned</code> 或 <code>Mark computer as owned</code> ，就可以运行该查询，从而了解从那些被标记为“已拥有”的用户或计算机出发，还能进一步攻击到多远的范围。这对于发动进一步的攻击来说非常有用。</td>
+</tr>
+<tr>
+<td><code>Shortest Paths to Domain Admins from Owned Principals</code></td>
+<td>找到从任何被标记为“已拥有”的用户或计算机到域管理员访问的最短路径。</td>
+</tr>
+<tr>
+<td><code>Shortest Paths to High-Value Targets</code></td>
+<td>这将为我们提供到达 <code>BloodHound</code> 已经认为具有高价值目标的最近路径。它也可以用来找到路径到我们右键点击并选择将 X 标记为高价值的任何对象。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org">chen7chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org/2026/06/08/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/2%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1%20BloodHound%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">http://blog.xchstudy.org/2026/06/08/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/2%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1%20BloodHound%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.xchstudy.org" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.636865.xyz/raw/7.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/06/08/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/2%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/4%20LDAP%E5%AD%A6%E4%B9%A0/" title="LDAP学习"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/8.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">LDAP学习</div></div></a></div><div class="next-post pull-right"><a href="/2026/06/07/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/08%20%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/1%20%E5%9F%9F%E6%B8%97%E9%80%8F/4%20Kerberos%E6%94%BB%E5%87%BB/" title="kerberos攻击"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/11.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">kerberos攻击</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chen7chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">244</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">173</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#BloodHound%E8%AE%BE%E7%BD%AE%E5%92%8C%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">BloodHound设置和安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BloodHound%E6%A6%82%E8%BF%B0"><span class="toc-number">2.</span> <span class="toc-text">BloodHound概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AD%E8%AE%BF%E9%97%AE%E7%AE%A1%E7%90%86"><span class="toc-number">2.1.</span> <span class="toc-text">AD访问管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BloodHound%E5%9B%BE%E8%AE%BA%E4%B8%8ECypher%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80"><span class="toc-number">2.3.</span> <span class="toc-text">BloodHound图论与Cypher查询语言</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%B6%E9%9B%86%E4%BF%A1%E6%81%AF"><span class="toc-number">3.</span> <span class="toc-text">收集信息</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SharpHound"><span class="toc-number">3.1.</span> <span class="toc-text">SharpHound</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%9E%9A%E4%B8%BE"><span class="toc-number">3.1.1.</span> <span class="toc-text">基本枚举</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-number">3.1.2.</span> <span class="toc-text">随机化输出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BloodHpund-py"><span class="toc-number">3.2.</span> <span class="toc-text">BloodHpund.py</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">3.2.1.</span> <span class="toc-text">使用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE"><span class="toc-number">4.</span> <span class="toc-text">传输数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="toc-number">5.</span> <span class="toc-text">结构与数据分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92"><span class="toc-number">5.1.</span> <span class="toc-text">路径规划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8A%82%E7%82%B9"><span class="toc-number">5.2.</span> <span class="toc-text">节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7"><span class="toc-number">5.2.1.</span> <span class="toc-text">用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA"><span class="toc-number">5.2.2.</span> <span class="toc-text">主机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BE%A4%E7%BB%84"><span class="toc-number">5.2.3.</span> <span class="toc-text">群组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D"><span class="toc-number">5.2.4.</span> <span class="toc-text">域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E7%BB%87%E5%8D%95%E5%85%83"><span class="toc-number">5.2.5.</span> <span class="toc-text">组织单元</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Edges"><span class="toc-number">5.3.</span> <span class="toc-text">Edges</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List-of-Edges-%E8%BE%B9%E7%9A%84%E5%88%97%E8%A1%A8"><span class="toc-number">5.4.</span> <span class="toc-text">List of Edges  边的列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="toc-number">5.5.</span> <span class="toc-text">分析过程</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/23/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E6%B8%97%E9%80%8F%E9%9D%B6%E5%9C%BA/HTB%E9%9D%B6%E5%9C%BA/HTB%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%983%E2%80%94%E2%80%94Support/" title="HTB靶场刷题3——Support">HTB靶场刷题3——Support</a><time datetime="2026-06-23T02:04:43.300Z" title="发表于 2026-06-23 10:04:43">2026-06-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/22/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E6%B8%97%E9%80%8F%E9%9D%B6%E5%9C%BA/HTB%E9%9D%B6%E5%9C%BA/HTB%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%982%E2%80%94%E2%80%94Checkpoint/" title="HTB靶场刷题2——Checkpoint">HTB靶场刷题2——Checkpoint</a><time datetime="2026-06-22T13:58:43.197Z" title="发表于 2026-06-22 21:58:43">2026-06-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/18/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/2%20%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/PC%E9%80%86%E5%90%91/2%20linux%E7%BC%96%E7%A8%8B/linux%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B/" title="linux汇编编程">linux汇编编程</a><time datetime="2026-06-18T12:29:40.921Z" title="发表于 2026-06-18 20:29:40">2026-06-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/16/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/0%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/3%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/0%20%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81%E5%8E%9F%E7%90%86/" title="汇编代码原理">汇编代码原理</a><time datetime="2026-06-16T14:08:06.776Z" title="发表于 2026-06-16 22:08:06">2026-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/13/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/3%20%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%AB%AF/js/2%20%E6%B5%8F%E8%A7%88%E5%99%A8/JavaScript%E6%B5%8F%E8%A7%88%E5%99%A8%E6%93%8D%E4%BD%9C/" title="JavaScript浏览器操作">JavaScript浏览器操作</a><time datetime="2026-06-13T14:35:44.271Z" title="发表于 2026-06-13 22:35:44">2026-06-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By chen7chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/取证/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 取证 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络攻防/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 网络攻防 (17)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络攻防/CTF靶场/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 CTF靶场 (6)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络攻防/自建靶场/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 自建靶场 (5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="http://blog.xchstudy.org/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/8.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-13</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">pandas</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2026/03/29/取证/2025獬豸杯/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/7.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2026-03-29</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2026/03/29/取证/2025獬豸杯/&quot;);" href="javascript:void(0);" alt="">2025獬豸杯</a><div class="blog-slider__text">2025年獬豸</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2026/03/29/取证/2025獬豸杯/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2026/01/20/取证/2025年美亚杯/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2026-01-20</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2026/01/20/取证/2025年美亚杯/&quot;);" href="javascript:void(0);" alt="">2025年美亚杯个人赛</a><div class="blog-slider__text">2025年美亚取证个人赛</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2026/01/20/取证/2025年美亚杯/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/5.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">linux系统变量</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>

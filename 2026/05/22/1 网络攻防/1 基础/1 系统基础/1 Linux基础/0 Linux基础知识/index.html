@@ -1,0 +1,891 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>linux基础知识 | 小chen妙妙屋</title><meta name="author" content="chen7chen"><meta name="copyright" content="chen7chen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="组成部分    组成成分 描述     Bootloader  引导加载程序 一段用于引导启动过程以启动操作系统的代码。Parrot Linux 使用 GRUB 引导加载程序。   OS Kernel  操作系统内核 内核是操作系统的主要组件。它在硬件层面管理系统 I&#x2F;O 设备的资源。   Daemons    守护进程 后台服务在 Linux 中被称为“守护进程”。其目的是确保调度、打印和多媒体">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux基础知识">
+<meta property="og:url" content="http://blog.xchstudy.org/2026/05/22/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/1%20%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/1%20Linux%E5%9F%BA%E7%A1%80/0%20Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="小chen妙妙屋">
+<meta property="og:description" content="组成部分    组成成分 描述     Bootloader  引导加载程序 一段用于引导启动过程以启动操作系统的代码。Parrot Linux 使用 GRUB 引导加载程序。   OS Kernel  操作系统内核 内核是操作系统的主要组件。它在硬件层面管理系统 I&#x2F;O 设备的资源。   Daemons    守护进程 后台服务在 Linux 中被称为“守护进程”。其目的是确保调度、打印和多媒体">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.636865.xyz/raw/7.webp">
+<meta property="article:published_time" content="2026-05-22T13:53:49.930Z">
+<meta property="article:modified_time" content="2026-05-29T02:59:45.710Z">
+<meta property="article:author" content="chen7chen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.636865.xyz/raw/7.webp"><link rel="shortcut icon" href="/img/output.png"><link rel="canonical" href="http://blog.xchstudy.org/2026/05/22/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/1%20%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/1%20Linux%E5%9F%BA%E7%A1%80/0%20Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'linux基础知识',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-05-29 10:59:45'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/music.css" media="defer" onload="this.media='all'"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小chen妙妙屋" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (true) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="an_music_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">244</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">173</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://wiki.xchstudy.org/"><i class="fa-fw fas fa-book-open"></i><span> wiki</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.636865.xyz/raw/7.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="小chen妙妙屋"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img%5Coutput.png"/><span class="site-name">小chen妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fa-brands fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-link"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/#%E5%90%84%E4%BD%8D%E5%B8%88%E5%82%85"><i class="fa-fw fas fa-user-friends"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/link/#%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5"><i class="fa-fw fas fa-laptop-code"></i><span> 技术链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://wiki.xchstudy.org/"><i class="fa-fw fas fa-book-open"></i><span> wiki</span></a></div><div class="menus_item"><a class="site-page" href="/message/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">linux基础知识</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-05-22T13:53:49.930Z" title="发表于 2026-05-22 21:53:49">2026-05-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-05-29T02:59:45.710Z" title="更新于 2026-05-29 10:59:45">2026-05-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title="linux基础知识"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="twikoo_visitors"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>组成成分</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Bootloader</code>  引导加载程序</td>
+<td>一段用于引导启动过程以启动操作系统的代码。Parrot Linux 使用 GRUB 引导加载程序。</td>
+</tr>
+<tr>
+<td><code>OS Kernel</code>  操作系统内核</td>
+<td>内核是操作系统的主要组件。它在硬件层面管理系统 I/O 设备的资源。</td>
+</tr>
+<tr>
+<td><code>Daemons</code>    守护进程</td>
+<td>后台服务在 Linux 中被称为“守护进程”。其目的是确保调度、打印和多媒体等关键功能正常工作。这些小程序在我们启动或登录电脑后才加载。</td>
+</tr>
+<tr>
+<td><code>OS Shell</code>  操作系统壳</td>
+<td>操作系统壳层或命令语言解释器（也称为命令行）是操作系统与用户之间的接口。该界面允许用户告诉操作系统该做什么。最常用的贝壳有 Bash、Tcsh/Csh、Ksh、Zsh 和 Fish。</td>
+</tr>
+<tr>
+<td><code>Graphics server</code>  图形服务器</td>
+<td>这提供了一个称为“X”或“X-server”的图形子系统（服务器），允许图形程序在 X 窗口系统上本地或远程运行。</td>
+</tr>
+<tr>
+<td><code>Window Manager</code>  窗口管理器</td>
+<td>也称为图形用户界面（GUI）。有很多选择，包括 GNOME、KDE、MATE、Unity 和 Cinnamon。桌面环境通常包含多个应用程序，包括文件浏览器和网页浏览器。这些功能允许用户访问和管理操作系统中重要且频繁访问的功能和服务。</td>
+</tr>
+<tr>
+<td><code>Utilities</code> 实用程序</td>
+<td>应用程序或实用工具是为用户或另一个程序执行特定功能的程序。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Path  路径</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>顶层目录是根文件系统，包含在挂载其他文件系统之前启动操作系统所需的全部文件，以及启动其他文件系统所需的文件。启动后，所有其他文件系统都作为根的子目录挂载到标准挂载点。</td>
+</tr>
+<tr>
+<td><code>/bin</code></td>
+<td>包含必要的命令二进制文件。</td>
+</tr>
+<tr>
+<td><code>/boot</code></td>
+<td>由静态引导加载程序、内核可执行文件以及启动 Linux 操作系统所需的文件组成。</td>
+</tr>
+<tr>
+<td><code>/dev</code></td>
+<td>包含设备文件，以方便访问系统上连接的每个硬件设备。</td>
+</tr>
+<tr>
+<td><code>/etc</code></td>
+<td>本地系统配置文件。已安装应用程序的配置文件也可能保存在这里。</td>
+</tr>
+<tr>
+<td><code>/home</code></td>
+<td><br>系统中的每个用户都有一个用于存储的子目录。</td>
+</tr>
+<tr>
+<td><code>/lib</code></td>
+<td>系统启动所需的共享库文件。</td>
+</tr>
+<tr>
+<td><code>/media</code></td>
+<td>USB 驱动器等外部可移动媒体设备挂载在这里。</td>
+</tr>
+<tr>
+<td><code>/mnt</code></td>
+<td>常规文件系统的临时挂载点。</td>
+</tr>
+<tr>
+<td><code>/opt</code></td>
+<td>可选文件，如第三方工具，可以保存在这里。</td>
+</tr>
+<tr>
+<td><code>/root</code></td>
+<td>root 用户的家目录。</td>
+</tr>
+<tr>
+<td><code>/sbin</code></td>
+<td>此目录包含用于系统管理（二进制系统文件）的可执行文件。</td>
+</tr>
+<tr>
+<td><code>/tmp</code></td>
+<td>操作系统和许多程序使用此目录来存储临时文件。此目录通常在系统启动时被清除，并在其他时间可能未经警告就被删除。</td>
+</tr>
+<tr>
+<td><code>/usr</code></td>
+<td>包含可执行文件、库文件、man 文件等。</td>
+</tr>
+<tr>
+<td><code>/var</code></td>
+<td>此目录包含各种数据文件，如日志文件、电子邮件收件箱、Web 应用程序相关文件、cron 文件等。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="SHELL简介"><a href="#SHELL简介" class="headerlink" title="SHELL简介"></a><code>SHELL</code>简介</h1><p>Linux 终端，也称为 <code>shell</code> 或命令行，为用户提供了一个基于文本的输入/输出（I/O）界面，用于与计算机系统的内核进行交互。该术语通常也指代“控制台”，但这里指的是文本模式下的屏幕，而不是窗口。在终端窗口中，可以执行命令来控制系统。</p>
+<p>我们可以将 shell 视为一个基于文本的 GUI，在其中我们输入命令来执行导航到其他目录、处理文件以及从系统中获取信息等操作，但功能远不止这些。</p>
+<h2 id="终端模拟器"><a href="#终端模拟器" class="headerlink" title="终端模拟器"></a>终端模拟器</h2><p>终端仿真软件是模拟终端功能的软件。它允许在图形用户界面（ <code>GUI</code> ）中使用基于文本的程序。还存在所谓的命令行界面（ <code>CLI</code> ），它们作为附加终端在一个终端中运行。简而言之，终端是 shell 解释器的一个接口。</p>
+<p>现在，假设你正在远程工作。终端仿真软件就像你电脑屏幕上的虚拟接待台（GUI），让你能够在不实际在办公室的情况下与服务器室进行交互。它仿真了实际接待台的功能，使你能够在图形环境中使用基于文本的程序和命令。</p>
+<p>此外，在单个终端内运行的 <code>command-line interfaces</code> （ <code>CLI</code> ）作为额外的终端，就像在屏幕上同时打开了多个虚拟接待台。每一个都允许你独立地向服务器室发送不同的指令，但通过同一个主界面。本质上，终端充当了你的网关，让你能够与由 shell 管理的核心操作进行通信和控制。</p>
+<hr>
+<p>Linux 中最常用的 shell 是 <code>Bourne-Again Shell</code> ( <code>BASH</code> )，它是 GNU 项目的组成部分。通过图形用户界面（GUI）完成的一切操作，我们都可以通过 shell 来完成。shell 给我们提供了更多与程序和进程交互的可能性，从而更快地获取信息。此外，许多进程可以通过小型或大型脚本轻松实现自动化，从而大大简化了手动工作。</p>
+<h1 id="提示符"><a href="#提示符" class="headerlink" title="提示符"></a>提示符</h1><p>Bash 提示符很简单，默认情况下，它会显示用户名（你是谁）、计算机名称（主机名）以及当前正在工作的文件夹/目录等信息。它是一条显示在屏幕上的文本行，告诉你系统已准备好接收你的指令。提示符会出现在新的一行上，光标（闪烁的线或框）会紧随其后，等待你输入命令。</p>
+<p>它可以被自定义以向用户提供有用的信息。格式可能看起来像这样：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;username&gt;@&lt;hostname&gt;&lt;current working directory&gt;$</span><br></pre></td></tr></table></figure></p>
+<h2 id="家目录"><a href="#家目录" class="headerlink" title="家目录"></a>家目录</h2><p>用户的家目录用波浪号 <code>~</code> 标记，并且是登录时的默认文件夹。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;username&gt;@&lt;hostname&gt;[~]$</span><br></pre></td></tr></table></figure>
+<h2 id="管理员身份"><a href="#管理员身份" class="headerlink" title="管理员身份"></a>管理员身份</h2><p>在这种情况下，美元符号代表用户。一旦我们以 <code>root</code> 登录，字符会变为 <code>hash</code>  <code>#</code> ，看起来像这样：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@htb[/htb]#</span><br></pre></td></tr></table></figure></p>
+<h3 id="Unprivileged-User-Shell-Prompt"><a href="#Unprivileged-User-Shell-Prompt" class="headerlink" title="Unprivileged - User Shell Prompt"></a>Unprivileged - User Shell Prompt</h3><p>无特权 - 用户 Shell 提示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$</span><br></pre></td></tr></table></figure>
+<h3 id="Privileged-Root-Shell-Prompt"><a href="#Privileged-Root-Shell-Prompt" class="headerlink" title="Privileged - Root Shell Prompt"></a>Privileged - Root Shell Prompt</h3><p>特权 - 根 Shell 提示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="外观控制"><a href="#外观控制" class="headerlink" title="外观控制"></a>外观控制</h2><p>Linux 系统中的 <code>PS1</code> 变量控制终端中命令提示的外观。它就像一个模板，定义了每次系统准备好让您输入命令时您看到的文本。通过自定义 PS1 变量，您可以更改提示以显示用户名、计算机名称、当前文件夹等信息，甚至可以添加颜色和特殊字符。这使您能够个性化命令行界面，使其更具信息量或视觉吸引力。</p>
+<p>除了显示用户名和当前文件夹等基本信息外，您还可以自定义命令提示符以显示其他有用信息，例如 IP 地址、日期、时间和最后一个命令的成功或失败状态。这种自定义在渗透测试期间特别有帮助，因为它允许您更有效地跟踪您的操作。例如，您可以设置提示符显示当前工作目录的完整路径，而不仅仅是其名称，如果需要，还可以包含目标的 IP 地址。使用 <code>script</code> 等工具或查看 <code>.bash_history</code> 文件（位于用户的主目录中），您可以记录所有已使用的命令，并按日期和时间进行组织，这有助于文档记录和分析。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特殊符号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\d</code></td>
+<td>日期（Mon Feb 6）</td>
+</tr>
+<tr>
+<td><code>\D&#123;%Y-%m-%d&#125;</code></td>
+<td>日期 (YYYY-MM-DD)</td>
+</tr>
+<tr>
+<td><code>\H</code></td>
+<td>完整主机名</td>
+</tr>
+<tr>
+<td><code>\j</code></td>
+<td>shell 管理的作业数量</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>换行符</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>回车符</td>
+</tr>
+<tr>
+<td><code>\s</code></td>
+<td>shell 的名称</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>当前时间 24 小时制（HH:MM:SS）</td>
+</tr>
+<tr>
+<td><code>\T</code></td>
+<td>当前时间 12 小时制（HH:MM:SS）</td>
+</tr>
+<tr>
+<td><code>\@</code></td>
+<td>当前时间</td>
+</tr>
+<tr>
+<td><code>\u</code></td>
+<td>当前用户名</td>
+</tr>
+<tr>
+<td><code>\w</code></td>
+<td>当前工作目录的完整路径</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>自定义提示符是一个让您的终端体验更加个性化和高效的有用方法。它还可以是一个有助于故障排除和解决问题的工具，因为它可以在任何时候提供有关系统状态的重要信息。</p>
+<p>除了自定义提示符外，我们还可以通过不同的配色方案、字体和其他设置来自定义他们的终端环境，使他们的工作环境更具视觉吸引力且更易于使用。</p>
+<p>然而，我们在处理 Windows GUI 时看到了相同的情况。我们以用户身份登录到一台具有特定名称的计算机上，并且在浏览系统时我们知道自己所在的目录。Bash 提示符也可以根据我们的需要进行自定义和更改。调整 bash 提示符的范围不在此模块内。然而，我们可以查看 bash-prompt-generator 和 powerline，它们为我们提供了根据需求调整提示符的可能性。</p>
+<h1 id="文件描述和重定向"><a href="#文件描述和重定向" class="headerlink" title="文件描述和重定向"></a>文件描述和重定向</h1><h2 id="文件描述"><a href="#文件描述" class="headerlink" title="文件描述"></a>文件描述</h2><p>文件描述符（ <code>FD</code> ）在 Unix/Linux 操作系统中是一个由内核维护的引用，它允许系统管理输入/输出（ <code>I/O</code> ）操作。它作为打开文件、套接字或任何其他 I/O 资源的唯一标识符。在基于 Windows 的操作系统中，这被称为文件句柄。本质上，文件描述符是系统跟踪活动 <code>I/O</code> 连接的方式，例如从文件中读取或向文件中写入。</p>
+<p>默认情况下，Linux 中的前三个文件描述符是：</p>
+<ol>
+<li>输入数据流<ul>
+<li><code>STDIN – 0</code></li>
+</ul>
+</li>
+<li>输出数据流<ul>
+<li><code>STDOUT – 1</code></li>
+</ul>
+</li>
+<li>与发生错误相关的输出数据流。<ul>
+<li><code>STDERR – 2</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h2><p>使用<code>&gt;</code>来进行重定向<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /etc/ -name shadow 2&gt; stderr.txt 1&gt; stdout.txt</span><br></pre></td></tr></table></figure></p>
+<h1 id="权限管理"><a href="#权限管理" class="headerlink" title="权限管理"></a>权限管理</h1><p>在 Linux 中，权限就像钥匙，控制对文件和目录的访问。这些权限分配给用户和组，就像组织内特定个人和团队分发钥匙一样。每个用户可以属于多个组，成为组的一部分会获得额外的访问权限，允许用户对文件和目录执行特定操作。</p>
+<p>每个文件和目录都有一个所有者（用户）并与一个组相关联。这些文件的权限为所有者和组定义，决定允许执行哪些操作——如读取、写入或执行</p>
+<p>目录，用户必须首先拥有正确的钥匙——这个钥匙就是目录上的 <code>execute</code> 权限。没有它，即使目录的内容对用户可见，他们也无法进入或浏览其中。</p>
+<p>换句话说，在目录上拥有 <code>execute</code> 权限就像拥有通过走廊进入房间内的权限。它不允许你查看或修改内部内容，但它确实授予你进入并探索目录结构的权限。没有这个权限，用户无法访问目录内容，而会看到一条“ <code>Permission Denied</code> ”错误消息。</p>
+<p>需要注意的是，无论用户的访问级别如何，要遍历一个目录都需要 <code>execute</code> 权限。此外，目录上的 <code>execute</code> 权限不允许用户执行或修改任何文件或内容，只能遍历和访问目录内容。</p>
+<p>要在目录中执行文件，用户需要在相应的文件上拥有 <code>execute</code> 权限。要修改目录内容（创建、删除或重命名文件和子目录），用户需要在目录上拥有 <code>write</code> 权限。</p>
+<p>Linux 系统中的整个权限系统基于八进制数制，基本上，文件或目录可以被分配三种不同的权限：</p>
+<ul>
+<li>( <code>r</code> ) - 阅读</li>
+<li>( <code>w</code> ) - 写入</li>
+<li>( <code>x</code> ) - 执行</li>
+</ul>
+<h2 id="更改权限"><a href="#更改权限" class="headerlink" title="更改权限"></a>更改权限</h2><p>我们可以使用 <code>chmod</code> 命令修改权限，权限组引用（ <code>u</code> - 所有者， <code>g</code> - 组， <code>o</code> - 其他， <code>a</code> - 所有用户），以及使用 <code>+</code> 或 <code>-</code> 来添加或移除指定的权限。在以下示例中，假设我们有一个名为 <code>shell</code> 的文件，我们希望修改它的权限，以便这个脚本属于该用户，不可执行，并为所有用户设置读写权限。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l shell</span><br></pre></td></tr></table></figure></p>
+<p>然后我们可以应用 <code>read</code> 权限给所有用户，并查看结果。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+r shell &amp;&amp; ls -l shell</span><br></pre></td></tr></table></figure></p>
+<p>我们也可以使用八进制值赋值，将所有其他用户的权限设置为 <code>read</code> 。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod 754 shell &amp;&amp; ls -l shell</span><br><span class="line"></span><br><span class="line">-rwxr-xr--   1 cry0l1t3 htbteam 0 May  4 22:12 shell</span><br></pre></td></tr></table></figure><br>权限分配赋值如下：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Binary Notation:                4 2 1  |  4 2 1  |  4 2 1</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">Binary Representation:          1 1 1  |  1 0 1  |  1 0 0</span><br><span class="line">----------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<h2 id="更改所有者"><a href="#更改所有者" class="headerlink" title="更改所有者"></a>更改所有者</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown &lt;user&gt;:&lt;group&gt; &lt;file/directory&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="SUID-和-SGID"><a href="#SUID-和-SGID" class="headerlink" title="SUID 和 SGID"></a>SUID 和 SGID</h2><p>除了标准的用户和组权限外，Linux 允许我们通过 Set User ID（ <code>SUID</code> ）和 Set Group ID（ <code>SGID</code> ）位来配置文件的特殊权限。这些位就像临时访问通行证一样，使用户能够以另一个用户或组的权限运行某些程序。例如，管理员可以使用 <code>SUID</code> 或 <code>SGID</code> 来授予用户特定应用程序的提权，允许以必要的权限执行任务，即使该用户本身通常没有这些权限。</p>
+<p>这些权限的存在通过文件权限集中的 <code>s</code> 代替通常的 <code>x</code> 来指示。当一个设置了 SUID 或 SGID 位的程序被执行时，它将以文件所有者或组的权限运行，而不是启动它的用户。这对于某些系统任务很有用，但如果使用不当，也会引入潜在的安全风险。 </p>
+<h2 id="粘性位"><a href="#粘性位" class="headerlink" title="粘性位"></a>粘性位</h2><p>Linux 中的粘性位就像共享空间中文件上的锁。当应用于目录时，粘性位会增加一层额外的安全性，确保只有特定人员可以修改或删除文件，即使其他人有权访问该目录。</p>
+<p>此功能在共享环境中特别有用，例如公共目录，多个用户一起工作。通过设置粘滞位，您可以确保重要文件不会被有权力的用户意外或恶意更改，为协作工作空间添加了重要的安全保护。</p>
+<p>如果粘性位大写（ <code>T</code> ），这意味着所有其他用户都没有 <code>execute</code> （ <code>x</code> ）权限，因此无法查看文件夹内容或从其中运行任何程序。小写的粘性位（ <code>t</code> ）是设置了 <code>execute</code> （ <code>x</code> ）权限的粘性位。</p>
+<h1 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h1><p>有效的用户管理是 Linux 系统管理的基本方面。管理员经常需要创建新的用户帐户或将现有用户分配到特定组以执行适当的访问控制。此外，以不同用户身份执行命令对于需要不同权限的任务通常是必要的。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Command  命令</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sudo</code></td>
+<td>以不同用户执行命令。</td>
+</tr>
+<tr>
+<td><code>su</code></td>
+<td><code>su</code> 工具通过 PAM 请求适当的用户凭证，并切换到该用户 ID（默认用户是超级用户）。然后执行一个 shell。</td>
+</tr>
+<tr>
+<td><code>useradd</code></td>
+<td>创建新用户或更新默认新用户信息。</td>
+</tr>
+<tr>
+<td><code>userdel</code></td>
+<td>删除用户帐户和相关文件。</td>
+</tr>
+<tr>
+<td><code>usermod</code></td>
+<td>修改用户帐户。</td>
+</tr>
+<tr>
+<td><code>addgroup</code></td>
+<td>向系统添加组。</td>
+</tr>
+<tr>
+<td><code>delgroup</code></td>
+<td>从系统中删除组。</td>
+</tr>
+<tr>
+<td><code>passwd</code></td>
+<td>更改用户密码。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="服务和进程管理"><a href="#服务和进程管理" class="headerlink" title="服务和进程管理"></a>服务和进程管理</h1><h2 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h2><p>服务，也称为守护进程，是 Linux 系统的基础组件，它们在后台静默运行“无需直接用户交互”。它们执行关键任务，以保持系统运行并提供附加功能。通常，服务可以分为两种类型：</p>
+<h3 id="系统服务"><a href="#系统服务" class="headerlink" title="系统服务"></a>系统服务</h3><p>这些是在系统启动时所需的内部服务。它们执行与硬件相关的关键任务，并初始化操作系统正常运行所需的系统组件。这些就像引擎和变速箱系统。当你转动点火钥匙时它们启动，对于汽车运行至关重要。没有它们，汽车将无法移动。</p>
+<h3 id="用户服务"><a href="#用户服务" class="headerlink" title="用户服务"></a>用户服务</h3><p>这些服务由用户添加，通常包括服务器应用程序和其他后台进程，以提供特定的功能或能力。</p>
+<p>一般来说，当我们处理一个服务或流程时，我们只有几个目标：</p>
+<ol>
+<li>启动/重启服务/流程</li>
+<li>停止服务/流程</li>
+<li>查看服务/流程的当前状态或历史状态</li>
+<li>启用/禁用开机时服务/进程</li>
+<li>查找服务/进程</li>
+</ol>
+<p>大多数现代 Linux 发行版都采用了 <code>systemd</code> 作为其初始化系统（init 系统）。它在启动过程中是第一个启动的进程，并被分配了进程 ID（ <code>PID</code> ）。Linux 系统中的所有进程都被分配了一个 <code>PID</code> ，可以在 <code>/proc/</code> 目录下查看，该目录包含了关于每个进程的信息。进程还可能有一个父进程 ID（ <code>PPID</code> ），表明它们是由另一个进程（父进程）启动的，因此它们是子进程。</p>
+<h3 id="单元"><a href="#单元" class="headerlink" title="单元"></a>单元</h3><p>简单说，单元就是 Systemd 的最小功能单位，是单个进程的描述。一个个小的单元互相调用和依赖，组成一个庞大的任务管理系统，这就是 Systemd 的基本思想。</p>
+<p>由于 Systemd 要做的事情太多，导致单元有很多<a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files">不同的种类</a>，大概一共有12种。</p>
+<p>每个单元都有一个单元描述文件，它们分散在三个目录。</p>
+<blockquote>
+<ul>
+<li><code>/lib/systemd/system</code>：系统默认的单元文件</li>
+<li><code>/etc/systemd/system</code>：用户安装的软件的单元文件</li>
+<li><code>/usr/lib/systemd/system</code>：用户自己定义的单元文件<h3 id="管理"><a href="#管理" class="headerlink" title="管理"></a>管理</h3>使用<code>systemctl</code>进行管理<br>可以使用 <code>systemctl</code> 列出所有服务。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-units --type=service</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>有可能服务因错误而无法启动。要查看问题，我们可以使用工具 <code>journalctl</code> 查看日志。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -u ssh.service --no-pager</span><br></pre></td></tr></table></figure></p>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h3 id="结束进程"><a href="#结束进程" class="headerlink" title="结束进程"></a>结束进程</h3><p>一个进程可以处于以下状态：</p>
+<ul>
+<li>Running  运行</li>
+<li>Waiting (waiting for an event or system resource)<br>  等待（等待事件或系统资源）</li>
+<li>Stopped  已停止</li>
+<li>Zombie (stopped but still has an entry in the process table).<br>  僵尸（已停止但仍在进程表中有一个条目）。</li>
+</ul>
+<p>可以使用 <code>kill</code> 、 <code>pkill</code> 、 <code>pgrep</code> 和 <code>killall</code> 控制进程。要与进程交互，我们必须向它发送一个信号。可以使用以下命令查看所有信号：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">kill -l</span><br><span class="line"></span><br><span class="line"> 1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL       5) SIGTRAP</span><br><span class="line"> 2) SIGABRT      7) SIGBUS       8) SIGFPE       9) SIGKILL     10) SIGUSR1</span><br><span class="line">3) SIGSEGV     12) SIGUSR2     13) SIGPIPE     14) SIGALRM     15) SIGTERM</span><br><span class="line">4) SIGSTKFLT   17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP</span><br><span class="line">5) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU     25) SIGXFSZ</span><br><span class="line">6) SIGVTALRM   27) SIGPROF     28) SIGWINCH    29) SIGIO       30) SIGPWR</span><br><span class="line">7) SIGSYS      34) SIGRTMIN    35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3</span><br><span class="line">8) SIGRTMIN+4  39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8</span><br><span class="line">9) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12 47) SIGRTMIN+13</span><br><span class="line">10) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14 51) SIGRTMAX-13 52) SIGRTMAX-12</span><br><span class="line">11) SIGRTMAX-11 54) SIGRTMAX-10 55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7</span><br><span class="line">12) SIGRTMAX-6  59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2</span><br><span class="line">13) SIGRTMAX-1  64) SIGRTMAX</span><br></pre></td></tr></table></figure>
+<p>常用的信号是：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Signal  信号</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td><code>SIGHUP</code> - This is sent to a process when the terminal that controls it is closed.  <br><code>SIGHUP</code> - 当控制它的终端关闭时，这会发送给进程。</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><code>SIGINT</code> - Sent when a user presses <code>[Ctrl] + C</code> in the controlling terminal to interrupt a process.  <br><code>SIGINT</code> - 当用户在控制终端中按下 <code>[Ctrl] + C</code> 来中断进程时发送。</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td><code>SIGQUIT</code> - Sent when a user presses <code>[Ctrl] + D</code> to quit.  <br><code>SIGQUIT</code> - 当用户按下 <code>[Ctrl] + D</code> 退出时发送。</td>
+</tr>
+<tr>
+<td><code>9</code></td>
+<td><code>SIGKILL</code> - Immediately kill a process with no clean-up operations.  <br><code>SIGKILL</code> - 立即杀死进程，不进行清理操作。</td>
+</tr>
+<tr>
+<td><code>15</code></td>
+<td><code>SIGTERM</code> - Program termination.  <br><code>SIGTERM</code> - 程序终止。</td>
+</tr>
+<tr>
+<td><code>19</code></td>
+<td><code>SIGSTOP</code> - Stop the program. It cannot be handled anymore.  <br><code>SIGSTOP</code> - 停止程序。无法再处理。</td>
+</tr>
+<tr>
+<td><code>20</code></td>
+<td><code>SIGTSTP</code> - Sent when a user presses <code>[Ctrl] + Z</code> to request for a service to suspend. The user can handle it afterward.  <br><code>SIGTSTP</code> - 当用户按下 <code>[Ctrl] + Z</code> 请求服务暂停时发送。用户稍后可以处理。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="后台进程"><a href="#后台进程" class="headerlink" title="后台进程"></a>后台进程</h3><p>有时我们需要将刚刚启动的扫描或进程放到后台，以便继续使用当前会话与系统交互或启动其他进程。正如我们已经看到的，我们可以用快捷键 <code>[Ctrl + Z]</code> 来完成这个操作。如上所述，我们向内核发送 <code>SIGTSTP</code> 信号，内核会挂起进程。</p>
+<p>所有后台进程都可以用以下命令显示。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jobs</span><br></pre></td></tr></table></figure></p>
+<p><code>[Ctrl] + Z</code> 快捷键会挂起进程，并且它们将不会被进一步执行。为了在后台保持运行，我们必须输入 <code>bg</code> 命令将进程放到后台。</p>
+<p>另一个选项是在命令末尾使用 AND 符号（ <code>&amp;</code> ）来自动设置进程。</p>
+<h3 id="前台进程"><a href="#前台进程" class="headerlink" title="前台进程"></a>前台进程</h3><p>之后，我们可以使用 <code>jobs</code> 命令来列出所有后台进程。后台进程不需要用户交互，我们可以使用同一个 shell 会话，而无需等待进程首先完成。一旦扫描或处理完成其工作，终端将通知我们进程已完成。</p>
+<p>如果我们想把后台进程调到前台并再次与之交互，我们可以使用 <code>fg &lt;ID&gt;</code> 命令。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fg 1</span><br></pre></td></tr></table></figure></p>
+<h1 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h1><p>任务调度是 Linux 系统中的一个关键功能，它允许用户和管理员通过在特定时间或定期间隔运行任务来自动化任务，无需手动启动。在 Ubuntu、Red Hat Linux 和 Solaris 等发行版中提供此功能，该功能管理各种任务，如自动软件更新、脚本执行、数据库维护和备份自动化。通过调度定期和重复性任务，确保它们一致且可靠地执行。此外，可以配置警报在特定事件发生时通知管理员或用户。虽然这种自动化有众多应用，但这些示例代表了最常见的用例。</p>
+<p>理解 Linux 系统中的任务调度对于我们作为网络安全专家和渗透测试人员来说至关重要，因为它既可以作为一种合法的管理工具，也可以成为恶意活动的载体。了解任务自动化方式使您能够识别潜在的安全风险，例如未经授权的 cron 作业执行有害脚本或在预定时间间隔上维护持久后门。通过理解任务调度的复杂性，您可以检测和分析这些隐藏威胁，增强系统审核，甚至可以利用计划任务在渗透测试期间模拟攻击场景。</p>
+<h2 id="Systemd"><a href="#Systemd" class="headerlink" title="Systemd"></a><code>Systemd</code></h2><p>Systemd 是在 Ubuntu、Redhat Linux 和 Solaris 等 Linux 系统中用于在特定时间启动进程和脚本的服务。有了它，我们可以设置进程和脚本在特定时间或时间间隔运行，还可以指定特定的事件和触发器来触发特定任务。为此，在我们系统的脚本或进程自动执行之前，需要采取一些步骤和预防措施。</p>
+<ol>
+<li>Create a timer (schedules when your <code>mytimer.service</code> should run)<br> 创建定时器（安排你的 <code>mytimer.service</code> 应该运行的时间）</li>
+<li>Create a service (executes the commands or script)<br> 创建服务（执行命令或脚本）</li>
+<li>Activate the timer  启动定时器</li>
+</ol>
+<h3 id="创建定时器"><a href="#创建定时器" class="headerlink" title="创建定时器"></a>创建定时器</h3><p>为 systemd 创建定时器，我们需要创建一个目录来存储定时器脚本。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /etc/systemd/system/mytimer.timer.d</span><br></pre></td></tr></table></figure><br>写入文件<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/systemd/system/mytimer.timer</span><br></pre></td></tr></table></figure><br>我们需要创建一个配置定时器的脚本。该脚本必须包含以下选项：”Unit”、”Timer” 和 “Install”。 “Unit” 选项指定定时器的描述。”Timer” 选项指定定时器的启动时间和激活时间。最后，”Install” 选项指定定时器的安装位置。</p>
+<ul>
+<li><code>[Unit]</code>部分介绍本单元的基本信息（即元数据），<code>Description</code>字段给出这个单元的简单介绍（名字叫做<code>MyTimer</code>）。</li>
+<li><code>[Service]</code>部分用来定制行为，Systemd 提供许多字段。<ul>
+<li><code>ExecStart</code>：<code>systemctl start</code>所要执行的命令</li>
+<li><code>ExecStop</code>：<code>systemctl stop</code>所要执行的命令</li>
+<li><code>ExecReload</code>：<code>systemctl reload</code>所要执行的命令</li>
+<li><code>ExecStartPre</code>：<code>ExecStart</code>之前自动执行的命令</li>
+<li><code>ExecStartPost</code>：<code>ExecStart</code>之后自动执行的命令</li>
+<li><code>ExecStopPost</code>：<code>ExecStop</code>之后自动执行的命令</li>
+</ul>
+</li>
+<li><code>[Timer]</code>部分定制定时器。Systemd 提供以下一些字段。<ul>
+<li><code>OnActiveSec</code>：定时器生效后，多少时间开始执行任务</li>
+<li><code>OnBootSec</code>：系统启动后，多少时间开始执行任务</li>
+<li><code>OnStartupSec</code>：Systemd 进程启动后，多少时间开始执行任务</li>
+<li><code>OnUnitActiveSec</code>：该单元上次执行后，等多少时间再次执行</li>
+<li><code>OnUnitInactiveSec</code>： 定时器上次关闭后多少时间，再次执行</li>
+<li><code>OnCalendar</code>：基于绝对时间，而不是相对时间执行</li>
+<li><code>AccuracySec</code>：如果因为各种原因，任务必须推迟执行，推迟的最大秒数，默认是60秒</li>
+<li><code>Unit</code>：真正要执行的任务，默认是同名的带有<code>.service</code>后缀的单元</li>
+<li><code>Persistent</code>：如果设置了该字段，即使定时器到时没有启动，也会自动执行相应的单元</li>
+<li><code>WakeSystem</code>：如果系统休眠，是否自动唤醒系统<h3 id="Cron"><a href="#Cron" class="headerlink" title="Cron"></a><code>Cron</code></h3>Cron 是 Linux 系统中另一个可以用来调度和自动化进程的工具。它允许用户和管理员在特定时间或特定间隔内执行任务。对于上述示例，我们也可以使用 Cron 来自动化相同的任务。我们只需要创建一个脚本，然后告诉 cron 守护进程在特定时间调用它。</li>
+</ul>
+</li>
+</ul>
+<p>使用 Cron，我们可以自动化相同的任务，但设置 Cron 守护进程的过程与 Systemd 略有不同。要设置 cron 守护进程，我们需要将任务存储在一个名为 <code>crontab</code> 的文件中，然后告诉守护进程何时运行这些任务。然后我们可以通过相应地配置 cron 守护进程来安排和自动化任务。Cron 的结构由以下组件组成：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Time Frame  时间范围</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Minutes (0-59)  分钟（0-59）</td>
+<td>This specifies in which minute the task should be executed.  <br>这指定了任务应在哪一分钟执行。</td>
+</tr>
+<tr>
+<td>Hours (0-23)  小时（0-23）</td>
+<td>This specifies in which hour the task should be executed.  <br>这指定了任务应在哪一小时执行。</td>
+</tr>
+<tr>
+<td>Days of month (1-31)  月份中的天数（1-31）</td>
+<td>This specifies on which day of the month the task should be executed.  <br>这指定了任务应在月份的哪一天执行。</td>
+</tr>
+<tr>
+<td>Months (1-12)  月份（1-12）</td>
+<td>This specifies in which month the task should be executed.  <br>这指定了任务应在哪个月执行。</td>
+</tr>
+<tr>
+<td>Days of the week (0-7)  <br>星期几（0-7）</td>
+<td>This specifies on which day of the week the task should be executed.  <br>这指定了任务应在哪一天执行。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>例如，这样的 crontab 可能看起来像这样：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># System Update</span><br><span class="line">0 */6 * * * /path/to/update_software.sh</span><br><span class="line"></span><br><span class="line"># Execute Scripts</span><br><span class="line">0 0 1 * * /path/to/scripts/run_scripts.sh</span><br><span class="line"></span><br><span class="line"># Cleanup DB</span><br><span class="line">0 0 * * 0 /path/to/scripts/clean_database.sh</span><br><span class="line"></span><br><span class="line"># Backups</span><br><span class="line">0 0 * * 7 /path/to/scripts/backup.sh</span><br></pre></td></tr></table></figure></p>
+<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><p>管理 Linux 文件系统是一项关键任务，涉及在磁盘或其他存储设备上组织、存储和维护数据。Linux 是一个多功能的操作系统，支持多种不同的文件系统，包括 ext2、ext3、ext4、XFS、Btrfs 和 NTFS 等。每种文件系统都有其独特的特性，并适用于特定的使用场景。最佳文件系统的选择取决于应用程序或用户的特定需求，例如：</p>
+<ul>
+<li><code>ext2</code> 是一种较旧的文件系统，没有日志记录功能，这使得它不太适合现代系统，但在某些低开销场景中仍然有用（例如 USB 驱动器）。</li>
+<li><code>ext3</code> 和 <code>ext4</code> 更高级，具有日志记录功能（有助于恢复崩溃），而 ext4 是大多数现代 Linux 系统的默认选择，因为它在性能、可靠性和大文件支持方面提供了平衡。</li>
+<li><code>Btrfs</code> 以快照和内置数据完整性检查等高级功能而闻名，使其成为复杂存储设置的理想选择。</li>
+<li><code>XFS</code> 在处理大文件和高性能方面表现出色。它最适合具有高 I/O 需求的环境。</li>
+<li><code>NTFS</code> ，最初为 Windows 开发，在处理双系统启动或需要在 Linux 和 Windows 系统上工作的外部驱动器时，具有兼容性优势。</li>
+</ul>
+<p>选择文件系统时，分析应用程序或用户需求至关重要，性能、数据完整性、兼容性和存储需求等因素会影响决策。</p>
+<p>Linux 的文件系统架构基于 Unix 模型，采用分层结构组织。这种结构由多个组件组成，其中最重要的是 <code>inodes</code> 。 <code>Inodes</code> 是数据结构，用于存储每个文件和目录的元数据，包括权限、所有权、大小和时间戳。Inodes 不存储文件的实际数据或名称，但它们包含指向磁盘上存储文件数据的块的指针。</p>
+<h2 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h2><h3 id="常见文件"><a href="#常见文件" class="headerlink" title="常见文件"></a>常见文件</h3><p>普通文件是最常见的类型，通常由文本数据（如 ASCII）和/或二进制数据（如图像、音频或可执行文件）组成。它们存在于文件系统中的各个目录中，而不仅仅是在根目录中。根目录 (/) 仅仅是分层目录树的顶部，文件可以存在于该结构中的任何目录内。</p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>目录是特殊类型的文件，它们充当其他文件（包括普通文件和其他目录）的容器。当文件存储在目录中时，该目录被称为该文件的父目录。目录帮助组织 Linux 文件系统中的文件，允许以有效的方式管理文件集合。</p>
+<h3 id="符号链接"><a href="#符号链接" class="headerlink" title="符号链接"></a>符号链接</h3><p>除了常规文件和目录外，Linux 还支持符号链接（ <code>symlinks</code> ），它们充当指向其他文件或目录的快捷方式或引用。符号链接允许快速访问文件系统不同部分的文件，而无需复制文件本身。符号链接可用于通过指向不同位置的重要文件来简化访问或组织复杂的目录结构。</p>
+<p>每个用户类别可以有不同的权限级别。例如，文件的所有者可能拥有读取、写入和执行该文件的权限，而其他人可能只有读取权限。这些权限是独立的，即对一个用户的权限的更改不一定会影响其他人。</p>
+<h2 id="磁盘与驱动器"><a href="#磁盘与驱动器" class="headerlink" title="磁盘与驱动器"></a>磁盘与驱动器</h2><h3 id="分区管理"><a href="#分区管理" class="headerlink" title="分区管理"></a>分区管理</h3><h4 id="fdisk"><a href="#fdisk" class="headerlink" title="fdisk"></a><code>fdisk</code></h4><p>Linux 下的磁盘管理涉及管理物理存储设备，包括硬盘、固态硬盘和可移动存储设备。Linux 下磁盘管理的主要工具是 <code>fdisk</code> ，它允许我们在驱动器上创建、删除和管理分区。它还可以显示分区表的信息，包括每个分区的大小和类型。在 Linux 上对驱动器进行分区涉及将物理存储空间划分为单独的逻辑部分。然后，每个分区都可以使用特定的文件系统（如 ext4、NTFS 或 FAT32）进行格式化，并可以作为一个单独的文件系统挂载。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk -l</span><br></pre></td></tr></table></figure></p>
+<h3 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h3><p>每个逻辑分区或存储驱动器都必须分配到文件系统中的特定目录。这个过程称为 <code>mounting</code> 。挂载涉及将驱动器或分区链接到目录，使其内容在整体文件系统层次结构中可访问。一旦驱动器挂载到目录（也称为挂载点），它就可以像系统上的任何其他目录一样被访问和使用。</p>
+<p><code>mount</code> 命令通常用于在 Linux 上手动挂载文件系统。但是，如果您希望某些文件系统或分区在系统启动时自动挂载，您可以在 <code>/etc/fstab</code> 文件中定义它们。此文件列出了文件系统及其挂载点，以及读写权限和文件系统类型等选项，确保在启动时特定驱动器或分区可用，而无需手动干预。</p>
+<h3 id="SWAP"><a href="#SWAP" class="headerlink" title="SWAP"></a><code>SWAP</code></h3><p>交换空间是 Linux 内存管理的重要组成部分，在确保系统平稳运行方面起着关键作用，尤其是在可用的物理内存（RAM）被完全利用时。当系统物理内存耗尽时，内核会将不活跃的内存页（未立即使用的数据）移动到交换空间，从而释放 RAM 供活跃进程使用。这个过程被称为交换。</p>
+<h4 id="创建交换空间"><a href="#创建交换空间" class="headerlink" title="创建交换空间"></a>创建交换空间</h4><ul>
+<li><code>mkswap</code> 用于准备设备或文件作为交换空间使用，通过创建 Linux 交换区域</li>
+<li><code>swapon</code> 激活交换空间，允许系统使用它</li>
+</ul>
+<h4 id="管理-1"><a href="#管理-1" class="headerlink" title="管理"></a>管理</h4><p><code>swap space</code> 的大小不是固定的，取决于您的系统物理内存和预期用途。例如，RAM 较少或运行内存密集型应用程序的系统可能需要更多的交换空间。然而，具有大量 RAM 的现代系统可能需要较少甚至不需要交换空间，具体取决于特定的使用案例。</p>
+<p>在设置交换空间时，重要的是将其分配在一个独立的分区或文件上，与文件系统的其余部分分开。这可以防止碎片化，并确保在需要时能够高效地使用交换区域。此外，由于敏感数据可能会暂时存储在交换空间中，因此建议对交换空间进行加密，以防止潜在的数据泄露。</p>
+<h4 id="用于休眠的交换空间"><a href="#用于休眠的交换空间" class="headerlink" title="用于休眠的交换空间"></a>用于休眠的交换空间</h4><p>除了扩展物理内存外，交换空间还用于 <code>hibernation</code> 。休眠是一种节能功能，它将系统的状态（包括打开的应用程序和进程）保存到交换空间，然后关闭系统。当系统重新启动时，它会从交换空间恢复其先前状态，从而继续之前未完成的工作。</p>
+<h1 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h1><p>容器化是将应用程序打包并在隔离环境中运行的过程，通常称为容器。这些容器为应用程序提供轻量级、一致的环境，确保它们无论部署在哪里都能以相同的方式运行。Docker、Docker Compose 和 Linux 容器（LXC）等技术在 Linux 基于的系统上使容器化成为可能。容器与虚拟机不同，因为它们共享主机系统的内核，因此更加轻量级和高效。借助这些技术，用户可以快速创建、部署和管理应用程序，同时提高安全性、可移植性和可扩展性。</p>
+<p>容器高度可配置，允许用户根据其特定需求进行定制，其轻量级特性使得在同一主机系统上同时运行多个容器变得容易。此功能对于扩展应用程序和管理复杂的微服务架构尤其有利。</p>
+<p>同样地，容器将应用程序及其所有必需的工具和设置打包在一起，使其能够在不同的系统上一致地运行而不会发生冲突，同时共享同一个“主舞台”（底层系统的资源）。</p>
+<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>Docker 是一个开源平台，用于自动化部署应用程序为自包含的单元，称为容器。它使用分层文件系统和资源隔离功能来提供灵活性和可移植性。此外，它提供了一套强大的工具来创建、部署和管理应用程序，这有助于简化容器化过程。</p>
+<h2 id="LXC"><a href="#LXC" class="headerlink" title="LXC"></a>LXC</h2><p>Linux 容器（ <code>LXC</code> ）是一种轻量级的虚拟化技术，允许多个隔离的 Linux 系统（称为容器）在单个主机上运行。LXC 使用关键资源隔离功能，如控制组（ <code>cgroups</code> ）和 <code>namespaces</code> ，以确保每个容器独立运行。与传统虚拟机不同，后者每个实例都需要完整的操作系统，容器共享主机的内核，这使得 LXC 在资源使用方面更加高效。</p>
+<p>LXC 提供了一套全面的工具和 API 用于管理和配置容器，使其成为 Linux 系统上容器化的流行选择。然而，虽然 LXC 和 Docker 都是容器化技术，但它们服务于不同的目的并具有独特的功能。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Category  分类</strong></th>
+<th><strong>Description  描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Approach</code></td>
+<td>LXC 通常被视为一种更传统、系统级的容器化工具，专注于创建类似轻量级虚拟机的隔离 Linux 环境。而 Docker 则侧重于应用，意味着它针对打包和部署单个应用或微服务进行了优化。</td>
+</tr>
+<tr>
+<td><code>Image building</code></td>
+<td>Docker 使用标准化的镜像格式（Docker 镜像），其中包含运行应用所需的一切（代码、库、配置）。LXC 虽然能够实现类似的功能，但在构建和管理环境方面通常需要更多的手动设置。</td>
+</tr>
+<tr>
+<td><code>Portability</code></td>
+<td>Docker 在可移植性方面表现出色。其容器镜像可以通过 Docker Hub 或其他注册中心轻松地在不同系统之间共享。相比之下，LXC 环境在这方面可移植性较差，因为它们与主机系统的配置更紧密地集成。</td>
+</tr>
+<tr>
+<td><code>Easy of use</code></td>
+<td>Docker 以简洁为设计理念，提供用户友好的 CLI 和广泛的社会支持。LXC 虽然功能强大，但可能需要更深入了解 Linux 系统管理，对初学者来说不太直接。</td>
+</tr>
+<tr>
+<td><code>Security</code></td>
+<td>Docker 容器通常开箱即用更安全，这得益于额外的隔离层，如 AppArmor 和 SELinux，以及其只读文件系统功能。LXC 容器虽然安全，但可能需要额外的配置才能达到 Docker 默认提供的隔离级别。有趣的是，当配置错误时，Docker 和 LXC 都可能成为本地提权的途径（这些技术在我们 Linux 本地提权模块中有详细说明）。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org">chen7chen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.xchstudy.org/2026/05/22/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/1%20%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/1%20Linux%E5%9F%BA%E7%A1%80/0%20Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">http://blog.xchstudy.org/2026/05/22/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/1%20%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/1%20Linux%E5%9F%BA%E7%A1%80/0%20Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.xchstudy.org" target="_blank">小chen妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="https://pic.636865.xyz/raw/7.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/05/22/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/03%20web%E5%AE%89%E5%85%A8/0%20web%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="web基础知识"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/11.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">web基础知识</div></div></a></div><div class="next-post pull-right"><a href="/2026/05/12/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E6%B8%97%E9%80%8F%E9%9D%B6%E5%9C%BA/HTB%E9%9D%B6%E5%9C%BA/HTB%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%981%E2%80%94%E2%80%94logging/" title="HTB靶场刷题1——logging"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/6.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">HTB靶场刷题1——logging</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/images.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chen7chen</div><div class="author-info__description">个人心得，学习分享</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">244</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">173</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cjc0729"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/cjc0729" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:chenjichao729@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center> <b> 学习使用，师傅勿喷(#／。＼#)； <br><br> 功能、内容尚未完全，网站还会持续更新优化哦(*´∀`)~♥ <br><br> 电影网站需要认证才能进入哦，如有需要，请联系本人。 声明：本人搭建所有网站均无商业用途。 </b> </center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">组成部分</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">文件系统</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SHELL%E7%AE%80%E4%BB%8B"><span class="toc-number">3.</span> <span class="toc-text">SHELL简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E6%A8%A1%E6%8B%9F%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">终端模拟器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E7%AC%A6"><span class="toc-number">4.</span> <span class="toc-text">提示符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B6%E7%9B%AE%E5%BD%95"><span class="toc-number">4.1.</span> <span class="toc-text">家目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E5%91%98%E8%BA%AB%E4%BB%BD"><span class="toc-number">4.2.</span> <span class="toc-text">管理员身份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Unprivileged-User-Shell-Prompt"><span class="toc-number">4.2.1.</span> <span class="toc-text">Unprivileged - User Shell Prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Privileged-Root-Shell-Prompt"><span class="toc-number">4.2.2.</span> <span class="toc-text">Privileged - Root Shell Prompt</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E8%A7%82%E6%8E%A7%E5%88%B6"><span class="toc-number">4.3.</span> <span class="toc-text">外观控制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">5.</span> <span class="toc-text">文件描述和重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0"><span class="toc-number">5.1.</span> <span class="toc-text">文件描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">5.2.</span> <span class="toc-text">重定向</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="toc-number">6.</span> <span class="toc-text">权限管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-number">6.1.</span> <span class="toc-text">更改权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9%E6%89%80%E6%9C%89%E8%80%85"><span class="toc-number">6.2.</span> <span class="toc-text">更改所有者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SUID-%E5%92%8C-SGID"><span class="toc-number">6.3.</span> <span class="toc-text">SUID 和 SGID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%98%E6%80%A7%E4%BD%8D"><span class="toc-number">6.4.</span> <span class="toc-text">粘性位</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-number">7.</span> <span class="toc-text">用户管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">服务和进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1"><span class="toc-number">8.1.</span> <span class="toc-text">服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1"><span class="toc-number">8.1.1.</span> <span class="toc-text">系统服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1"><span class="toc-number">8.1.2.</span> <span class="toc-text">用户服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%85%83"><span class="toc-number">8.1.3.</span> <span class="toc-text">单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E7%90%86"><span class="toc-number">8.1.4.</span> <span class="toc-text">管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">8.2.</span> <span class="toc-text">进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%BF%9B%E7%A8%8B"><span class="toc-number">8.2.1.</span> <span class="toc-text">结束进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B"><span class="toc-number">8.2.2.</span> <span class="toc-text">后台进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E5%8F%B0%E8%BF%9B%E7%A8%8B"><span class="toc-number">8.2.3.</span> <span class="toc-text">前台进程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6"><span class="toc-number">9.</span> <span class="toc-text">任务调度</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Systemd"><span class="toc-number">9.1.</span> <span class="toc-text">Systemd</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">9.1.1.</span> <span class="toc-text">创建定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cron"><span class="toc-number">9.1.2.</span> <span class="toc-text">Cron</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86"><span class="toc-number">10.</span> <span class="toc-text">文件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-number">10.1.</span> <span class="toc-text">文件类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%96%87%E4%BB%B6"><span class="toc-number">10.1.1.</span> <span class="toc-text">常见文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">10.1.2.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E9%93%BE%E6%8E%A5"><span class="toc-number">10.1.3.</span> <span class="toc-text">符号链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E4%B8%8E%E9%A9%B1%E5%8A%A8%E5%99%A8"><span class="toc-number">10.2.</span> <span class="toc-text">磁盘与驱动器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%8C%BA%E7%AE%A1%E7%90%86"><span class="toc-number">10.2.1.</span> <span class="toc-text">分区管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fdisk"><span class="toc-number">10.2.1.1.</span> <span class="toc-text">fdisk</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%82%E8%BD%BD"><span class="toc-number">10.2.2.</span> <span class="toc-text">挂载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SWAP"><span class="toc-number">10.2.3.</span> <span class="toc-text">SWAP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%BA%A4%E6%8D%A2%E7%A9%BA%E9%97%B4"><span class="toc-number">10.2.3.1.</span> <span class="toc-text">创建交换空间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E7%90%86-1"><span class="toc-number">10.2.3.2.</span> <span class="toc-text">管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E4%BC%91%E7%9C%A0%E7%9A%84%E4%BA%A4%E6%8D%A2%E7%A9%BA%E9%97%B4"><span class="toc-number">10.2.3.3.</span> <span class="toc-text">用于休眠的交换空间</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8"><span class="toc-number">11.</span> <span class="toc-text">容器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker"><span class="toc-number">11.1.</span> <span class="toc-text">Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LXC"><span class="toc-number">11.2.</span> <span class="toc-text">LXC</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/23/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E6%B8%97%E9%80%8F%E9%9D%B6%E5%9C%BA/HTB%E9%9D%B6%E5%9C%BA/HTB%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%983%E2%80%94%E2%80%94Support/" title="HTB靶场刷题3——Support">HTB靶场刷题3——Support</a><time datetime="2026-06-23T02:04:43.300Z" title="发表于 2026-06-23 10:04:43">2026-06-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/22/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/%E6%B8%97%E9%80%8F%E9%9D%B6%E5%9C%BA/HTB%E9%9D%B6%E5%9C%BA/HTB%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%982%E2%80%94%E2%80%94Checkpoint/" title="HTB靶场刷题2——Checkpoint">HTB靶场刷题2——Checkpoint</a><time datetime="2026-06-22T13:58:43.197Z" title="发表于 2026-06-22 21:58:43">2026-06-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/18/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/2%20%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/PC%E9%80%86%E5%90%91/2%20linux%E7%BC%96%E7%A8%8B/linux%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B/" title="linux汇编编程">linux汇编编程</a><time datetime="2026-06-18T12:29:40.921Z" title="发表于 2026-06-18 20:29:40">2026-06-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/16/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/3%20%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/06%20%E8%BD%AF%E4%BB%B6%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82%E5%AE%89%E5%85%A8/0%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/3%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/0%20%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81%E5%8E%9F%E7%90%86/" title="汇编代码原理">汇编代码原理</a><time datetime="2026-06-16T14:08:06.776Z" title="发表于 2026-06-16 22:08:06">2026-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/13/1%20%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/1%20%E5%9F%BA%E7%A1%80/3%20%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%AB%AF/js/2%20%E6%B5%8F%E8%A7%88%E5%99%A8/JavaScript%E6%B5%8F%E8%A7%88%E5%99%A8%E6%93%8D%E4%BD%9C/" title="JavaScript浏览器操作">JavaScript浏览器操作</a><time datetime="2026-06-13T14:35:44.271Z" title="发表于 2026-06-13 22:35:44">2026-06-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By chen7chen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.chenjichao.site/',
+      region: 'ap-shanghai',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="/js/jquery.js"></script><script async src="/styles/fish.js"></script><script defer src="/js/pace.min.js"></script><canvas async id="universe"></canvas><script defer src="/js/js.js"></script><script defer src="/js/emoji.js"></script><script async src="/js/pace.min.js"></script><script async src="/js/title.js"></script><script async data-pjax src="/js/anzhiyu.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://npm.elemecdn.com/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/取证/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 取证 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络攻防/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 网络攻防 (17)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络攻防/CTF靶场/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🧀 CTF靶场 (6)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="http://blog.xchstudy.org/categories/网络攻防/自建靶场/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 自建靶场 (5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="http://blog.xchstudy.org/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '0.5s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__rotateInDownLeft');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://unpkg.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/8.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-13</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">pandas</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/13/3 大数据技术/数据可视化/pandas/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2026/03/29/取证/2025獬豸杯/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/7.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2026-03-29</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2026/03/29/取证/2025獬豸杯/&quot;);" href="javascript:void(0);" alt="">2025獬豸杯</a><div class="blog-slider__text">2025年獬豸</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2026/03/29/取证/2025獬豸杯/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2026/01/20/取证/2025年美亚杯/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/4.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2026-01-20</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2026/01/20/取证/2025年美亚杯/&quot;);" href="javascript:void(0);" alt="">2025年美亚杯个人赛</a><div class="blog-slider__text">2025年美亚取证个人赛</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2026/01/20/取证/2025年美亚杯/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://pic.636865.xyz/raw/5.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-06-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">linux系统变量</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/06/09/1 网络攻防/2 防御技术/电子取证/服务器取证/linux/命令介绍/linux系统变量/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
