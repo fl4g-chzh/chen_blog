@@ -482,9 +482,9 @@
             
             <tag> 网络攻防 </tag>
             
-            <tag> 自建靶场 </tag>
-            
             <tag> sql注入 </tag>
+            
+            <tag> 自建靶场 </tag>
             
         </tags>
       
@@ -548,9 +548,9 @@
             
             <tag> 网络攻防 </tag>
             
-            <tag> 命令执行 </tag>
-            
             <tag> 自建靶场 </tag>
+            
+            <tag> 命令执行 </tag>
             
         </tags>
       
